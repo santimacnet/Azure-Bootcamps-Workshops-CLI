@@ -1,9 +1,10 @@
-**TUTORIAL NODE-AZURE - PRACTICA PARA MEETUPS**
-
-Podemos usar [az login] o [https://shell.azure.com]
+**PRACTICA PARA MEETUPS AZURE-NODEJS**
 ---------------------------------------------------
+Ejemplo: https://github.com/Azure-Samples/nodejs-docs-hello-world/archive/master.zip
 
-https://docs.microsoft.com/es-es/azure/app-service/app-service-web-get-started-nodejs
+Documentacion: https://docs.microsoft.com/es-es/azure/app-service/app-service-web-get-started-nodejs
+
+Consola CLI:  [az login] o [https://shell.azure.com]
 
 ### Configurar entorno Azure para Node
 $ az group create --name WebAppsNode-recursos --location northeurope
@@ -23,3 +24,6 @@ Visitar la web creada (sin aplicacion): https://appwebnode01.azurewebsites.net
 - Visitar la web creada: https://appwebnode01.azurewebsites.net
 - Veremos ahora el mensaje "Hello World" que esta en index.js
 - Podemos editar index.js directamente en Kudu y cambiar el mensaje
+
+### Borrar recursos Azure
+az group delete --name WebAppsNode-recursos 
