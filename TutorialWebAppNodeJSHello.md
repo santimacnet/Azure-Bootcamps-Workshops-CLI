@@ -17,10 +17,21 @@ $ az webapp config appsettings set --resource-group WebAppsNode-recursos --name 
 
 Visitar la web creada (sin aplicacion): https://appwebnode01.azurewebsites.net
 
+### Deploy directo con az CLI
+- Compilar proyecto "ng build --prod" en la carpeta dist
+- Comprimir proyecto generado en carpeta dist en una archivo ZIP
+- Deploy con el comando de az:
+
+$ az webapp deployment source config-zip --resource-group=WebAppsNode-recursos --name=appwebnode01 
+     --src C:\rutaproyectos\...\dist\deploy.zip
+
 ### Deploy del proyecto HelloNode con Kudu y ZipDeployUI
-- Comprimir proyecto desde los archicos en ZIP
-- visitar Kudu: https://appwebnode01.scm.azurewebsites.net/ZipDeployUI
+- Compilar proyecto "ng build --prod" en la carpeta dist
+- Comprimir proyecto generado en carpeta dist en una archivo ZIP
+- Visitar Kudu: https://appwebnode01.scm.azurewebsites.net/ZipDeployUI
 - Arrastrar el archivo ZIP sobre el entorno Kudu y se desplegará automaticamente.
+
+### Ver WebApp funcionando en Azure
 - Visitar la web creada: https://appwebnode01.azurewebsites.net
 - Veremos ahora el mensaje "Hello World" que esta en index.js
 - Podemos editar index.js directamente en Kudu y cambiar el mensaje
