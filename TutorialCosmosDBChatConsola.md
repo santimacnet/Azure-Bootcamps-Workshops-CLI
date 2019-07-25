@@ -1,8 +1,9 @@
-**PRACTICA AZURE-COSMOS DB CON MONGO**
--------------------------------------------------------
+**PRACTICA AZURE-COSMOS DB CON MONGO y ERRORES TRANSITORIOS**
+------------------------------------------------------------- 
 
 - Consola: [az login] o [https://shell.azure.com]
 - Ejemplo: https://github.com/MicrosoftDocs/mslearn-handle-transient-errors-in-your-app
+- Documentacion: https://docs.microsoft.com/es-es/learn/modules/handle-transient-errors-in-your-app/6-define-appropriate-retry-policy?pivots=csharp
 
 ### Configurar entorno Azure para crear la base de datos
 
