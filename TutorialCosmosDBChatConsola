@@ -1,7 +1,8 @@
 **PRACTICA AZURE-COSMOS DB CON MONGO **
 -------------------------------------------------------
 
-Consola CLI:  [az login] o [https://shell.azure.com]
+Consola: [az login] o [https://shell.azure.com]
+Ejemplo: https://github.com/MicrosoftDocs/mslearn-handle-transient-errors-in-your-app
 
 ### Configurar entorno Azure para crear la base de datos
 
