@@ -1,8 +1,8 @@
-**PRACTICA AZURE-COSMOS DB CON MONGO **
+**PRACTICA AZURE-COSMOS DB CON MONGO**
 -------------------------------------------------------
 
-Consola: [az login] o [https://shell.azure.com]
-Ejemplo: https://github.com/MicrosoftDocs/mslearn-handle-transient-errors-in-your-app
+- Consola: [az login] o [https://shell.azure.com]
+- Ejemplo: https://github.com/MicrosoftDocs/mslearn-handle-transient-errors-in-your-app
 
 ### Configurar entorno Azure para crear la base de datos
 
@@ -24,20 +24,27 @@ $ az cosmosdb list-connection-strings \
   --resource-group practica-acfb5bbc \
   --name $COSMOS_DB_NAME  | sed -n -e '4 p' | sed -E -e 's/.*mongo(.*)true.*/mongo\1true/'
   
-### Clonar repo de la aplicación de chat y ejecutarla con NetCore
+### Clonar repo aplicación de chat de consola
 
 cd ~
+
 git clone https://github.com/MicrosoftDocs/mslearn-handle-transient-errors-in-your-app.git
+
 cd ~/mslearn-handle-transient-errors-in-your-app/csharp/chatapp/
 
 nano Program.cs //Poner cadena de conexion con mongo en el codigo fuente
 
+
+### Ejecutar chat de consola con NetCore
+
 dotnet build
+
 dotnet run
 
-Para probar la aplicacion utilizar los comandos que se muestran en consola.
-Introducir varios mensajes para guardarlos en base de datos
-En Azure buscar cosmosdb y abrir colecciones para ver los datos registrados.
+- Para probar la aplicacion utilizar los comandos que se muestran en consola.
+- Introducir varios mensajes para guardarlos en base de datos
+- En Azure buscar en todos los recursos nuestra cosmosdb 
+- Abrir colecciones para ver los mensajes registrados en mongo
 
 
 
