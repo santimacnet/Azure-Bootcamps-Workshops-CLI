@@ -1,12 +1,15 @@
 **PRACTICA AZURE WEBAPP-NODEJS**
 ---------------------------------------------------
-Ejemplo: https://github.com/Azure-Samples/nodejs-docs-hello-world/archive/master.zip
 
-Documentacion: https://docs.microsoft.com/es-es/azure/app-service/app-service-web-get-started-nodejs
+- Consola CLI:  [az login] o [https://shell.azure.com]
+- Ejemplo: https://github.com/Azure-Samples/nodejs-docs-hello-world/archive/master.zip
+- Documentacion: https://docs.microsoft.com/es-es/azure/app-service/app-service-web-get-started-nodejs
 
-Consola CLI:  [az login] o [https://shell.azure.com]
 
 ### Configurar entorno Azure para Node
+Pasos para crear y configurar entorno AppService para Node
+
+```
 $ az group create --name WebAppsNode-recursos --location northeurope
 
 $ az appservice plan create --name WebAppsNodePlan --resource-group WebAppsNode-recursos --sku FREE
@@ -14,6 +17,7 @@ $ az appservice plan create --name WebAppsNodePlan --resource-group WebAppsNode-
 $ az webapp create --resource-group WebAppsNode-recursos --plan WebAppsNodePlan --name appwebnode01
 
 $ az webapp config appsettings set --resource-group WebAppsNode-recursos --name appwebnode01 --settings WEBSITE_NODE_DEFAULT_VERSION=10.14.1
+```
 
 Visitar la web creada (sin aplicacion): https://appwebnode01.azurewebsites.net
 
@@ -22,8 +26,9 @@ Visitar la web creada (sin aplicacion): https://appwebnode01.azurewebsites.net
 - Comprimir proyecto generado en carpeta dist en una archivo ZIP
 - Deploy con el comando de az:
 
-$ az webapp deployment source config-zip --resource-group=WebAppsNode-recursos --name=appwebnode01 
-     --src C:\rutaproyectos\...\dist\deploy.zip
+```
+$ az webapp deployment source config-zip --resource-group=WebAppsNode-recursos --name=appwebnode01 --src C:\rutaproyectos\...\dist\deploy.zip
+```
 
 ### Deploy del proyecto HelloNode con Kudu y ZipDeployUI
 - Compilar proyecto "ng build --prod" en la carpeta dist
@@ -37,4 +42,9 @@ $ az webapp deployment source config-zip --resource-group=WebAppsNode-recursos -
 - Podemos editar index.js directamente en Kudu y cambiar el mensaje
 
 ### Borrar recursos Azure
-az group delete --name WebAppsNode-recursos 
+
+```
+$ az group delete --name WebAppsNode-recursos 
+```
+
+
