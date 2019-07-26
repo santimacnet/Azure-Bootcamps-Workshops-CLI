@@ -1,5 +1,5 @@
-**PRACTICA AZURE CON ARQUITECTURA WEB EN CAPAS Y SQL SERVER **
-------------------------------------------------------------- 
+**PRACTICA AZURE CON ARQUITECTURA WEB EN CAPAS Y SQL SERVER**
+-------------------------------------------------------------- 
 
 - Consola: [az login] o [https://shell.azure.com]
 - Ejemplo: https://raw.githubusercontent.com/MicrosoftDocs/mslearn-n-tier-architecture/master
@@ -9,6 +9,7 @@
 
 La creacion de recursos tardará varios minutos y el password se generá de forma aleatoria en este ejemplo.
 
+```
 $ az group create --name ArquitecturaWebCapas-recursos --location northeurope
 
 $ az group deployment create \
@@ -21,8 +22,9 @@ $ az group deployment show \
     --resource-group ArquitecturaWebCapas-recursos \
     --query properties.outputs.webSiteUrl \
     --output table 
-    
-Una ver finalizado ir al sitio web y poner valores validos: pizza, tacos, sushi.
+```
+
+Una vez finalizado ir al sitio web y poner valores validos: pizza, tacos, sushi.
 
 
 
