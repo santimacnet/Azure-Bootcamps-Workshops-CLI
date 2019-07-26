@@ -28,9 +28,27 @@ La plantilla crea dos máquinas virtuales (VM), una base de datos de Azure SQL y
 
 La red virtual tiene 2 subredes, una para presentación y otra para el nivel aplicación, con un límite de seguridad para cada uno.
 
-Se han aplicado etiquetas (tags) a los recursos como parte de la implementación para reflejar el nivel que admite el recurso (tier:presentation, tier:application, tier:data). 
-
 Una vez finalizado ir al sitio web y poner valores validos: pizza, tacos, sushi.
+
+### Revisar la infraestructura creada en Azure con template de recursos
+
+En la creacion de la infraestrucutra, se han aplicado etiquetas (tags) a los recursos como parte de la implementación para reflejar el nivel que admite el recurso (tier:presentation, tier:application, tier:data). 
+
+La creacion ya esta lista y podemos verla desde el portal de Azure o bien desde comandos AZ consultando los recursos por etiquetas.
+
+```
+$ az resource list --tag tier=presentation --output table
+
+$ az resource list --tag tier=application --output table
+
+$ az resource list --tag tier=data --output table
+```
+
+Con estos comandos se muestran  todos los recursos para cada una de las capas del proyecto.
+
+
+
+
 
 
 
