@@ -53,5 +53,6 @@ Con estos comandos se muestran  todos los recursos para cada una de las capas de
 En este ejemplo se ha realizado la implementación en base a IaaS con maquinas virtuales, menos la BBDD, el uso de servicios PaaS en lugar de máquinas virtuales, se reducen los costos, aumenta la seguridad y se reducen los requisitos de administración de redes, almacenamiento, etc.
 
 
+Referencia: https://docs.microsoft.com/es-es/azure/architecture/guide/architecture-styles/n-tier
 
 
