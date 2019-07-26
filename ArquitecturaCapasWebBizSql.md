@@ -24,13 +24,14 @@ $ az group deployment show \
     --output table 
 ```
 
-La plantilla crea dos máquinas virtuales (VM), una base de datos de Azure SQL y los recursos necesarios para admitir estos recursos, como discos, NIC y redes virtuales. También implementa el código para ejecutar la aplicación en cada nivel. 
+La plantilla crea una red virtual con 2 subredes, 2 máquinas virtuales (VM), una base de datos de Azure SQL y los recursos necesarios para admitir estos recursos, como discos, NIC y redes virtuales con un límite de seguridad entre ellos, lo entenderemos mejor con este diagrama de la pagina de Microsoft
 
-La red virtual tiene 2 subredes, una para presentación y otra para el nivel aplicación, con un límite de seguridad para cada uno.
+![](https://docs.microsoft.com/es-es/learn/modules/n-tier-architecture/media/3-n-tier-deployment.svg)
 
+También se hace deploy de las aplicaciones en cada nivel, ya sea para VM o SQL Server. 
 Una vez finalizado ir al sitio web y poner valores validos: pizza, tacos, sushi.
 
-### Revisar la infraestructura creada en Azure con template de recursos
+### Revisar la infraestructura creada en Azure
 
 En la creacion de la infraestrucutra, se han aplicado etiquetas (tags) a los recursos como parte de la implementación para reflejar el nivel que admite el recurso (tier:presentation, tier:application, tier:data). 
 
