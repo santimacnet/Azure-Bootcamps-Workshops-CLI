@@ -8,12 +8,15 @@ Para este tutorial es necesario tener los siguientes requerimientos:
 - saber utilizar Dashboard de Kubernetes para consultar Wordloads
 
 
-### Configurar acceso en Azure para Dashboard Kubernetes
+### Configurar acceso con Suscripcion Azure para abrir Dashboard Kubernetes
 
 Abrir una shell de Azure para conectarnos al Dashboard Kubernetes
 ```
+$ az account list
+$ az account set --subscription ****-****-***-***
 $ az aks browse --name <nombre-aks> --resource-group <nombre-rg> 
 ```
+
 Abrir otra shell de Azure para ejecutar comandos con Kubectl
 ```
 $  kubectl get nodes
