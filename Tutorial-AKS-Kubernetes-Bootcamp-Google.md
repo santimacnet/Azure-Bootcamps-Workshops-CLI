@@ -27,6 +27,7 @@ $ kubectl get nodes
 
 ### Paso1: Implementando aplicación Bootcamp en AKS
 
+```
 $ kubectl create deployment k8-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1
 
 $ kubectl get deployments - ver deployment ej: k8-bootcamp
@@ -35,16 +36,18 @@ $ kubectl get pods        - ver pod creado ej: k8-bootcamp-6969f6d786-z842s
 $ kubectl get services    - no lo vemos porque no ha sido creado
 
 $ kubectl get all         - ver todo con un solo comando
-
+```
 
 ### Paso2:  Explorando aplicación para Troubleshooting y Debugging 
 
+```
 $ kubectl logs <nombre-pod>           - ver logs del pod-contenedor
 $ kubectl describe pods <nombre-pod>  - detalle del pod creado indicando "nombre-pod"
 $ kubectl exec <nombre-pod> env       - ejecutar comando env  en pod/contenedor para ver todas las vars entorno definidas
 $ kubectl exec -ti <nombre-pod> bash  - ejecutar comando bash en pod/contenedor para tener una shell interactiva
   # curl localhost:8080               - veremos: Hello Kubernetes bootcamp! | Running on: k8-bootcamp-6969f6d786-z842s | v=1
   # exit
+```
 
 
 ### Paso3: Exponer Services para acceder aplicación creada
