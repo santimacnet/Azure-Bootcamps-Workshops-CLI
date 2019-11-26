@@ -72,17 +72,30 @@ $ kubectl get pods -o wide -l app=k8-bootcamp
 $ kubectl describe deployments/k8-bootcamp
 $ kubectl describe services/k8-bootcamp  
 
-$ curl  http://EXTERNALIP:puerto -- veremos como funciona el load-balancing mirando pod-name diferente
+$ curl http://EXTERNALIP:puerto // veremos como funciona el load-balancing mirando pod-name diferente
 
-$ kubectl scale deployments/k8-bootcamp --replicas=3 -- escalar hacia abajo el numero de pods
+$ kubectl scale deployments/k8-bootcamp --replicas=3 // escalar hacia abajo el numero de pods
 $ kubectl get pods -o wide -l app=k8-bootcamp  
 ```
 
 ### Paso5: Rolling updates pasar de aplicacion-v1 a aplicacion-v2
 
-...
+```
+$ kubectl get deployments
+$ kubectl describe deployment/k8-bootcamp  // obtener detalles deployment actual
+$ kubectl get pods -o wide
+
+$ kubectl set image deployments/k8-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2
+$ kubectl get pods -o wide               // veremos status y IPs de los pods 
+$ kubectl describe services/k8-bootcamp  // veremos ExternalIP y Endpoints de nuevos pods creados
+$ curl http://EXTERNALIP:puerto          // veremos la respuesta desde aplicacion-V2
+
+$ kubectl set image deployments/k8-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v1
+$ kubectl get pods -o wide               // veremos status y IPs de los pods 
+$ kubectl describe services/k8-bootcamp  // veremos ExternalIP y Endpoints de nuevos pods creados
+$ curl http://EXTERNALIP:puerto          // veremos la respuesta desde aplicacion-V1
+```
 
 ### Conclusiones
-Hemos visto un caso practico de como realizar en 5 pasos un deployment en Kubernetes (AKS).
-
+Hemos visto un caso practico de como realizar en 5 pasos deployments en Kubernetes (AKS).
 
