@@ -52,11 +52,11 @@ $ kubectl exec -ti <nombre-pod> bash   // ejecutar comando bash en pod/contenedo
 
 ```
 $ kubectl get services    // no vemos el servicio porque no fue creado
-$ kubectl expose deployment/k8-bootcamp --type="NodePort" --port 8080  //exponer como NodePort - no usar en AKS
-$ kubectl expose deployment/k8-bootcamp --type="LoadBalancer" --port 8080         //exponer como Load Balancer en AKS
+$ kubectl expose deployment/k8-bootcamp --type="LoadBalancer" --port 8080   // exponer como Load Balancer en AKS no usar NodePort
 $ kubectl get services    // ahora veremos el servicio expuesto como LoadBalancer (pending)
+
 $ kubectl describe services/k8-bootcamp   // describir datos del service para obtener el Endpoint "ip:puerto"
-$ curl http://EXTERNALIP:PUERTO          // veremos "Hello Kubernetes bootcamp! | Running on: k8-bootcamp-*****-*** | v=1
+$ curl http://EXTERNALIP:PUERTO           // veremos "Hello Kubernetes bootcamp! | Running on: k8-bootcamp-*****-*** | v=1
 
 $ kubectl describe deployment/k8-bootcamp  // describir datos del label-selector creado por defecto
 $ kubectl get pods -l app=k8-bootcamp      // obtener pods con filtro por label
@@ -64,7 +64,19 @@ $ kubectl get pods -l app=k8-bootcamp      // obtener pods con filtro por label
 
 ### Paso4: Escalar aplicación creada desde 1-pod hasta 5-pods
 
-...
+```
+$ kubectl get pods -o wide
+$ kubectl scale deployments/k8-bootcamp --replicas=5
+$ kubectl get deployments
+$ kubectl get pods -o wide -l app=k8-bootcamp  
+$ kubectl describe deployments/k8-bootcamp
+$ kubectl describe services/k8-bootcamp  
+
+$ curl  http://EXTERNALIP:puerto -- veremos como funciona el load-balancing mirando pod-name diferente
+
+$ kubectl scale deployments/k8-bootcamp --replicas=3 -- escalar hacia abajo el numero de pods
+$ kubectl get pods -o wide -l app=k8-bootcamp  
+```
 
 ### Paso5: Rolling updates pasar de aplicacion-v1 a aplicacion-v2
 
