@@ -30,30 +30,37 @@ $ kubectl get nodes
 ```
 $ kubectl create deployment k8-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1
 
-$ kubectl get deployments - ver deployment ej: k8-bootcamp
-$ kubectl get rs          - ver replicaset ej: k8-bootcamp-6969f6d786
-$ kubectl get pods        - ver pod creado ej: k8-bootcamp-6969f6d786-z842s 
-$ kubectl get services    - no lo vemos porque no ha sido creado
-
-$ kubectl get all         - ver todo con un solo comando
+$ kubectl get deployments  // ver deployment ej: k8-bootcamp
+$ kubectl get rs           // ver replicaset ej: k8-bootcamp-6969f6d786
+$ kubectl get pods         // ver pod creado ej: k8-bootcamp-6969f6d786-z842s 
+$ kubectl get services     // no lo vemos porque no ha sido creado
+$ kubectl get all          // ver todo los objetos con un solo comando
 ```
 
 ### Paso2:  Explorando aplicación para Troubleshooting y Debugging 
 
 ```
-$ kubectl logs <nombre-pod>           - ver logs del pod-contenedor
-$ kubectl describe pods <nombre-pod>  - detalle del pod creado indicando "nombre-pod"
-$ kubectl exec <nombre-pod> env       - ejecutar comando env  en pod/contenedor para ver todas las vars entorno definidas
-$ kubectl exec -ti <nombre-pod> bash  - ejecutar comando bash en pod/contenedor para tener una shell interactiva
-  # curl localhost:8080               - veremos: Hello Kubernetes bootcamp! | Running on: k8-bootcamp-6969f6d786-z842s | v=1
+$ kubectl logs <nombre-pod>            // ver logs del pod-contenedor
+$ kubectl describe pods <nombre-pod>   // detalle del pod creado indicando "nombre-pod"
+$ kubectl exec <nombre-pod> env        // ejecutar comando env  en pod/contenedor para ver todas las vars entorno definidas
+$ kubectl exec -ti <nombre-pod> bash   // ejecutar comando bash en pod/contenedor para tener una shell interactiva
+  # curl localhost:8080                // veremos: Hello Kubernetes bootcamp! | Running on: k8-bootcamp-*****-*** | v=1
   # exit
 ```
 
-
 ### Paso3: Exponer Services para acceder aplicación creada
 
-...
+```
+$ kubectl get services    // no vemos el servicio porque no fue creado
+$ kubectl expose deployment/k8-bootcamp --type="NodePort" --port 8080  //exponer como NodePort - no usar en AKS
+$ kubectl expose deployment/k8-bootcamp --type="LoadBalancer" --port 8080         //exponer como Load Balancer en AKS
+$ kubectl get services    // ahora veremos el servicio expuesto como LoadBalancer (pending)
+$ kubectl describe services/k8-bootcamp   // describir datos del service para obtener el Endpoint "ip:puerto"
+$ curl http://EXTERNALIP:PUERTO          // veremos "Hello Kubernetes bootcamp! | Running on: k8-bootcamp-*****-*** | v=1
 
+$ kubectl describe deployment/k8-bootcamp  // describir datos del label-selector creado por defecto
+$ kubectl get pods -l app=k8-bootcamp      // obtener pods con filtro por label
+```
 
 ### Paso4: Escalar aplicación creada desde 1-pod hasta 5-pods
 
