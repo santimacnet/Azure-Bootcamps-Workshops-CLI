@@ -9,6 +9,8 @@ Para este tutorial es necesario tener los siguientes requerimientos:
 - saber utilizar Kubectl para trabajar con Kubernetes
 - saber utilizar Dashboard de Kubernetes para consultar Wordloads
 
+Otra practica Votos: https://docs.microsoft.com/es-es/azure/aks/tutorial-kubernetes-prepare-app
+
 
 ### Configurar acceso con Suscripcion Azure para abrir Dashboard Kubernetes
 
