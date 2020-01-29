@@ -29,7 +29,7 @@ $ kubectl config current-context
 
 $ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 
-$ az aks get-credentials --resource-group Webinar-recursos --name WebinarCloudK8s --admin
+$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admin
 
 $ az aks browse --name <nombre-aks> --resource-group <nombre-rg> 
 ```
