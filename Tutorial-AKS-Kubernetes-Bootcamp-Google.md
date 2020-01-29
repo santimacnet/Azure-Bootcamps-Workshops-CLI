@@ -34,6 +34,13 @@ $ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admi
 $ az aks browse --name <nombre-aks> --resource-group <nombre-rg> 
 ```
 
+
+Si queremos quitar los permisos para no acceder al Dashboard
+
+```
+$ kubectl delete clusterrolebinding kubernetes-dashboard -n kube-system
+```
+
 Doc oficial:https://docs.microsoft.com/es-es/azure/aks/kubernetes-dashboard
 
 Abrir otra shell de Azure para ejecutar el resto de comandos con Kubectl
