@@ -14,14 +14,27 @@ Otra practica Votos: https://docs.microsoft.com/es-es/azure/aks/tutorial-kuberne
 
 ### Configurar acceso con Suscripcion Azure para abrir Dashboard Kubernetes
 
-Abrir una shell de Azure para conectarnos al Dashboard Kubernetes
+Abrir una shell de Azure para consultar suscripcion correcta
 ```
 $ az account list
 $ az account set --subscription ****-****-***-***
+```
+
+### Configurar acceso Dashboard AKS-Kubernetes
+
+Desde la shell de Azure configurar rol de acceso y conectar con Dashboard Kubernetes
+
+```
+$ kubectl config current-context
+
+$ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+
+$ az aks get-credentials --resource-group Webinar-recursos --name WebinarCloudK8s --admin
+
 $ az aks browse --name <nombre-aks> --resource-group <nombre-rg> 
 ```
 
-Abrir otra shell de Azure para ejecutar comandos con Kubectl
+Abrir otra shell de Azure para ejecutar el resto de comandos con Kubectl
 ```
 $ kubectl cluster-info
 $ kubectl get nodes
