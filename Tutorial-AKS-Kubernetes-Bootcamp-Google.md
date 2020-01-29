@@ -22,7 +22,7 @@ $ az account set --subscription ****-****-***-***
 
 ### Configurar acceso Dashboard AKS-Kubernetes
 
-Desde la shell de Azure configurar rol de acceso y conectar con Dashboard Kubernetes
+Desde la shell de Azure configurar rol de acceso y conectar con Dashboard Kubernetes.
 
 ```
 $ kubectl config current-context
@@ -33,6 +33,8 @@ $ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admi
 
 $ az aks browse --name <nombre-aks> --resource-group <nombre-rg> 
 ```
+
+Doc oficial:https://docs.microsoft.com/es-es/azure/aks/kubernetes-dashboard
 
 Abrir otra shell de Azure para ejecutar el resto de comandos con Kubectl
 ```
