@@ -26,7 +26,7 @@ $ node --version
 
 ### Crear Aplicacion Angular HelloWorld
 
-Ejecutar los comandos desde consola para crear nueva aplicacion Angular, esto compilará y ejecutar la aplicacion en http://localhost:4200
+Ejecutar los comandos desde consola para crear y ejecutar nueva aplicacion Angular
 ```
 $ npm install -g @angular/cli (si no lo tenemos instalado
 $ ng new angular-hello
@@ -39,7 +39,7 @@ Compiled successfully.
 ```
 Abrimos en navegador http://localhost:4200 para ver la aplicacion en el browser.
 
-### Crear Dockerfile para generar imagen simple y ejecutar contenedor Docker
+### Crear Dockerfile para generar imagen Docker
 
 Crear archivo Dockerfile con un editor/IDE en el mismo directorio que aplicacion Angular
 ```
@@ -61,7 +61,7 @@ COPY --from=build /app/dist/ /usr/share/nginx/html
 # COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 ```
 
-### Construir la imagen definida en Dockerfile y veremos los Steps definidos en el Dockerfile
+### Construir la imagen definida en Dockerfile y veremos los Steps definidos
 ```
  $ docker build --rm -f "Dockerfile" -t angularhello:v1 "."
  
