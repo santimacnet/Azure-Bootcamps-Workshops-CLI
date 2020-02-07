@@ -49,7 +49,35 @@ EXPOSE 4200
 ENTRYPOINT npm start
 ```
 
-Construir la imagen del archivo Dockerfile 
+Construir la imagen del archivo Dockerfile y veremos los Steps definidos en el Dockerfile
 
+```
+ $ docker build --rm -f "Dockerfile" -t angularhello:v1 "."
+ 
+  # Simplico las trazas del Build para no tener tanto texto
+    Sending build context to Docker daemon.....
+
+    Step 1/6 : FROM node:13.7-alpine
+    Step 2/6 : WORKDIR  /app
+    Step 3/6 : COPY ./ /app/
+    Step 4/6 : RUN npm install
+    Step 5/6 : EXPOSE 4200
+    Step 6/6 : ENTRYPOINT npm start
+    Removing intermediate container
+    Successfully built e671f4d19609
+    Successfully tagged angularhello:v1
+```
+
+Mostrar las imagenes que acabamos de construir
+
+```
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+angularhello        v1                  e671f4d19609        11 minutes ago      468MB 
+angularpoc          v1                  b162eb20c3f4        About an hour ago   499MB 
+node                13.7-alpine         b809734bb743        2 weeks ago         113MB 
+```
+
+Levantar el contenedor para ejecutar aplicacion Angular
 
 
