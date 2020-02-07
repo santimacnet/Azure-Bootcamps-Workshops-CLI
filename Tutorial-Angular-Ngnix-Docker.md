@@ -122,7 +122,6 @@ $ docker push santimacnet/angularhello:v2
 ```
 
 Nota: si queremos conectarnos a un repo privado usaremos: docker login registry.privado.com
-!!YEAH!! Si visitamos nuestra cuenta de DockerHub ya tendremos la imagen publicada.
 
 
 ### Limpiando el campamento 
@@ -139,3 +138,4 @@ $ docker rm $(docker ps -a -q)
 $ docker rmi -f $(docker images -q)
 ```
 
+!!YEAH!! Si visitamos nuestra cuenta de DockerHub ya tendremos la imagen publicada.
