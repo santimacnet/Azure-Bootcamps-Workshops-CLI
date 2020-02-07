@@ -35,7 +35,7 @@ $ ng serve
 ** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
 Compiled successfully.
 ```
-Abrimos un navegador y accedemos a http://localhost:4200 para ver la aplicacion ejecutandose en el browser.
+Abrimos en navegador http://localhost:4200 para ver la aplicacion en el browser.
 
 ### Crear Dockerfile para generar imagen simple y ejecutar contenedor Docker
 
@@ -79,5 +79,11 @@ node                13.7-alpine         b809734bb743        2 weeks ago         
 ```
 
 Levantar el contenedor para ejecutar aplicacion Angular
+
+```
+docker run --rm -d -p 8888:80 angularhello:v1
+```
+
+Abrimos en navegador http://localhost:8888 para ver la aplicacion ejecutandose en el browser a traves de NGINX.
 
 
