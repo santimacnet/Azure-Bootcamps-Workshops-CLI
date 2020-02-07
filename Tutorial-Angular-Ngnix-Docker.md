@@ -106,3 +106,21 @@ docker run --rm -d -p 8888:80 angularhello:v1
 Abrimos en navegador http://localhost:8888 para ver la aplicacion ejecutandose en el browser a traves de NGINX.
 
 !!GENIAL!! Ya tenemos nuestra aplicacion Angular funcionando en Docker y accediendo meditante NGINX
+
+
+### Subir imagen a DockerHub Publico
+Si queremos compartir nuestra imagen ya definitiva podemos subirla a DockerHub si disponemos de una cuenta
+```
+# Accederemos al DockerHub desde nuestro equipo
+$ docker login
+
+# Tageamos la imagen con formato nombre/imagen:version para DockerHub
+$ docker tag angularpoc:v2 santimacnet/angularpoc:v2
+
+# Publicamos la imagen con Tag en DockerHub
+$ docker push santimacnet/angularhello:v2
+```
+
+Nota: si queremos conectarnos a un repo privado usaremos: docker login registry.privado.com
+
+!!YEAH!! Si visitamos nuestra cuenta de DockerHub ya tendremos la imagen publicada.
