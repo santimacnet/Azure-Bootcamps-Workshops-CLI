@@ -122,5 +122,20 @@ $ docker push santimacnet/angularhello:v2
 ```
 
 Nota: si queremos conectarnos a un repo privado usaremos: docker login registry.privado.com
-
 !!YEAH!! Si visitamos nuestra cuenta de DockerHub ya tendremos la imagen publicada.
+
+
+### Limpiando el campamento 
+
+Para terminar la practica si queremos borrar todas las imagenes y contenedores en nuestro equipo local usaremos siguiente comandos.
+
+Antes de lanzar estos comandos estar seguros que no teneis otras imagenes o contenedores porque borra todo lo referente a Docker
+
+```
+$ docker kill $(docker ps -q)
+
+$ docker rm $(docker ps -a -q)
+
+$ docker rmi -f $(docker images -q)
+```
+
