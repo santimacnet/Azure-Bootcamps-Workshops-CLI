@@ -10,7 +10,7 @@ Para este tutorial es necesario tener los siguientes requerimientos:
 - Angular CLI: https://cli.angular.io
 - Angular Oficial : https://angular.io
 - Angular Tutorial: https://angular.io/tutorial
-- Docker en equipo local: 
+- Docker en equipo local: https://www.docker.com
 
 ### Configurar version node v13.7
 
@@ -19,7 +19,7 @@ Abrir una shell para instalar version node v13.7
 $ node --version (para comprobar version actual)
 $ nvm install 13.7.0 (ver nvm github para ayuda de cada comando)
 $ nvm use 13.7.0
-$ node --version (para comp13.7.x)
+$ node --version 
 ```
 
 ### Crear Aplicacion Angular HelloWorld
