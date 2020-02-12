@@ -111,11 +111,13 @@ Abrimos en navegador http://localhost:8888 para ver la aplicacion ejecutandose e
 ### Subir imagen a DockerHub Publico
 Si queremos compartir nuestra imagen ya definitiva podemos subirla a DockerHub si disponemos de una cuenta
 ```
-# Accederemos al DockerHub desde nuestro equipo
-$ docker login
-
 # Tageamos la imagen con formato nombre/imagen:version para DockerHub
 $ docker tag angularhello:v1 santimacnet/angularhello:v1
+
+# Accederemos al DockerHub desde nuestro equipo
+$ docker login
+username: nombre
+password: *******
 
 # Publicamos la imagen con Tag en DockerHub
 $ docker push santimacnet/angularhello:v1
@@ -126,13 +128,13 @@ Ref Docker: https://docs.docker.com/engine/reference/commandline/login
 ### Subir imagen a Azure Container Registry (Privado)
 Si queremos compartir nuestra imagen en un repo privado como ACR hay que realizar algunos cambios
 ```
+# Impornate: Tageamos imagen con formato **registryname.azurecr.io/imagen:version** para subirla
+$ docker tag angularhello:v1 registryname.azurecr.io/angularhello:v1
+
 # Accederemos al Docker privado en Azure recomendado usar --password-stdin.
 $ docker login registryname.azurecr.io -u <ServPrincipalID-guid> -p <ServPrincipalPwd-guid> 
 WARNING! Using --password via the CLI is insecure. Use --password-stdin.
 Login Succeeded
-
-# Impornate: Tageamos imagen con formato **registryname.azurecr.io/imagen:version** para subirla
-$ docker tag angularhello:v1 registryname.azurecr.io/angularhello:v1
 
 # Publicamos la imagen con Tag en DockerHub
 $ docker push registryname.azurecr.io/angularhello:v1
