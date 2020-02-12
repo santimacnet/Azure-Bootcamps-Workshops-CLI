@@ -122,6 +122,8 @@ $ docker push santimacnet/angularhello:v2
 ```
 
 Nota: si queremos conectarnos a un repo privado usaremos: docker login registry.privado.com
+Ref Docker: https://docs.docker.com/engine/reference/commandline/login
+Ref Azure : https://docs.microsoft.com/es-es/azure/container-registry/container-registry-get-started-docker-cli
 
 
 ### Limpiando el campamento 
