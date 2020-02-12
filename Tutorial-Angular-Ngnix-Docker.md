@@ -128,7 +128,7 @@ Ref Docker: https://docs.docker.com/engine/reference/commandline/login
 ### Subir imagen a Azure Container Registry (Privado)
 Si queremos compartir nuestra imagen en un repo privado como ACR hay que realizar algunos cambios
 ```
-# Impornate: Tageamos imagen con formato **registryname.azurecr.io/imagen:version** para subirla
+# Importante: Tageamos imagen con formato **registryname.azurecr.io/imagen:version** para subirla
 $ docker tag angularhello:v1 registryname.azurecr.io/angularhello:v1
 
 # Accederemos al Docker privado en Azure recomendado usar --password-stdin.
