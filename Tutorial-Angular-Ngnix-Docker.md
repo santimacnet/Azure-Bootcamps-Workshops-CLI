@@ -115,14 +115,31 @@ Si queremos compartir nuestra imagen ya definitiva podemos subirla a DockerHub s
 $ docker login
 
 # Tageamos la imagen con formato nombre/imagen:version para DockerHub
-$ docker tag angularpoc:v2 santimacnet/angularpoc:v2
+$ docker tag angularhello:v1 santimacnet/angularhello:v1
 
 # Publicamos la imagen con Tag en DockerHub
-$ docker push santimacnet/angularhello:v2
+$ docker push santimacnet/angularhello:v1
 ```
-
-Nota: si queremos conectarnos a un repo privado usaremos: docker login registry.privado.com
+Nota: Necesitaremos hacer login en DockerHub con nuestro usuario/password
 Ref Docker: https://docs.docker.com/engine/reference/commandline/login
+
+### Subir imagen a Azure Container Registry (Privado)
+Si queremos compartir nuestra imagen en un repo privado como ACR hay que realizar algunos cambios
+```
+# Accederemos al Docker privado en Azure recomendado usar --password-stdin.
+$ docker login registryname.azurecr.io -u <ServPrincipalID-guid> -p <ServPrincipalPwd-guid> 
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Login Succeeded
+
+# Impornate: Tageamos imagen con formato **registryname.azurecr.io/imagen:version** para subirla
+$ docker tag angularhello:v1 registryname.azurecr.io/angularhello:v1
+
+# Publicamos la imagen con Tag en DockerHub
+$ docker push registryname.azurecr.io/angularhello:v1
+The push refers to repository [registryname.azurecr.io/angularhello]
+af0b15c8625b: Pushed   
+```
+Nota: Necesitaremos hacer login con un Service Principal en vez de usuario y password
 Ref Azure : https://docs.microsoft.com/es-es/azure/container-registry/container-registry-get-started-docker-cli
 
 
