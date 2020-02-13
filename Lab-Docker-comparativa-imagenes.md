@@ -13,7 +13,7 @@ Para este tutorial es necesario tener los siguientes requerimientos:
 
 Ejecutar los comandos desde consola donde para cada una de las imagenes veremos la info en consola "Using default tag: latest..." y mas logs que no muestro para ahorrar texto.
 
-'''
+```
 $ docker pull alpine
   
 $ docker pull busybox
@@ -31,13 +31,13 @@ $ docker pull nginx
 $ docker pull mysql 
 
 $ docker pull bitnami/minideb:latest
-'''
+```
 
 ### Tamaño de las diferentes imagenes 
 
 Ahora consultaremos el tamaña de las imagenes descargadas, como vemos cada imagen tiene tamaños distintos y dependerán de las capas/contenidos que el autor ha incluido para crear la imagen completa.
 
-'''
+```
 $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 bitnami/minideb     latest              65f1ca5e4251        18 hours ago        53.7MB
@@ -48,7 +48,7 @@ ubuntu              latest              735f80812f90        2 weeks ago         
 nginx               latest              c82521676580        3 weeks ago         109MB
 debian              latest              3bbb526d2608        4 weeks ago         101MB
 alpine              latest              11cd0b38bc3c        5 weeks ago         4.41MB
-'''
+```
 
 ### Consultando contenido de las diferentes imagenes 
 
