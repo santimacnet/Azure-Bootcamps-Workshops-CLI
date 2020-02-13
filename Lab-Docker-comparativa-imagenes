@@ -1,0 +1,49 @@
+**PRACTICA COMPARAR TAMAÑO DIFERENTES IMAGES CON DOCKER**
+------------------------------------------------------------------
+
+Tutorial didáctico para eventos y meetups sobre DOCKER.
+
+Para este tutorial es necesario tener los siguientes requerimientos:
+
+- Cuenta en DockerHub: https://hub.docker.com
+- Docker en equipo local: https://www.docker.com
+- Visual Studio Code, otros editores
+
+### Descargar diferentes imagenes desde linea de comandos
+
+Ejecutar los comandos desde consola donde para cada una de las imagenes veremos la info en consola "Using default tag: latest..." y mas logs que no muestro para ahorrar texto.
+
+```
+$ docker pull alpine
+  
+$ docker pull busybox
+
+$ docker pull debian
+
+$ docker pull centos
+
+$ docker pull ubuntu
+
+$ docker pull oraclelinux
+
+$ docker pull nginx
+
+$ docker pull mysql 
+
+$ docker pull bitnami/minideb:latest
+```
+
+### Tamaño de las diferentes imagenes 
+
+Ahora consultaremos el tamaña de las imagenes descargadas, como vemos cada imagen tiene tamaños distintos y dependerán de las capas/contenidos que el autor ha incluido para crear la imagen completa.
+
+...
+
+### Consultando contenido de las diferentes imagenes 
+
+Para saber que incluye cada imagen utilizaremos los siguientes comandos:
+
+...
+
+
+
