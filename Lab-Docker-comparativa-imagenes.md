@@ -40,21 +40,30 @@ Ahora consultaremos el tamaña de las imagenes descargadas, como vemos cada imag
 ```
 $ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-bitnami/minideb     latest              65f1ca5e4251        18 hours ago        53.7MB
-mysql               latest              29e0ae3b69b9        19 hours ago        484MB
-oraclelinux         latest              5bfa048e0f42        8 days ago          234MB
-centos              latest              5182e96772bf        8 days ago          200MB
-ubuntu              latest              735f80812f90        2 weeks ago         83.5MB
-nginx               latest              c82521676580        3 weeks ago         109MB
-debian              latest              3bbb526d2608        4 weeks ago         101MB
-alpine              latest              11cd0b38bc3c        5 weeks ago         4.41MB
+bitnami/minideb     latest              65f1ca5e4251        1 weeks ago        53.7MB
+mysql               latest              29e0ae3b69b9        1 weeks ago         484MB
+oraclelinux         latest              5bfa048e0f42        1 weeks ago         234MB
+centos              latest              5182e96772bf        1 weeks ago         200MB
+ubuntu              latest              735f80812f90        1 weeks ago        83.5MB
+nginx               latest              c82521676580        1 weeks ago         109MB
+debian              latest              3bbb526d2608        1 weeks ago         101MB
+busybox             latest              af2f74c517aa        1 weeks ago        3.41MB
+alpine              latest              11cd0b38bc3c        1 weeks ago        4.41MB
 ```
 
 ### Consultando contenido de las diferentes imagenes 
 
-Para saber que incluye cada imagen utilizaremos los siguientes comandos:
+Para saber que incluye cada imagen, según la distro utilizada encontraremos diferentes paquetes instalados en cada una de ellas. 
 
-...
+El comando para ver los paquetes instalados depende de cada distro: Centos (yum), Debian (apt) y todos los demas que encontrareis en esta lista: https://es.wikipedia.org/wiki/Categor%C3%ADa:Gestores_de_paquetes_Linux
+
+Para saber la version del Kernel Linux que esta corriendo usaremos algo como en este ejemplo:
+
+```
+# uname -a
+Linux c8620b896e2d 4.9.0-7-amd64 #1 SMP Debian 4.9.110-3+deb9u1 (2018-08-03) x86_64 GNU/Linux
+```
+
 
 
 
