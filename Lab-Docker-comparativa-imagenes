@@ -37,7 +37,18 @@ $ docker pull bitnami/minideb:latest
 
 Ahora consultaremos el tamaña de las imagenes descargadas, como vemos cada imagen tiene tamaños distintos y dependerán de las capas/contenidos que el autor ha incluido para crear la imagen completa.
 
-...
+```
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+bitnami/minideb     latest              65f1ca5e4251        18 hours ago        53.7MB
+mysql               latest              29e0ae3b69b9        19 hours ago        484MB
+oraclelinux         latest              5bfa048e0f42        8 days ago          234MB
+centos              latest              5182e96772bf        8 days ago          200MB
+ubuntu              latest              735f80812f90        2 weeks ago         83.5MB
+nginx               latest              c82521676580        3 weeks ago         109MB
+debian              latest              3bbb526d2608        4 weeks ago         101MB
+alpine              latest              11cd0b38bc3c        5 weeks ago         4.41MB
+```
 
 ### Consultando contenido de las diferentes imagenes 
 
