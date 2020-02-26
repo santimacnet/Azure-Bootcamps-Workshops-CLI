@@ -36,7 +36,6 @@ $ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admi
 $ az aks browse --name <nombre-aks> --resource-group <nombre-rg> 
 ```
 
-
 Si queremos ver y quitar permisos para no acceder al Dashboard
 
 ```
@@ -51,6 +50,31 @@ Abrir otra shell de Azure para ejecutar el resto de comandos con Kubectl
 $ kubectl cluster-info
 $ kubectl get nodes
 ```
+
+Acceso mediante port-forward
+
+Usar esto es realmente útil para la depuración (conectarnos directamente al pod y depurarlo), pero NUNCA usarlo como alternativa y exponer aplicaiones para entornos de producción.
+
+```
+$ kubectl -n kube-system get pods
+-------------------------------------------------------------------------------
+NAME                                    READY   STATUS    RESTARTS   AGE
+coredns-698c77c5d7-j5bbq                1/1     Running   0          22h
+coredns-698c77c5d7-wq6sr                1/1     Running   0          22h
+coredns-autoscaler-79b778686c-xbjbd     1/1     Running   0          22h
+kube-proxy-6pm6r                        1/1     Running   0          22h
+kube-proxy-rh8rr                        1/1     Running   0          22h
+[kubernetes-dashboard-74d8c675bc-qgd7l]   1/1     Running   1          22h
+metrics-server-69df9f75bf-rkpsp         1/1     Running   2          22h
+omsagent-5cjg9                          1/1     Running   0          22h
+omsagent-b977c                          1/1     Running   1          22h
+omsagent-rs-85cd58d7f4-vtcg8            1/1     Running   1          22h
+tunnelfront-f7d9d5fcc-kmxhd             1/1     Running   0          22h
+
+$ kubectl port-forward kubernetes-dashboard-74d8c675bc-qgd7l 9090:9090 -n kube-system
+```
+Abrimos navegador en localhost:9090 y veremos el Dashboard de Kubernetes
+
 
 ### Paso1: Implementando aplicación Bootcamp en AKS
 
