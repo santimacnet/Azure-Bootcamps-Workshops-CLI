@@ -51,9 +51,9 @@ $ kubectl cluster-info
 $ kubectl get nodes
 ```
 
-Acceso mediante port-forward
+### Acceso Dashboard mediante port-forward
 
-Usar esto es realmente útil para la depuración (conectarnos directamente al pod y depurarlo), pero NUNCA usarlo como alternativa y exponer aplicaiones para entornos de producción.
+Usar esto es realmente útil para la depuración (conectarnos directamente al pod y depurarlo), pero NUNCA como alternativa y exponer aplicaciones para entornos de producción.
 
 ```
 $ kubectl -n kube-system get pods
