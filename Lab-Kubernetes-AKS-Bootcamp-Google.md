@@ -25,6 +25,8 @@ $ az account set --subscription ****-****-***-***
 Desde la shell de Azure configurar rol de acceso y conectar con Dashboard Kubernetes.
 
 ```
+$ az aks install-cli (para instalar kubectl si no lo tenemos en local)
+
 $ kubectl config current-context
 
 $ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
@@ -35,9 +37,10 @@ $ az aks browse --name <nombre-aks> --resource-group <nombre-rg>
 ```
 
 
-Si queremos quitar los permisos para no acceder al Dashboard
+Si queremos ver y quitar permisos para no acceder al Dashboard
 
 ```
+$ kubectl get clusterrolebinding 
 $ kubectl delete clusterrolebinding kubernetes-dashboard -n kube-system
 ```
 
