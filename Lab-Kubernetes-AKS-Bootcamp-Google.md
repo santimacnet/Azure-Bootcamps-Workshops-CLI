@@ -53,7 +53,9 @@ $ kubectl get nodes
 
 ### Acceso Dashboard mediante port-forward
 
-Usar esto es realmente útil para la depuración (conectarnos directamente al pod y depurarlo), pero NUNCA como alternativa y exponer aplicaciones para entornos de producción.
+Esta opción reenvía las conexiones de un puerto local a un puerto en un pod. En comparación con kubectl proxy, kubectl port-forward es más genérico, ya que puede reenviar TCP tráfico mientras que kubectl proxy solo puede reenviar tráfico HTTP.
+
+Usar esto es realmente útil para pruebas/depuración (conectarnos directamente al pod y depurarlo), pero NUNCA como alternativa y exponer aplicaciones para entornos de producción.
 
 ```
 $ kubectl -n kube-system get pods
