@@ -14,7 +14,7 @@ Para este tutorial es necesario tener los siguientes requerimientos:
 - Conocimientos Kubectl para trabajar con Kubernetes
 - Suscripcion de Azure con permisos Admin para Azure Active Directory
 
-Recomendado practica Votos: https://docs.microsoft.com/es-es/azure/aks/tutorial-kubernetes-prepare-app
+Todo se realizará desde la Shell de Azure directamente.
 
 
 ### Configurar Suscripcion Azure para Workshop
@@ -63,5 +63,21 @@ $ az aks create --resource-group rg-santi-pruebas-cluster-aks \
 
 ```
 
+### Paso3: Desde la shell de Azure configurar Kubectl y Credenciales acceso AKS
 
-### Paso3: 
+Necesitamos configurar la herramienta de Kubectl para trabajar con AKS
+```
+$ az aks install-cli (para instalar kubectl si no lo tenemos en local)
+
+$ kubectl version
+
+$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks-cluster> --admin
+  Merged "aks-santi-cluster-pruebas-admin" as current context in /home/santimacnet/.kube/config
+
+$ kubectl config current-context (para ver contexto correcto AKS)
+
+$ kubectl cluster-info
+
+$ kubectl get nodes
+```
+
