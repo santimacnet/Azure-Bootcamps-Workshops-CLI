@@ -85,7 +85,7 @@ $ kubectl get nodes
 
 Helm, the package manager for Kubernetes. Como explican en su web oficial https://helm.sh y actualmente se encuentra en la version Helm 3.0: https://helm.sh/blog/helm-3-released
 
-Necesitamos configurar el repositorio de Charts de Helm y asegurarlo que esta actualizado para trabajar desde nuestro entorno: 
+Configuramos repositorio de Charts de Helm y asegurarnos que esta actualizado para trabajar desde nuestro entorno: 
 ```
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com
 "stable" has been added to your repositories
@@ -94,6 +94,7 @@ $ helm repo update
 Update Complete. ⎈ Happy Helming!⎈
 
 $ helm search repo stable
+...listado de charts estables para instalar en Kubernetes
 ```
 
 Mas detalles: https://v3.helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-repository
