@@ -5,7 +5,7 @@ Tutorial para eventos y meetups sobre AKS donde veremos:
 - Paso1: Creando un Service Principal para AKS
 - Paso2: Creando un cluster de AKS
 - Paso3: Configurar Kubectl y Credenciales acceso AKS
-- Como implementar los contenedores desde Docker Hub
+- Paso4: Configurar Helm y repositorio estable Charts 
 - Como configurar el monitoring
 - Como escalar una aplicación en AKS
 
@@ -80,5 +80,21 @@ $ kubectl cluster-info
 $ kubectl get nodes
 ```
 
+### Paso4: Configurar Helm y repositorio estable Charts 
 
+
+Helm, the package manager for Kubernetes. Como explican en su web oficial https://helm.sh y actualmente se encuentra en la version Helm 3.0: https://helm.sh/blog/helm-3-released
+
+Necesitamos configurar el repositorio de Charts de Helm y asegurarlo que esta actualizado para trabajar desde nuestro entorno: 
+```
+$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+"stable" has been added to your repositories
+
+$ helm repo update
+Update Complete. ⎈ Happy Helming!⎈
+
+$ helm search repo stable
+```
+
+Mas detalles: https://v3.helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-repository
 
