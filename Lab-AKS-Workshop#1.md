@@ -1,7 +1,7 @@
 **PRACTICA AKS KUBERNETES PARA TECHDAYS DE MICROSOFT**
 -------------------------------------------------------
 
-Tutorial para formacion eventos y meetups sobre AKS donde veremos:
+Tutorial para eventos y meetups sobre AKS donde veremos:
 - Paso1: Creando un Service Principal para AKS
 - Paso2: Creando un cluster de AKS
 - Paso3: Configurar Kubectl y Credenciales acceso AKS
@@ -9,7 +9,9 @@ Tutorial para formacion eventos y meetups sobre AKS donde veremos:
 - Como configurar el monitoring
 - Como escalar una aplicación en AKS
 
-Para este tutorial es necesario tener los siguientes requerimientos:
+Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
+
+Requerimientos Tutorial:
 - Azure y Kubernetes fundamentos basicos
 - Conocimientos Azure CLI, shell.azure.com y Kubectl
 - Suscripcion de Azure con permisos Admin para Azure Active Directory
