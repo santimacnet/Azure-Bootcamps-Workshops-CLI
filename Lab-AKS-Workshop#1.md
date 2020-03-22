@@ -102,9 +102,9 @@ $ helm search repo stable
 Mas detalles: https://v3.helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-repository
 
 
-### Paso5: Instalar WordPress con MariaDB con Helm
+### Paso5: Instalar WordPress y MariaDB con Helm
 
-Para ver la potencia de Helm, instalaremos con MariaDB desde el repo de azure-marketplace/wordpress con un solo comando:
+Para ver la potencia de Helm, instalaremos WordPress desde el repo de azure-marketplace/wordpress con un solo comando:
 
 ```
 $ helm install aks-blogdemo azure-marketplace/wordpress --set global.imagePullSecrets={emptysecret}
