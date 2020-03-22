@@ -104,7 +104,9 @@ Mas detalles: https://v3.helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-
 
 ### Paso5: Instalar WordPress y MariaDB con Helm
 
-Para ver la potencia de Helm, instalaremos WordPress desde el repo de azure-marketplace/wordpress con un solo comando:
+Para ver la potencia de Helm, instalaremos WordPress desde el repo azure-marketplace/wordpress con un solo comando.
+
+Ejecutamos el comando de instalación que se muestra, donde obtendremos las indicaciones detalladas para acceder a nuestro Wordpress una vez este creado y funcionando en Kubernetes:
 
 ```
 $ helm install aks-blogdemo azure-marketplace/wordpress --set global.imagePullSecrets={emptysecret}
@@ -146,3 +148,40 @@ aks-blogdemo-mariadb-0                    1/1     Running   0          16m
 aks-blogdemo-wordpress-778c69ff58-5gtlk   1/1     Running   1          16m
 otros pods...
 ```
+
+
+Ahora consultamos el estatus del servicio para obtener la IP publica de nuestro WordPress:
+
+```
+# comando para ver todos los services
+$ kubectl get service -w
+
+# comando para solo ver wordpress
+$ kubectl get svc --namespace default -w aks-blogdemo-wordpress'
+
+NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+aks-blogdemo-mariadb     ClusterIP      10.0.69.22     <none>          3306/TCP                     5m
+aks-blogdemo-wordpress   LoadBalancer   10.0.254.234   51.xxx.xx.xxx   80:32487/TCP,443:31012/TCP   5m
+otros services...
+```
+
+Una vez tenemos la EXTERNAL-IP, abrimos un navegador y veremos Wordpress ya funcionando, con el mensaje Welcome to WordPress!!
+
+Consultando y Borrando el campamento.
+
+En este punto podemos consultar el trabajo y eliminar WordPress si es necesario con los comandos siguientes:
+
+```
+# Consultar lista de charts desplegados y versiones
+$ helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+aks-blogdemo    default         1               2020-03-22 21:08:17.752260455 +0000 UTC deployed        wordpress-9.0.3 5.3.2
+
+# Desinstalando Wordpress completamente
+$ helm uninstall aks-blogdemo
+release "aks-blogdemo" uninstalled
+```
+
+
+Happy Lab!!
+
