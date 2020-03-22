@@ -7,6 +7,7 @@ Tutorial para eventos y meetups sobre AKS donde veremos:
 - Paso3: Configurar Kubectl y Credenciales acceso AKS
 - Paso4: Configurar Helm y repositorios de Charts 
 - Paso5: Instalar WordPress con MariaDB con Helm
+- Paso6: Consultando y Borrando WordPress con Helm
 
 Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
 
@@ -167,7 +168,7 @@ otros services...
 
 Una vez tenemos la EXTERNAL-IP, abrimos un navegador y veremos Wordpress ya funcionando, con el mensaje Welcome to WordPress!!
 
-Consultando y Borrando el campamento.
+### Paso6: Consultando y Borrando WordPress con Helm
 
 En este punto podemos consultar el trabajo y eliminar WordPress si es necesario con los comandos siguientes:
 
@@ -182,6 +183,8 @@ $ helm uninstall aks-blogdemo
 release "aks-blogdemo" uninstalled
 ```
 
+Por último, tambien podemos eliminar AKS para no incurrir en gastos innecesarios una vez finalizado el laboratorio.
+...
 
 Happy Lab!!
 
