@@ -43,6 +43,9 @@ $ kubectl get pods --namespace env-dev
 
 # describir pods desplegados
 $ kubectl describe pod nginx --namespace env-dev
+
+# conectando al pod mediante port-forwarding (navegar en localhost:9090)
+$ kubectl port-forward nginx-7bb7cd8db5-jk7cd 9090:80 --namespace env-dev
 ```
 
 ### Practicando METRICAS SIMPLES
