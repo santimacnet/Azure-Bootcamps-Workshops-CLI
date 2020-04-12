@@ -1,4 +1,4 @@
-**PRACTICA AKS KUBERNETES BASADO EN BOOTCAMP GOOGLE**
+**PRACTICA COMANDOS BASICOS DE KUBERNETES EN AKS**
 ------------------------------------------------------------------
 
 Tutorial didáctico con fines de demostración y formacion para eventos y meetups sobre AKS y los comandos basicos de Kubectl.
@@ -7,6 +7,7 @@ Para este tutorial es necesario tener los siguientes requerimientos:
 - AKS creado en Azure con permisos administrador
 - saber utilizar shell.azure.com y Azure CLI
 - saber utilizar Kubectl para trabajar con Kubernetes
+- BASADO EN TUTORIALES Y BOOTCAMP GOOGLE
 
 ### Configurar Suscripcion Azure y acceso kubectl para Kubernetes
 
