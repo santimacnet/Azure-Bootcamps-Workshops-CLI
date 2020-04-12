@@ -1,39 +1,43 @@
 **PRACTICA AKS KUBERNETES BASADO EN BOOTCAMP GOOGLE**
 ------------------------------------------------------------------
 
-Tutorial didáctico con fines de demostración y formacion para eventos y meetups sobre AKS y los comandos basicos de Kubectl.
+Tutorial para eventos, meetups y formación sobre AKS donde veremos:
 
-Para este tutorial es necesario tener los siguientes requerimientos:
-- AKS creado en Azure con permisos administrador
-- saber utilizar shell.azure.com y Azure CLI
-- saber utilizar Kubectl para trabajar con Kubernetes
-- saber utilizar Dashboard de Kubernetes para consultar Wordloads
+    - Previo: Configurar acceso Dashboard AKS-Kubernetes
+    - Previo: Acceso Dashboard mediante port-forward
+    - Paso1: Implementando aplicación Bootcamp en AKS
+    - Paso2: Explorando aplicación para Troubleshooting y Debugging 
+    - Paso3: Exponer Services para acceder aplicación creada
+    - Paso4: Escalar aplicación creada desde 1-pod hasta 5-pods
+    - Paso5: Rolling updates pasar de aplicacion-v1 a aplicacion-v2
 
-Otra practica Votos: https://docs.microsoft.com/es-es/azure/aks/tutorial-kubernetes-prepare-app
+Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
+
+Requerimientos Tutorial:
+
+    - Azure y Kubernetes fundamentos basicos
+    - Conocimientos Azure CLI, shell.azure.com y Kubectl
+    - Suscripcion de Azure con permisos Admin para Azure Active Directory
+    - AKS ya creado en Azure con permisos administrador
+
+Todo se realizará directamente desde la Shell de Azure mediante comandos Azure CLI.
 
 
-### Configurar acceso con Suscripcion Azure para abrir Dashboard Kubernetes
+### Configurar acceso con Suscripcion Azure y configurar acceso Dashboard AKS
 
-Abrir una shell de Azure para consultar suscripcion correcta
+Abrir una shell de Azure para consultar suscripcion correcta y configurar rol de acceso para conectar con Dashboard.
 ```
 $ az account list
 $ az account set --subscription ****-****-***-***
-```
 
-### Configurar acceso Dashboard AKS-Kubernetes
+$ az aks install-cli (para instalar kubectl si no lo tenemos en la shell)
 
-Desde la shell de Azure configurar rol de acceso y conectar con Dashboard Kubernetes.
-
-```
-$ az aks install-cli (para instalar kubectl si no lo tenemos en local)
-
+$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admin
 $ kubectl config current-context
 
 $ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 
-$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admin
-
-$ az aks browse --name <nombre-aks> --resource-group <nombre-rg> 
+$ az aks browse --resource-group <nombre-rg> --name <nombre-aks>
 ```
 
 Si queremos ver y quitar permisos para no acceder al Dashboard
@@ -90,7 +94,7 @@ $ kubectl get services     // no lo vemos porque no ha sido creado
 $ kubectl get all          // ver todo los objetos con un solo comando
 ```
 
-### Paso2:  Explorando aplicación para Troubleshooting y Debugging 
+### Paso2: Explorando aplicación para Troubleshooting y Debugging 
 
 ```
 $ kubectl logs <nombre-pod>            // ver logs del pod-contenedor
