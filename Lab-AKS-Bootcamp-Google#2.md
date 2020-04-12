@@ -38,5 +38,21 @@ $ kubectl run nginx --image=nginx --namespace env-prod
 
 # saber donde estan desplegados los pods 
 $ kubectl get pods --all-namespaces
+$ kubectl get pods --namespace env-dev
+
+# describir pods desplegados
+$ kubectl describe pod nginx --namespace env-dev
 ```
 
+### Practicando METRICAS SIMPLES
+
+Desde la shell de Azure lanzamos los siguientes comandos.
+
+```
+# metricas de nodos y pods
+$ kubectl top pods nodes
+$ kubectl top pods --all-namespaces
+
+# metricas de un pod y sus containers (indicar namespace)
+$ kubectl top pod POD_NAME --containers 
+```
