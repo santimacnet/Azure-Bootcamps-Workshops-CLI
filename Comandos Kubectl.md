@@ -5,13 +5,14 @@ Abrir una shell en Azure directamente para ejecutar estos comandos, necesitamos 
 
 ### Comandos para Troubleshooting and Debugging
 
-  attach         Attach to a running container
-  describe       Show details of a specific resource or group of resources
-  logs           Print the logs for a container in a pod
-  exec           Execute a command in a container
-  port-forward   Forward one or more local ports to a pod
-  proxy          Run a proxy to the Kubernetes API server
-
+```
+attach         Attach to a running container
+describe       Show details of a specific resource or group of resources
+logs           Print the logs for a container in a pod
+exec           Execute a command in a container
+port-forward   Forward one or more local ports to a pod
+proxy          Run a proxy to the Kubernetes API server
+```
 
 ### Comandos para PODS
 
