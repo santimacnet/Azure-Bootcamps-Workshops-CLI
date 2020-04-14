@@ -32,12 +32,13 @@ Ref: https://kubernetes.io/docs/tasks/access-application-cluster/list-all-runnin
 ### Pruebas de HelloAPP en Kubernetes
 
 ```
-# Crear dos deployment directamente con "run" y nombre del pod "web" y "web2"
-$ kubectl run web --image=gcr.io/google-samples/hello-app:1.0 --port=8080
-$ kubectl run web2 --image=gcr.io/google-samples/hello-app:2.0 --port=8080
+# Crear deployment directamente con "run" y nombre del pod "web" y "web2"
+$ kubectl run web --image=gcr.io/google-samples/hello-app:1.0 --port=8081
+$ kubectl run web2 --image=gcr.io/google-samples/hello-app:2.0 --port=8082
 
 # Crear el service directamente con "expose" de tipo "NodePort"
-$ kubectl expose deployment web --target-port=8080 --type=NodePort
+$ kubectl expose deployment web --target-port=8081 --type=NodePort
+$ kubectl expose deployment web2 --target-port=8082 --type=NodePort
 
 # Validar que el service se ha creado correctamente y ver la IP-Externa del nodo
 $ kubectl get service web
@@ -51,6 +52,10 @@ $ kubectl get nodes -o wide
 # Los PODs son mortales no resucitan, borrar un pod y ver como crea pod nuevo
 $ kubectl delete pod web2-674dd45977-86s8z
 $ kubectl get pods (mirar nuevo nombre y AGE)
+
+# Los PODs podemos ponerlos en cuarentena para evitar perderlos y debugearlos cambiando su label
+$ kubectl label pod web2-674dd45977-86s8z role=cuarentena --override
+$ kubectl get pods (mirar nuevo nombre y AGE - al cambiar etiqueta el pod queda aislado y K8screará uno nuevo)
 
 # Los NODOS son mortales no resucitan, borrar todos los nodos de VMSS y ver que pasa
 $ kubectl get nodes
