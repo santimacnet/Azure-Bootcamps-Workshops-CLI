@@ -2,6 +2,7 @@
 -------------------------------------------------------
 
 Tutorial para eventos y meetups sobre AKS donde veremos:
+
 - Paso1: Creando un Service Principal para AKS
 - Paso2: Creando un cluster de AKS
 - Paso3: Configurar Kubectl y Credenciales acceso AKS
@@ -12,12 +13,12 @@ Tutorial para eventos y meetups sobre AKS donde veremos:
 Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
 
 Requerimientos Tutorial:
+
 - Azure y Kubernetes fundamentos basicos
 - Conocimientos Azure CLI, shell.azure.com, Kubectl y Helm
 - Suscripcion de Azure con permisos Admin para Azure Active Directory
 
 Todo se realizará directamente desde la Shell de Azure mediante comandos Azure CLI.
-
 
 ### Configurar Suscripcion Azure para Workshop
 
