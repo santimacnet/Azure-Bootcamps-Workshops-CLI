@@ -1,7 +1,17 @@
 **PRACTICA COMANDOS KUBECTL GENERALES **
 -------------------------------------------------------
 
-Abrir una shell en Azure directamente para ejecutar estos comandos, necesitamos un AKS funcionando.
+Abrir una shell en Azure para ejecutar estos comandos, necesitamos un AKS funcionando.
+
+### Tipos de Networking en Kubernetes
+
+Todos estos desafíos de redes deben abordarse al implementar un clúster de Kubernetes.
+
+- Container-to-container communication inside Pods
+- Pod-to-Pod communication on the same node and across cluster nodes sin (NAT)
+- Pod-to-Service communication within the same namespace and across cluster namespaces
+- External-to-Service communication for clients to access applications in a cluster
+
 
 ### Comandos para Troubleshooting and Debugging
 
