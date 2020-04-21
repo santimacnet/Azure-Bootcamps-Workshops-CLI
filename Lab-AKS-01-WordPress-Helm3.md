@@ -6,7 +6,7 @@ Tutorial para eventos y meetups sobre AKS donde veremos:
 - Paso1: Creando un Service Principal para AKS
 - Paso2: Creando un cluster de AKS
 - Paso3: Configurar Kubectl y Credenciales acceso AKS
-- Paso4: Configurar Helm y repositorios de Charts 
+- Paso4: Configurar Helm3 y repositorios de Charts 
 - Paso5: Instalar WordPress con MariaDB con Helm
 - Paso6: Consultando y Borrando WordPress con Helm
 
@@ -81,7 +81,7 @@ $ kubectl cluster-info
 $ kubectl get nodes
 ```
 
-### Paso4: Configurar Helm y repositorios de Charts 
+### Paso4: Configurar Helm3 y repositorios de Charts 
 
 Helm, es "The package manager for Kubernetes", como explican en su web oficial https://helm.sh y actualmente se encuentra en la version Helm 3.0: https://helm.sh/blog/helm-3-released
 
