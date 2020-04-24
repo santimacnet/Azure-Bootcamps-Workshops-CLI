@@ -24,6 +24,8 @@ port-forward   Forward one or more local ports to a pod
 proxy          Run a proxy to the Kubernetes API server
 ```
 
+Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+
 ### Comandos get para DEPLOYMENTS, SERVICES, PODS, NAMESPACES, ETC
 
 ```
@@ -34,10 +36,10 @@ $ kubectl get pods --all-namespaces
 $ kubectl get pods --all-namespaces -o wide
 $ kubectl get pods --show-labels
 $ kubectl get pods --watch
+$ kubectl get pods -l app=nginx
 ```
 
-Ref: https://kubernetes.io/docs/tasks/access-application-cluster/list-all-running-container-images
-
+Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#viewing-finding-resources
 
 ### Pruebas de HelloAPP en Kubernetes
 
