@@ -15,10 +15,10 @@ Abrir una shell de Azure para consultar suscripcion correcta
 $ az account list
 $ az account set --subscription ****-****-***-***
 
-$ az group create --name rg-aks-workshop-lab --location westeurope
+$ az group create --name rg-workshop-aks-lab --location westeurope
 $ az ad sp create-for-rbac --skip-assignment --name AKSClusterWorkshopLabServicePrincipal
-$ az aks create --resource-group rg-aks-workshop-lab \
-    --name aks-santi-cluster-pruebas \
+$ az aks create --resource-group rg-workshop-aks-lab \
+    --name aks-workshop-lab \
     --location westeurope \
     --enable-addons monitoring \
     --generate-ssh-keys \
@@ -29,7 +29,8 @@ $ az aks create --resource-group rg-aks-workshop-lab \
     --service-principal <appId> \
     --client-secret <password>
 
-$ az aks get-credentials --resource-group rg-aks-workshop-lab --name <nombre-aks> --admin
+$ az aks get-credentials --resource-group rg-workshop-aks-lab --name aks-workshop-lab --admin
+$ kubectl get nodes -o wide
 ```
 
 ### Practicando NAMESPACES
