@@ -1,22 +1,35 @@
-**PRACTICA COMANDOS BASICOS DE KUBERNETES EN AKS**
+**PRACTICA COMANDOS BASICOS KUBECTL y CREACION AKS**
 ------------------------------------------------------------------
 
-Tutorial didáctico con fines de demostración y formacion para eventos y meetups sobre AKS y los comandos basicos de Kubectl.
+Tutorial didáctico con fines de demostración y formacion.
 
 Para este tutorial es necesario tener los siguientes requerimientos:
-- AKS creado en Azure con permisos administrador
 - saber utilizar shell.azure.com y Azure CLI
 - saber utilizar Kubectl para trabajar con Kubernetes
 - BASADO EN TUTORIALES Y BOOTCAMP GOOGLE
 
-### Configurar Suscripcion Azure y acceso kubectl para Kubernetes
+### Configurar AKS y acceso para kubectl 
 
 Abrir una shell de Azure para consultar suscripcion correcta
 ```
 $ az account list
 $ az account set --subscription ****-****-***-***
 
-$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admin
+$ az group create --name rg-aks-workshop-lab --location westeurope
+$ az ad sp create-for-rbac --skip-assignment --name AKSClusterWorkshopLabServicePrincipal
+$ az aks create --resource-group rg-aks-workshop-lab \
+    --name aks-santi-cluster-pruebas \
+    --location westeurope \
+    --enable-addons monitoring \
+    --generate-ssh-keys \
+    --vm-set-type VirtualMachineScaleSets \
+    --enable-cluster-autoscaler \
+    --min-count 1 \
+    --max-count 3 \
+    --service-principal <appId> \
+    --client-secret <password>
+
+$ az aks get-credentials --resource-group rg-aks-workshop-lab --name <nombre-aks> --admin
 ```
 
 ### Practicando NAMESPACES
