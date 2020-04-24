@@ -81,3 +81,16 @@ $ kubectl get nodes
 
 # Preguntar al grupo que esta ocurriendo y explicar el comportamiento de Kubernetes
 ```
+
+### Practicando METRICAS SIMPLES
+
+Desde la shell de Azure lanzamos los siguientes comandos.
+
+```
+# metricas de nodos y pods
+$ kubectl top pods nodes
+$ kubectl top pods --all-namespaces
+
+# metricas de un pod y sus containers (indicar namespace)
+$ kubectl top pod POD_NAME --containers 
+```
