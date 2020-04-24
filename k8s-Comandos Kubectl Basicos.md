@@ -35,7 +35,10 @@ $ kubectl get nodes -o wide
 
 ### Practicando NAMESPACES
 
-Desde la shell de Azure creamos los siguientes namespaces.
+Desde la shell de Azure creamos los siguientes namespaces para varios nginx separados
+Por defecto si no funciona --image=nginx usar estos otros en el nombre de la imagen
+- docker.io/library/nginx:alpine 
+- k8s.gcr.io/nginx:alpine 
 
 ```
 # creamos los namespaces para la practica
