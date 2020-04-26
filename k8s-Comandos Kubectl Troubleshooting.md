@@ -24,7 +24,18 @@ port-forward   Forward one or more local ports to a pod
 proxy          Run a proxy to the Kubernetes API server
 ```
 
-Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+Ref.1: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+Ref.2: https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/index.md
+
+### Comandos para Kube-advisor
+Esta utilidad muestra recomendaciones para mejor rendimiento y resistencia para las aplicaciones de k8s
+
+```
+$ kubectl run --rm -i -t kube-advisor --image=mcr.microsoft.com/aks/kubeadvisor --restart=Never
+
+```
+
+Ref:https://github.com/azure/kube-advisor
 
 ### Comandos get para DEPLOYMENTS, SERVICES, PODS, NAMESPACES, ETC
 
