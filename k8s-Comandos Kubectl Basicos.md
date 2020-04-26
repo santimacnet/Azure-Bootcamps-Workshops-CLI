@@ -1,12 +1,9 @@
 **PRACTICA COMANDOS BASICOS KUBECTL y CREACION AKS**
 ------------------------------------------------------------------
 
-Tutorial didáctico con fines de demostración y formacion.
+Tutorial didáctico con fines de demostración, formacion y meetups
 
-Para este tutorial es necesario tener los siguientes requerimientos:
-- saber utilizar shell.azure.com y Azure CLI
-- saber utilizar Kubectl para trabajar con Kubernetes
-- BASADO EN TUTORIALES Y BOOTCAMP GOOGLE
+- BASADO EN TUTORIALES DE AKS Y BOOTCAMP GOOGLE
 
 ### Configurar AKS y acceso para kubectl 
 
@@ -29,8 +26,15 @@ $ az aks create --resource-group rg-workshop-aks-lab \
     --service-principal <appId> \
     --client-secret <password>
 
+# Configurar acceso Kubectl
 $ az aks get-credentials --resource-group rg-workshop-aks-lab --name aks-workshop-lab --admin
+$ kubectl get componentstatus
 $ kubectl get nodes -o wide
+
+# Configurar Dashboard
+$ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+
+$ az aks browse --resource-group rg-workshop-aks-lab --name aks-workshop-lab 
 ```
 
 ### Practicando NAMESPACES
