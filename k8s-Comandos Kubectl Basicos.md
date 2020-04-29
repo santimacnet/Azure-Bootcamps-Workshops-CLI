@@ -37,23 +37,31 @@ $ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --cluste
 $ az aks browse --resource-group rg-workshop-aks-lab --name aks-workshop-lab 
 ```
 
-### Practicando NAMESPACES
+### Practicando DEPLOYMENTS Y NAMESPACES
 
 Desde la shell de Azure creamos los siguientes namespaces para varios nginx separados
 Por defecto si no funciona --image=nginx usar estos otros en el nombre de la imagen
 - docker.io/library/nginx:alpine 
 - k8s.gcr.io/nginx:alpine 
 
+Hay 3 formas de crear deployments:
+- Using Generators (Run, Expose)
+- Using Imperative way (Create)
+- Using Declarative way (Apply)
+Ref: https://stackoverflow.com/questions/48015637/kubernetes-kubectl-run-vs-create-and-apply
+
 ```
 # creamos los namespaces para la practica
 $ kubectl create namespace env-dev
 $ kubectl create namespace env-qa
 $ kubectl create namespace env-prod
-
 $ kubectl get namespaces
 
-# creamos los pods para la practica (si no indicamos nada namespace=default)
-$ kubectl run nginx --image=nginx  
+# creamos deployment directo, si no indicamos nada namespace=default
+$ kubectl create deployment hello-nginx --image=nginx:alpine
+$ kubectl scale deployment hello-nginx --replicas=3
+
+# creamos deployment con run para la practica en namespace dev,qa,prod
 $ kubectl run nginx --image=nginx --namespace env-dev
 $ kubectl run nginx --image=nginx --namespace env-qa
 $ kubectl run nginx --image=nginx --namespace env-prod
