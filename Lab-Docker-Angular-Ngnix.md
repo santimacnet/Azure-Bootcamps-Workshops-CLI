@@ -124,6 +124,10 @@ $ cd usr/share/nginx/html
 $ ls index.html
 $ cat index.html
 
+# Configuracion de nginx 
+$ cd etc/nginx
+$ cat nginx.conf
+
 # Prueba de aplicacion Angular con CURL
 $ apk add curl
 $ curl localhost
