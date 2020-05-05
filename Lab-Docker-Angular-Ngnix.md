@@ -85,6 +85,8 @@ http {
   }
 }
 ```
+Ref1: https://angular.io/guide/deployment
+Ref2: https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#front-controller-pattern-web-apps
 
 ### Construir la imagen definida en Dockerfile y veremos los Steps definidos
 ```
