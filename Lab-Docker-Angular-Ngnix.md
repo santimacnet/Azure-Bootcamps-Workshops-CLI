@@ -108,6 +108,29 @@ Abrimos en navegador http://localhost:8888 para ver la aplicacion ejecutandose e
 !!GENIAL!! Ya tenemos nuestra aplicacion Angular funcionando en Docker y accediendo meditante NGINX
 
 
+
+### Entrar al contenedor para ver NGINX y aplicacion Angular
+```
+# Desde windows command line
+c:\> docker exec -it <id-container> /bin/sh
+c:\> docker exec -it <id-container> //bin//sh
+
+# Desde Visual Studio Code git/bash
+$ winpty docker exec -it <id-container> /bin/sh
+$ winpty docker exec -it <id-container> //bin//sh
+
+# Carpeta de nginx con aplicacion angular index.html
+$ cd usr/share/nginx/html
+$ ls index.html
+$ cat index.html
+
+# Prueba de aplicacion Angular con CURL
+$ apk add curl
+$ curl localhost
+```
+
+NOTA: Podemos usar /bin/bash o /bin/sh dependiendo de la shell de nuestro contenedor.
+
 ### Subir imagen a DockerHub Publico
 Si queremos compartir nuestra imagen ya definitiva podemos subirla a DockerHub si disponemos de una cuenta
 ```
