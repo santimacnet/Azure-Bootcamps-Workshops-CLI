@@ -85,8 +85,9 @@ http {
   }
 }
 ```
-Ref1: https://angular.io/guide/deployment
-Ref2: https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#front-controller-pattern-web-apps
+- Ref1: https://angular.io/guide/deployment
+- Ref2: https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#front-controller-pattern-web-apps
+- Ref3: https://www.serverlab.ca/tutorials/linux/web-servers-linux/how-to-configure-nginx-for-angular-and-reactjs
 
 ### Construir la imagen definida en Dockerfile y veremos los Steps definidos
 ```
