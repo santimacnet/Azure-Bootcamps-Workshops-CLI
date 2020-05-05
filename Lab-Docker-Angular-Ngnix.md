@@ -41,7 +41,7 @@ Abrimos en navegador http://localhost:4200 para ver la aplicacion en el browser.
 
 ### Crear Dockerfile para generar imagen Docker
 
-Crear archivo Dockerfile con un editor/IDE en el mismo directorio que aplicacion Angular
+Crear archivo Dockerfile en el mismo directorio que aplicacion Angular
 ```
 # STAGE-1: Construccion de Angular App
 FROM node:13.7-alpine AS build
@@ -58,7 +58,32 @@ FROM nginx:1.17.8-alpine
 COPY --from=build /app/dist/ /usr/share/nginx/html
 
 # Mejorar configuracion de NGINX copiado archivo nginx.conf
-# COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
+```
+
+### Crear configuracion NGINX para copiar en imagen Docker
+
+Crear archivo nginx.conf en el mismo directorio que aplicacion Angular y Dockerfile
+```
+http {
+  server {
+    listen 80;
+    server_name  localhost;
+ 
+    root   /usr/share/nginx/html;
+    include /etc/nginx/mime.types;
+    index  index.html;
+
+    ## Logging Settings
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    ## Location
+    location / {
+      try_files $uri $uri/ /index.html;
+    }
+  }
+}
 ```
 
 ### Construir la imagen definida en Dockerfile y veremos los Steps definidos
@@ -106,7 +131,6 @@ docker run --rm -d -p 8888:80 angularhello:v1
 Abrimos en navegador http://localhost:8888 para ver la aplicacion ejecutandose en el browser a traves de NGINX.
 
 !!GENIAL!! Ya tenemos nuestra aplicacion Angular funcionando en Docker y accediendo meditante NGINX
-
 
 
 ### Entrar al contenedor para ver NGINX y aplicacion Angular
