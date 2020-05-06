@@ -64,6 +64,7 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 ### Crear configuracion NGINX para copiar en imagen Docker
 
 Crear archivo nginx.conf en el mismo directorio que aplicacion Angular y Dockerfile
+Necesitamos NGINX para redirigir todas las rutas a index.html y comprimir la salida de nuestro servidor entre otras cosas
 ```
 http {
   server {
