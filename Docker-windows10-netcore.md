@@ -1,18 +1,18 @@
-PRACTICA DE CONTENEDORES WINDOWS FUNCIONANDO EN WINDOWS SERVER 2019
------------------------------------------------------------------------------
+PRACTICA DE CONTENEDORES FUNCIONANDO EN WINDOWS SERVER 2019
+------------------------------------------------------------
 
 Windows Server 2019 soporta 2 variantes de containers:
 
-###Windows container
+### Windows container
 The Windows container is the traditional container model. It’s fast, lightweight, and easy to use. The downside is that it shares the kernel with the host operating system (OS).
     
-###Hyper-V container: 
+### Hyper-V container: 
 If you have a workload that requires different versions of the kernel, or highly secure workloads that can’t share a kernel, the Hyper-V container is the better choice. The Hyper-V container has a higher performance hit on the host server, but because it runs each virtual machine (VM) in its own container, you can have containers that have different versions of the kernel, and you have true isolation because the container is not sharing the kernel of the host OS with the host and other containers.
 
 - Ref: https://www.dummies.com/computers/operating-systems/microsoft-windows/how-to-install-containers-on-windows-server-2019
 
 
-### Descargar la imagen HelloWorld para ver que funciona
+### Descargar imagen HelloWorld 
 ```
 C:\Users\santi>docker run hello-world
 ...
@@ -20,21 +20,19 @@ Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ```
 
-### Descargar la imagen de Microsoft de ejemplos netcore
+### Descargar imagen de Microsoft de ejemplos netcore
 ```
 C:\Users\santi>docker pull microsoft/dotnet-samples:dotnetapp
 dotnetapp: Pulling from microsoft/dotnet-samples
 ....
-```
+....
 
-### Ver imagenes descargadas de Microsoft 
-```
+
 C:\Users\santi>docker images
 REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
 hello-world                nanoserver          c7f4e41fba3a        3 weeks ago         251MB
 microsoft/dotnet-samples   dotnetapp           d14c2b1ef740        14 months ago       417MB
 ```
-
 
 ### Ejecutar contenedor y ver el resultado 
 ```
