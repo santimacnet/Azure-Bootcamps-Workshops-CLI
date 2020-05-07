@@ -9,7 +9,8 @@ The Windows container is the traditional container model. It’s fast, lightweig
 ### Hyper-V container: 
 If you have a workload that requires different versions of the kernel, or highly secure workloads that can’t share a kernel, the Hyper-V container is the better choice. The Hyper-V container has a higher performance hit on the host server, but because it runs each virtual machine (VM) in its own container, you can have containers that have different versions of the kernel, and you have true isolation because the container is not sharing the kernel of the host OS with the host and other containers.
 
-- Ref: https://www.dummies.com/computers/operating-systems/microsoft-windows/how-to-install-containers-on-windows-server-2019
+- Instalacion: https://blog.sixeyed.com/getting-started-with-docker-on-windows-server-2019/
+- Informacion: https://www.dummies.com/computers/operating-systems/microsoft-windows/how-to-install-containers-on-windows-server-2019
 
 
 ### Descargar imagen HelloWorld 
