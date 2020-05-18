@@ -1,0 +1,16 @@
+###### AZ CLI - COMANDOS BASICOS PARA WORKSHOPS
+Abrir una shell de Azure para ejecutar los comandos
+
+### Configurar entorno Azure
+```
+$ az configure 
+$ az configure --defaults location=westeurope
+$ az configure --defaults group=rg-default-recursos
+```
+
+### Configurar suscripcion correcta
+```
+$ az account list
+$ az account set --subscription ****-****-***-***
+```
+
