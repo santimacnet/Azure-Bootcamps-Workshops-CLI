@@ -28,8 +28,16 @@ $ az aks create --resource-group rg-workshop-aks-lab \
 
 # Configurar acceso Kubectl
 $ az aks get-credentials --resource-group rg-workshop-aks-lab --name aks-workshop-lab --admin
-$ kubectl get componentstatus
+$ kubectl config current-context
 $ kubectl get nodes -o wide
+
+# ver AKS correcto y actualizado a version definida
+$ kubectl cluster-info
+$ kubectl get componentstatus
+$ az aks list -o table
+
+# Ver servicios de CLUSTER-IP funcionando
+$ kubectl get services -o wide --all-namespaces
 
 # Configurar Dashboard
 $ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
