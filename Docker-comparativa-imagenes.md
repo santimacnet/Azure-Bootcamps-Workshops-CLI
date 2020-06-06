@@ -54,7 +54,7 @@ alpine              latest              11cd0b38bc3c        1 weeks ago        4
 
 ### Descargar y ejecutar aplicaciones docker para ejemplos
 
-Ejemplo para comparar imagenes NGINX y aplicaciones grandes para despues deploy en AKS.
+Ejemplo para comparar imagenes NGINX y aplicaciones grandes en nuestro equipo local y despues en AKS.
 ```
 # varias imagenes de nginx
 $ docker run –p 8080:80 –d nginx
@@ -67,6 +67,50 @@ $ docker run -p 8088:80  neilpeterson/aks-helloworld:v1
 # consultar tamaños de las imagenes descargadas
 $ docker images
 ```
+
+### Deployment aplicaciones docker en AKS desce Dashboard o Kubectl
+
+Ejemplo para deployment en AKS y saber los recursos cpu/ram de cada pod en AKS
+
+Cree un archivo *demo-akshello* y cópielo en el ejemplo siguiente de YAML:
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aks-helloworld-one
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aks-helloworld-one
+  template:
+    metadata:
+      labels:
+        app: aks-helloworld-one
+    spec:
+      containers:
+      - name: aks-helloworld-one
+        image: neilpeterson/aks-helloworld:v1
+        ports:
+        - containerPort: 80
+        env:
+        - name: TITLE
+          value: "Welcome to Azure Kubernetes Service (AKS)"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aks-helloworld-one
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: aks-helloworld-one
+```
+
+
 
 ### Consultando contenido de las diferentes imagenes 
 
