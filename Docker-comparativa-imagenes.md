@@ -135,5 +135,23 @@ Linux c8620b896e2d 4.9.0-7-amd64 #1 SMP Debian 4.9.110-3+deb9u1 (2018-08-03) x86
 ```
 
 
+### Limpiando el campamento Docker de imagenes y contenedores 
 
+Ver documentacion completa: https://docs.docker.com/config/pruning
 
+```
+# Show docker disk usage
+$ docker system df	
+
+# Get real time events from the server
+$ docker system events	
+
+# Display system-wide information
+$ docker system info	
+
+# Remove unused data
+$ docker system prune
+$ docker system prune -a --volumes
+```
+
+Happy Docking!!
