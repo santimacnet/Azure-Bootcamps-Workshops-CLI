@@ -3,22 +3,19 @@
 
 Tutorial para eventos y meetups sobre AKS donde veremos:
 
-- Paso1: Creando un Service Principal para AKS
-- Paso2: Creando un cluster de AKS
-- Paso3: Configurar Kubectl y Credenciales acceso AKS
-- Paso4: Configurar Helm3 y repositorios de Charts 
-- Paso5: Instalar WordPress con MariaDB con Helm
-- Paso6: Consultando y Borrando WordPress con Helm
-
-Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
+- Prev: Configurar Suscripcion Azure para Workshop
+- Paso1: Configurar Helm3 y repositorios de Charts 
+- Paso2: Instalar WordPress con MariaDB con Helm
+- Paso3: Consultando y Borrando WordPress con Helm
 
 Requerimientos Tutorial:
 
 - Azure y Kubernetes fundamentos basicos
-- Conocimientos Azure CLI, shell.azure.com, Kubectl y Helm
+- Azure CLI, shell.azure.com, Kubectl y Helm3
+- AKS ya creado en Azure con permisos administrador
 - Suscripcion de Azure con permisos Admin para Azure Active Directory
+- Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
 
-Todo se realizará directamente desde la Shell de Azure mediante comandos Azure CLI.
 
 ### Configurar Suscripcion Azure para Workshop
 
@@ -28,60 +25,7 @@ $ az account list
 $ az account set --subscription ****-****-***-***
 ```
 
-### Paso1: Creando un Service Principal para AKS
-
-Contexto: Cuando creamos un AKS, Azure automaticamente genera un Service Principal de AAD, pero esto no siempre ocurre (arrggg!!) y entonces tenemos que generarlo nosotros previamente para indicarlo en el comando: az aks create... 
-
-El Service Principal es necesario para interactuar con otros recursos de Azure, como un Load Balancer, registry ACR, Virtual Networks,etc y si AKS no dispone de uno en el momento de la creación fallará y nos dara un error: "AADSTS700016: Application with identifier xxxxx-xxxxx-xxxxx-xxxxxx was not found in the directory xxxxx-xxxxx-xxxxx-xxxxxx.
-
-Explicacion en Microsoft Docs y Proyecto GitHub Service principals for AKSm que podemos consultar en este enlace: 
-https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal
-
-Creamos el Service Principal y guardamos en notepad la respuesta JSON con AppID y Password, este SP se guarda en Azure Active Directory en la opcion de Aplicaciones Registradas:
-
-```
-$ az ad sp create-for-rbac --skip-assignment --name AKSClusterSantiPruebasServicePrincipal
-...respuesta json...
-```
-
-### Paso2: Creando un cluster de AKS
-
-Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
-```
-$ az group create --name rg-santi-pruebas-cluster-aks --location westeurope
-
-$ az aks create --resource-group rg-santi-pruebas-cluster-aks \
-    --name aks-santi-cluster-pruebas \
-    --location westeurope \
-    --enable-addons monitoring \
-    --generate-ssh-keys \
-    --vm-set-type VirtualMachineScaleSets \
-    --enable-cluster-autoscaler \
-    --min-count 1 \
-    --max-count 3 \
-    --service-principal <appId> \
-    --client-secret <password>
-```
-
-### Paso3: Configurar Kubectl y Credenciales acceso AKS
-
-Necesitamos configurar la herramienta de Kubectl para trabajar con AKS
-```
-$ az aks install-cli (para instalar kubectl si no lo tenemos en local)
-
-$ kubectl version
-
-$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks-cluster> --admin
-  Merged "aks-santi-cluster-pruebas-admin" as current context in /home/santimacnet/.kube/config
-
-$ kubectl config current-context (para ver contexto correcto AKS)
-
-$ kubectl cluster-info
-
-$ kubectl get nodes
-```
-
-### Paso4: Configurar Helm3 y repositorios de Charts 
+### Paso1: Configurar Helm3 y repositorios de Charts 
 
 Helm, es "The package manager for Kubernetes", como explican en su web oficial https://helm.sh y actualmente se encuentra en la version Helm 3.0: https://helm.sh/blog/helm-3-released
 
@@ -104,7 +48,7 @@ $ helm search repo stable
 Mas detalles: https://v3.helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-repository
 
 
-### Paso5: Instalar WordPress y MariaDB con Helm
+### Paso2: Instalar WordPress y MariaDB con Helm
 
 Para ver la potencia de Helm, instalaremos WordPress desde el repo azure-marketplace/wordpress con un solo comando.
 
@@ -169,7 +113,7 @@ otros services...
 
 Una vez tenemos la EXTERNAL-IP, abrimos un navegador y veremos Wordpress ya funcionando, con el mensaje Welcome to WordPress!!
 
-### Paso6: Consultando y Borrando WordPress con Helm
+### Paso3: Consultando y Borrando WordPress con Helm
 
 En este punto podemos consultar el trabajo y eliminar WordPress si es necesario con los comandos siguientes:
 
