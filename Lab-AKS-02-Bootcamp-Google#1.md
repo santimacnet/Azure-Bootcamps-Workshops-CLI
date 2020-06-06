@@ -3,8 +3,6 @@
 
 Tutorial para eventos, meetups y formación sobre AKS donde veremos:
 
-    - Previo: Configurar acceso Dashboard AKS-Kubernetes
-    - Previo: Acceso Dashboard mediante port-forward
     - Paso1: Implementando aplicación Bootcamp en AKS
     - Paso2: Explorando aplicación para Troubleshooting y Debugging 
     - Paso3: Exponer Services para acceder aplicación creada
@@ -13,77 +11,14 @@ Tutorial para eventos, meetups y formación sobre AKS donde veremos:
 
 Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
 
-Requerimientos Tutorial:
+Requerimientos:
 
     - Azure y Kubernetes fundamentos basicos
-    - Conocimientos Azure CLI, shell.azure.com y Kubectl
-    - Suscripcion de Azure con permisos Admin para Azure Active Directory
+    - Azure CLI, Kubectl y shell.azure.com
     - AKS ya creado en Azure con permisos administrador
-
-Todo se realizará directamente desde la Shell de Azure mediante comandos Azure CLI.
-
-
-### Configurar acceso con Suscripcion Azure y configurar acceso Dashboard AKS
-
-Abrir una shell de Azure para consultar suscripcion correcta y configurar rol de acceso para conectar con Dashboard.
-```
-$ az account list
-$ az account set --subscription ****-****-***-***
-
-$ az aks install-cli (para instalar kubectl si no lo tenemos en la shell)
-
-$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admin
-$ kubectl config current-context
-
-$ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
-
-$ az aks browse --resource-group <nombre-rg> --name <nombre-aks>
-```
-
-Si queremos ver y quitar permisos para no acceder al Dashboard
-
-```
-$ kubectl get clusterrolebinding 
-$ kubectl delete clusterrolebinding kubernetes-dashboard -n kube-system
-```
-
-Doc oficial:https://docs.microsoft.com/es-es/azure/aks/kubernetes-dashboard
-
-Abrir otra shell de Azure para ejecutar el resto de comandos con Kubectl
-```
-$ kubectl cluster-info
-$ kubectl get nodes
-```
-
-### Acceso Dashboard mediante port-forward
-
-Esta opción reenvía las conexiones de un puerto local a un puerto en un pod. En comparación con kubectl proxy, kubectl port-forward es más genérico, ya que puede reenviar TCP tráfico mientras que kubectl proxy solo puede reenviar tráfico HTTP.
-
-Usar esto es realmente útil para pruebas/depuración (conectarnos directamente al pod y depurarlo), pero NUNCA como alternativa y exponer aplicaciones para entornos de producción.
-
-```
-$ kubectl -n kube-system get pods
--------------------------------------------------------------------------------
-NAME                                    READY   STATUS    RESTARTS   AGE
-coredns-698c77c5d7-j5bbq                1/1     Running   0          22h
-coredns-698c77c5d7-wq6sr                1/1     Running   0          22h
-coredns-autoscaler-79b778686c-xbjbd     1/1     Running   0          22h
-kube-proxy-6pm6r                        1/1     Running   0          22h
-kube-proxy-rh8rr                        1/1     Running   0          22h
-[kubernetes-dashboard-74d8c675bc-qgd7l]   1/1     Running   1          22h
-metrics-server-69df9f75bf-rkpsp         1/1     Running   2          22h
-omsagent-5cjg9                          1/1     Running   0          22h
-omsagent-b977c                          1/1     Running   1          22h
-omsagent-rs-85cd58d7f4-vtcg8            1/1     Running   1          22h
-tunnelfront-f7d9d5fcc-kmxhd             1/1     Running   0          22h
-
-$ kubectl port-forward kubernetes-dashboard-74d8c675bc-qgd7l 9090:9090 -n kube-system
-```
-Abrimos navegador en localhost:9090 y veremos el Dashboard de Kubernetes
-
+    - Suscripcion de Azure con permisos Admin para Azure Active Directory
 
 ### Paso1: Implementando aplicación Bootcamp en AKS
-
 ```
 $ kubectl create deployment k8-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1
 
