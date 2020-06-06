@@ -8,6 +8,7 @@ Para este tutorial es necesario tener los siguientes requerimientos:
 - Cuenta en DockerHub: https://hub.docker.com
 - Docker en equipo local: https://www.docker.com
 - Visual Studio Code, otros editores
+- Docker Tutorial: https://www.tutorialspoint.com/docker/index.htm
 
 ### Descargar diferentes imagenes desde linea de comandos
 
@@ -49,6 +50,22 @@ nginx               latest              c82521676580        1 weeks ago         
 debian              latest              3bbb526d2608        1 weeks ago         101MB
 busybox             latest              af2f74c517aa        1 weeks ago        3.41MB
 alpine              latest              11cd0b38bc3c        1 weeks ago        4.41MB
+```
+
+### Descargar y ejecutar aplicaciones docker para ejemplos
+
+Ejemplo para comparar imagenes NGINX y aplicaciones grandes para despues deploy en AKS.
+```
+# varias imagenes de nginx
+$ docker run –p 8080:80 –d nginx
+$ docker run -p 8081:80 -d kitematic/hello-world-nginx
+$ docker run -p 8082:80 -d dockerbogo/docker-nginx-hello-world
+
+# imagen grande Welcome to Azure Container Service (AKS) - 900MB
+$ docker run -p 8088:80  neilpeterson/aks-helloworld:v1
+
+# consultar tamaños de las imagenes descargadas
+$ docker images
 ```
 
 ### Consultando contenido de las diferentes imagenes 
