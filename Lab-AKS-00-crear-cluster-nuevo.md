@@ -3,6 +3,10 @@
 
 Tutorial para charlas, eventos, meetups y formación sobre AKS donde veremos:
 
+   - Paso1: Creando un Service Principal para AKS
+   - Paso2: Creando un cluster de AKS
+   - Paso3: Configurar Kubectl y Credenciales acceso AKS
+
 
     - Paso1: Configurar acceso Dashboard AKS-Kubernetes
     - Paso2: Acceso Dashboard mediante port-forward
@@ -16,31 +20,70 @@ Requerimientos Tutorial:
     - Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
 
 
-### Configurar suscripcion y kubectl en equipo local
+### Paso1: Creando un Service Principal para AKS
+
+Contexto: Cuando creamos un AKS, Azure automaticamente genera un Service Principal de AAD, pero esto no siempre ocurre (arrggg!!) y entonces tenemos que generarlo nosotros previamente para indicarlo en el comando: az aks create... 
+
+El Service Principal es necesario para interactuar con otros recursos de Azure, como un Load Balancer, registry ACR, Virtual Networks,etc y si AKS no dispone de uno en el momento de la creación fallará y nos dara un error: "AADSTS700016: Application with identifier xxxxx-xxxxx-xxxxx-xxxxxx was not found in the directory xxxxx-xxxxx-xxxxx-xxxxxx.
+
+Explicacion en Microsoft Docs y Proyecto GitHub Service principals for AKS que podemos consultar en este enlace: 
+https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal
+
+Creamos el Service Principal y guardamos en notepad la respuesta JSON con AppID y Password, este SP se guarda en Azure Active Directory en la opcion de Aplicaciones Registradas:
+
+```
+$ az ad sp create-for-rbac --skip-assignment --name AKSClusterSantiPruebasServicePrincipal
+...respuesta json...
+```
+
+### Paso2: Creando un cluster de AKS
+
+Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
+```
+$ az group create --name rg-santi-pruebas-cluster-aks --location westeurope
+
+$ az aks create --resource-group rg-santi-pruebas-cluster-aks \
+    --name aks-santi-cluster-pruebas \
+    --location westeurope \
+    --enable-addons monitoring \
+    --generate-ssh-keys \
+    --vm-set-type VirtualMachineScaleSets \
+    --enable-cluster-autoscaler \
+    --min-count 1 \
+    --max-count 3 \
+    --service-principal <appId> \
+    --client-secret <password>
+    
+# ver aks esta actualizado y version definida
+$ az aks list -o table
+
+$ az aks show --resource-group rg-santi-pruebas-cluster-aks --name aks-santi-cluster-pruebas -o table    
+```
+
+### Paso3: Configurar Kubectl y Credenciales acceso AKS
 
 Abrir una shell de Azure para consultar suscripcion correcta
 ```
 $ az account list
 $ az account set --subscription ****-****-***-***
-
-$ az aks install-cli (para instalar kubectl si no lo tenemos en la shell)
 ```
 
-### Configurar acceso Kubectl
-
+Configurar la herramienta de Kubectl para trabajar con AKS
 ```
-$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks> --admin
-$ kubectl config current-context
+$ az aks install-cli (para instalar kubectl si no lo tenemos en local)
 
+$ kubectl version
 
-#  ejecutar comandos con Kubectl para verificar aks funcionando
+$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks-cluster> --admin
+  Merged "aks-santi-cluster-pruebas-admin" as current context in /home/santimacnet/.kube/config
+
+#  ejecutar comandos Kubectl para verificar aks funcionando
+$ kubectl config current-context (para ver contexto correcto AKS)
+
 $ kubectl cluster-info
+
 $ kubectl get nodes
 ```
-
-
-
-
 
 ### Configurar acceso Dashboard AKS
 
