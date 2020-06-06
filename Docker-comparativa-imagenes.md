@@ -54,23 +54,32 @@ alpine              latest              11cd0b38bc3c        1 weeks ago        4
 
 ### Descargar y ejecutar aplicaciones docker para ejemplos
 
-Ejemplo para comparar imagenes NGINX y aplicaciones grandes en nuestro equipo local y despues en AKS.
+Ejemplo para comparar imagenes NGINX y aplicaciones web/api en nuestro equipo local y despues en AKS.
+Descargamos y ejecutamos las imagenes directamente con docker run...
 ```
 # varias imagenes de nginx
 $ docker run –p 8080:80 –d nginx
 $ docker run -p 8081:80 -d kitematic/hello-world-nginx
 $ docker run -p 8082:80 -d dockerbogo/docker-nginx-hello-world
 
+# imagenes santi de ANGULAR, ASP.NET Core MVC y WEBAPI - 230MB
+$ docker run -d -p 8083:80 santimacnet/angularhello:v2
+$ docker run -d -p 8084:80 santimacnet/meetupweb
+$ docker run -d -p 8085:80 santimacnet/aspnetcoremvc-hello
+$ docker run -d -p 8086:80 santimacnet/aspnetcorewebapi-hello
+
 # imagen grande Welcome to Azure Container Service (AKS) - 900MB
-$ docker run -p 8088:80  neilpeterson/aks-helloworld:v1
+$ docker run -d -p 8088:80  neilpeterson/aks-helloworld:v1
 
 # consultar tamaños de las imagenes descargadas
 $ docker images
 ```
 
-### Deployment aplicaciones docker en AKS desce Dashboard o Kubectl
+### Deployment aplicaciones docker en AKS desce Dashboard
 
 Ejemplo para deployment en AKS y saber los recursos cpu/ram de cada pod en AKS
+
+Ver repo con más ejemplos: https://hub.docker.com/search?q=santimacnet&type=image
 
 Cree un archivo *demo-akshello* y cópielo en el ejemplo siguiente de YAML:
 
@@ -78,19 +87,19 @@ Cree un archivo *demo-akshello* y cópielo en el ejemplo siguiente de YAML:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aks-helloworld-one
+  name: aks-helloworld2020
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: aks-helloworld-one
+      app: aks-helloworld2020
   template:
     metadata:
       labels:
-        app: aks-helloworld-one
+        app: aks-helloworld2020
     spec:
       containers:
-      - name: aks-helloworld-one
+      - name: aks-helloworld2020
         image: neilpeterson/aks-helloworld:v1
         ports:
         - containerPort: 80
@@ -101,13 +110,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: aks-helloworld-one
+  name: aks-helloworld2020
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - port: 80
   selector:
-    app: aks-helloworld-one
+    app: aks-helloworld2020
 ```
 
 
