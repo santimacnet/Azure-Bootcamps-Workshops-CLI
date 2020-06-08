@@ -77,12 +77,43 @@ $ docker images
 
 ### Ejecutar aplicaciones en Kubernetes para ver sus metricas
 
-Descargamos y ejecutamos las imagenes directamente con Kubernetes con su nombre, imagen puerto y una política de reinicio podemos hacer esto:
+Descargamos y ejecutamos las imagenes directamente con Kubernetes con varios ejemplos:
+
 ```
+# Start a nginx pod.
+$ kubectl run demo-nginx --image=nginx
+  
+# Start a nginx pod with port and restart policy  
 $ kubectl run demo-nginx --image=nginx --port=80 --restart=Always
+
+# Start a busybox pod and keep it in the foreground, don't restart it if it exits.
+$ kubectl run -i -t busybox --image=busybox --restart=Never
+  
+# Start a hazelcast pod and set environment variables in the container
+$ kubectl run demo-nginx --image=nginx --env="DNS_DOMAIN=cluster" --env="POD_NAMESPACE=default"
+  
+# Start a hazelcast pod and set labels in the container.
+$ kubectl run demo-nginx --image=nginx --labels="app=hazelcast,env=prod"
+  
+# Dry run. Print the corresponding API objects without creating them.
+$ kubectl run demo-nginx --image=nginx:1.14.2 --port=80 --restart=Always -o yaml --dry-run
+  
+# Start a nginx pod, but overload the spec with a partial set of values parsed from JSON.
+$ kubectl run nginx --image=nginx --overrides='{ "apiVersion": "v1", "spec": { ... } }'
+  
+# Start the nginx pod using a different command and custom arguments.
+$ kubectl run nginx --image=nginx --command -- <cmd> <arg1> ... <argN>
+
+# Create service type LoadBalancer
+kubectl expose deployment demo-nginx --port=80 --type=LoadBalancer
 ```
 
+Ref: https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl
+Ref: https://kubernetes.io/docs/tasks/run-application/
+
 Nota: estos ejemplos solo estan pensados para escenarios de demostracion, no para producción. 
+Nota: kubectl run --generator=deployment/apps.v1 is DEPRECATED and will be removed in a future version.
+
 
 ### Deployment aplicaciones docker en AKS desce Dashboard
 
