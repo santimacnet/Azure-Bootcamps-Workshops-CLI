@@ -24,15 +24,36 @@ port-forward   Forward one or more local ports to a pod
 proxy          Run a proxy to the Kubernetes API server
 ```
 
-Ref.1: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
-Ref.2: https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/index.md
+Referencias:
+
+
+- Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+- Ref: https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/index.md
+
+### Comandos kubectl for Docker Users
+
+You can use the Kubernetes command line tool kubectl to interact with the API Server. Using kubectl is straightforward if you are familiar with the Docker command line tool. However, there are a few differences between the docker commands and the kubectl commands. The following sections show a docker sub-command and describe the equivalent kubectl command.
+
+```
+    docker run
+    docker ps
+    docker attach
+    docker exec
+    docker logs
+    docker stop and docker rm
+    docker login
+    docker version
+    docker info
+```    
+
+Ref: https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl
+
 
 ### Comandos para Kube-advisor
 Esta utilidad muestra recomendaciones para mejor rendimiento y resistencia para las aplicaciones de k8s
 
 ```
 $ kubectl run --rm -i -t kube-advisor --image=mcr.microsoft.com/aks/kubeadvisor --restart=Never
-
 ```
 
 Ref:https://github.com/azure/kube-advisor
