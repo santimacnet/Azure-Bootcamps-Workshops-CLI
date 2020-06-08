@@ -1,14 +1,14 @@
-**PRACTICA COMPARAR TAMAÑO DIFERENTES IMAGES CON DOCKER**
+**PRACTICA DOCKER COMPARATIVA DIFERENTES IMAGES**
 ------------------------------------------------------------------
 
-Tutorial didáctico para eventos y meetups sobre DOCKER.
+Tutorial didáctico para eventos, meetups y formacion sobre DOCKER.
 
 Para este tutorial es necesario tener los siguientes requerimientos:
 
 - Cuenta en DockerHub: https://hub.docker.com
 - Docker en equipo local: https://www.docker.com
-- Visual Studio Code, otros editores
 - Docker Tutorial: https://www.tutorialspoint.com/docker/index.htm
+- Visual Studio Code, complementos Docker y Kubernetes
 
 ### Descargar diferentes imagenes desde linea de comandos
 
@@ -52,9 +52,9 @@ busybox             latest              af2f74c517aa        1 weeks ago        3
 alpine              latest              11cd0b38bc3c        1 weeks ago        4.41MB
 ```
 
-### Descargar y ejecutar aplicaciones docker para ejemplos
+### Ejecutar aplicaciones en docker para ver sus metricas
 
-Ejemplo para comparar imagenes NGINX y aplicaciones web/api en nuestro equipo local y despues en AKS.
+Comparar diferentes imagenes de aplicaciones angular, web/api, nginix en nuestro equipo local y despues en AKS.
 Descargamos y ejecutamos las imagenes directamente con docker run...
 ```
 # varias imagenes de nginx
@@ -75,13 +75,48 @@ $ docker run -d -p 8088:80  neilpeterson/aks-helloworld:v1
 $ docker images
 ```
 
+### Ejecutar aplicaciones en Kubernetes para ver sus metricas
+
+Descargamos y ejecutamos las imagenes directamente con Kubernetes con su nombre, imagen puerto y una política de reinicio podemos hacer esto:
+```
+$ kubectl run demo-nginx --image=nginx --port=80 --restart=Always
+```
+
+Nota: estos ejemplos solo estan pensados para escenarios de demostracion, no para producción. 
+
 ### Deployment aplicaciones docker en AKS desce Dashboard
 
 Ejemplo para deployment en AKS y saber los recursos cpu/ram de cada pod en AKS
 
 Ver repo con más ejemplos: https://hub.docker.com/search?q=santimacnet&type=image
 
-Cree un archivo *demo-akshello* y cópielo en el ejemplo siguiente de YAML:
+Crear un archivo *demo-ngnix.yml* extraido de la doc de K8s y copiar el texto siguiente:
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-1
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+
+Crear un archivo *demo-akshello.yml* y copiar el texto siguiente:
 
 ```yml
 apiVersion: apps/v1
@@ -118,8 +153,6 @@ spec:
   selector:
     app: aks-helloworld2020
 ```
-
-
 
 ### Consultando contenido de las diferentes imagenes 
 
