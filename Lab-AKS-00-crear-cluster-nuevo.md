@@ -10,14 +10,12 @@ Tutorial para charlas, eventos, meetups y formación sobre AKS donde veremos:
    - Paso5: Configurar acceso Dashboard AKS
    - Paso6: Acceso Dashboard mediante port-forward
 
-
 Requerimientos Tutorial:
 
     - Azure y Kubernetes fundamentos basicos
     - Azure CLI, Kubectl y shell.azure.com
     - Suscripcion de Azure con permisos Admin para Azure Active Directory
     - Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
-
 
 ### Paso1: Creando un Service Principal para AKS
 
@@ -28,11 +26,14 @@ El Service Principal es necesario para interactuar con otros recursos de Azure, 
 Explicacion en Microsoft Docs y Proyecto GitHub Service principals for AKS que podemos consultar en este enlace: 
 https://docs.microsoft.com/en-us/azure/aks/kubernetes-service-principal
 
-Creamos el Service Principal y guardamos en notepad la respuesta JSON con AppID y Password, este SP se guarda en Azure Active Directory en la opcion de Aplicaciones Registradas:
-
+Creamos Service Principal y anotamos JSON con AppID y Password, este SP se guarda en Azure AD Aplicaciones Registradas:
 ```
-$ az ad sp create-for-rbac --skip-assignment --name AKSClusterSantiPruebasServicePrincipal
-...respuesta json...
+# configurar suscripcion correcta si fuera necesario
+$ az account list
+$ az account set --subscription ****-****-***-***
+
+$ az ad sp create-for-rbac --skip-assignment --name AKSClusterPruebasServicePrincipal
+...guardar datos respuesta json...
 ```
 
 ### Paso2: Creando cluster de AKS
@@ -42,7 +43,7 @@ Definims variables entorno para los recursos
 RG_NAME=rg-aks-cluster-demo
 RG_LOCATION=westeurope
 ACR_NAME=acrhubdemo
-AKS_NAME-demonew
+AKS_NAME-aks-cluter-pruebas
 
 ```
 
@@ -50,12 +51,13 @@ Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion de
 ```
 $ az group create --name $RG_NAME --location $RG_LOCATION
 
-$ az aks create --resource-group $RG_NAME \
-    --name aks-cluster-pruebas \
-    --location westeurope \
+$ az aks create --name $AKS_NAME \
+    --resource-group $RG_NAME \
+    --location $RG_LOCATION \
     --enable-addons monitoring \
     --generate-ssh-keys \
     --vm-set-type VirtualMachineScaleSets \
+    --node-vm-size Standard_b2ms \
     --enable-cluster-autoscaler \
     --min-count 1 \
     --max-count 3 \
@@ -64,7 +66,7 @@ $ az aks create --resource-group $RG_NAME \
     
 # verificamos AKS actualizado y version definida
 $ az aks list -o table
-$ az aks show --resource-group $RG_NAME --name aks-cluster-pruebas -o table    
+$ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
 ```
 
 ### Paso3: Creando registry de imagenes ACR
@@ -75,7 +77,8 @@ Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion de
 $ az acr create --name $ACR_NAME --resource-group $RG_NAME --location $RG_LOCATION --sku Basic
 
 # atachamos AKS para deployar imagenes
-$ az aks update --name aks-cluster-pruebas --resource-group $RG_NAME --attach-acr $ACR_NAME
+$ ACR_ID=$(az acr show --name $ACR_NAME --resource-group $RG_NAME --query id -o tsv)
+$ az aks update --name --name $AKS_NAME --resource-group $RG_NAME --attach-acr $ACR_ID
   - AAD role propagation - Running.... (tarda unos minutos)
   
 # importamos imagen NGNIX para pruebas AKS
@@ -86,12 +89,6 @@ $ az acr repository list --name $ACR_NAME --output table
 Nota: tambien podemos crear primero ACR y usar el parametro --attach-acr en la creacion de AKS
 
 ### Paso4: Configurar Kubectl y Credenciales acceso AKS
-
-Abrir una shell de Azure para consultar suscripcion correcta
-```
-$ az account list
-$ az account set --subscription ****-****-***-***
-```
 
 Configurar la herramienta de Kubectl para trabajar con AKS
 ```
