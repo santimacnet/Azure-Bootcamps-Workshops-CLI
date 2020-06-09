@@ -56,10 +56,13 @@ $ az aks create --resource-group rg-aks-cluster-demo \
 $ az aks list -o table
 $ az aks show --resource-group rg-aks-cluster-demo --name aks-cluster-pruebas -o table    
 
-# creamos el ACR para imagenes
-$ az acr create --resource-group rg-aks-cluster-demo --name acrhubdemo --sku Basic
+# creamos el ACR para publicar imagenes
+$ az acr create --name acrhubdemo --resource-group rg-aks-cluster-demo --sku Basic
 $ az acr repository list --name acrhubdemo --output table
 
+# atachamos AKS para deployar imagenes
+$ az aks update --name aks-cluster-pruebas --resource-group rg-aks-cluster-demo --attach-acr acrhubdemo
+  - AAD role propagation - Running.... (tarda unos minutos)
 ```
 
 ### Paso3: Configurar Kubectl y Credenciales acceso AKS
