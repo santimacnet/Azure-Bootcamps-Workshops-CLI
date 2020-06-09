@@ -37,11 +37,20 @@ $ az ad sp create-for-rbac --skip-assignment --name AKSClusterSantiPruebasServic
 
 ### Paso2: Creando cluster de AKS
 
+Definims variables entorno para los recursos
+```
+RG_NAME=rg-aks-cluster-demo
+RG_LOCATION=westeurope
+ACR_NAME=acrhubdemo
+AKS_NAME-demonew
+
+```
+
 Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
 ```
-$ az group create --name rg-aks-cluster-demo --location westeurope
+$ az group create --name $RG_NAME --location $RG_LOCATION
 
-$ az aks create --resource-group rg-aks-cluster-demo \
+$ az aks create --resource-group $RG_NAME \
     --name aks-cluster-pruebas \
     --location westeurope \
     --enable-addons monitoring \
@@ -55,7 +64,7 @@ $ az aks create --resource-group rg-aks-cluster-demo \
     
 # verificamos AKS actualizado y version definida
 $ az aks list -o table
-$ az aks show --resource-group rg-aks-cluster-demo --name aks-cluster-pruebas -o table    
+$ az aks show --resource-group $RG_NAME --name aks-cluster-pruebas -o table    
 ```
 
 ### Paso3: Creando registry de imagenes ACR
@@ -63,15 +72,15 @@ $ az aks show --resource-group rg-aks-cluster-demo --name aks-cluster-pruebas -o
 Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
 ```
 # creamos el ACR para publicar imagenes
-$ az acr create --name acrhubdemo --resource-group rg-aks-cluster-demo --sku Basic
+$ az acr create --name $ACR_NAME --resource-group $RG_NAME --location $RG_LOCATION --sku Basic
 
 # atachamos AKS para deployar imagenes
-$ az aks update --name aks-cluster-pruebas --resource-group rg-aks-cluster-demo --attach-acr acrhubdemo
+$ az aks update --name aks-cluster-pruebas --resource-group $RG_NAME --attach-acr $ACR_NAME
   - AAD role propagation - Running.... (tarda unos minutos)
   
 # importamos imagen NGNIX para pruebas AKS
-$ az acr import  -n acrhubdemo -g rg-aks-cluster-demo --source docker.io/library/nginx:latest --image nginx:v1
-$ az acr repository list --name acrhubdemo --output table
+$ az acr import  -n $ACR_NAME -g $RG_NAME --source docker.io/library/nginx:latest --image nginx:v1
+$ az acr repository list --name $ACR_NAME --output table
 ```
 
 Nota: tambien podemos crear primero ACR y usar el parametro --attach-acr en la creacion de AKS
@@ -111,7 +120,7 @@ $ kubectl get all (ver IP publica para nginx)
 $ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 
 # abrir dashboard como proxy
-$ az aks browse --resource-group <nombre-rg> --name <nombre-aks>
+$ az aks browse --resource-group $RG_NAME --name <nombre-aks>
 
 # ver lista de roles definidos
 $ kubectl get clusterrolebinding 
