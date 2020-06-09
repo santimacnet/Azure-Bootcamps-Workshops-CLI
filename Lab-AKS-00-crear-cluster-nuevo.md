@@ -1,13 +1,14 @@
-**PRACTICA AKS KUBERNETES CREAR CLUSTER NUEVO **
+**PRACTICA AKS KUBERNETES CREAR CLUSTER NUEVO**
 ------------------------------------------------------------------
 
 Tutorial para charlas, eventos, meetups y formación sobre AKS donde veremos:
 
    - Paso1: Creando un Service Principal para AKS
-   - Paso2: Creando cluster de AKS y registry ACR
-   - Paso3: Configurar Kubectl y Credenciales acceso AKS
-   - Paso4: Configurar acceso Dashboard AKS
-   - Paso5: Acceso Dashboard mediante port-forward
+   - Paso2: Creando cluster de AKS 
+   - Paso3: Creando registry de imagenes ACR
+   - Paso4: Configurar Kubectl y Credenciales acceso AKS
+   - Paso5: Configurar acceso Dashboard AKS
+   - Paso6: Acceso Dashboard mediante port-forward
 
 
 Requerimientos Tutorial:
@@ -34,7 +35,7 @@ $ az ad sp create-for-rbac --skip-assignment --name AKSClusterSantiPruebasServic
 ...respuesta json...
 ```
 
-### Paso2: Creando cluster de AKS y registry ACR
+### Paso2: Creando cluster de AKS
 
 Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
 ```
@@ -55,17 +56,27 @@ $ az aks create --resource-group rg-aks-cluster-demo \
 # verificamos AKS actualizado y version definida
 $ az aks list -o table
 $ az aks show --resource-group rg-aks-cluster-demo --name aks-cluster-pruebas -o table    
+```
 
+### Paso3: Creando registry de imagenes ACR
+
+Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
+```
 # creamos el ACR para publicar imagenes
 $ az acr create --name acrhubdemo --resource-group rg-aks-cluster-demo --sku Basic
-$ az acr repository list --name acrhubdemo --output table
 
 # atachamos AKS para deployar imagenes
 $ az aks update --name aks-cluster-pruebas --resource-group rg-aks-cluster-demo --attach-acr acrhubdemo
   - AAD role propagation - Running.... (tarda unos minutos)
+  
+# importamos imagen NGNIX para pruebas AKS
+$ az acr import  -n acrhubdemo -g rg-aks-cluster-demo --source docker.io/library/nginx:latest --image nginx:v1
+$ az acr repository list --name acrhubdemo --output table
 ```
 
-### Paso3: Configurar Kubectl y Credenciales acceso AKS
+Nota: tambien podemos crear primero ACR y usar el parametro --attach-acr en la creacion de AKS
+
+### Paso4: Configurar Kubectl y Credenciales acceso AKS
 
 Abrir una shell de Azure para consultar suscripcion correcta
 ```
@@ -87,7 +98,7 @@ $ kubectl cluster-info
 $ kubectl get nodes
 ```
 
-### Paso4: Configurar acceso Dashboard AKS
+### Paso5: Configurar acceso Dashboard AKS
 
 ```
 # crear role para permisos con rbac
@@ -104,7 +115,7 @@ $ kubectl delete clusterrolebinding kubernetes-dashboard -n kube-system
 ```
 
 
-### Paso5: Acceso Dashboard mediante port-forward
+### Paso6: Acceso Dashboard mediante port-forward
 
 Esta opción reenvía las conexiones de un puerto local a un puerto en un pod. En comparación con kubectl proxy, kubectl port-forward es más genérico, ya que puede reenviar TCP tráfico mientras que kubectl proxy solo puede reenviar tráfico HTTP.
 
