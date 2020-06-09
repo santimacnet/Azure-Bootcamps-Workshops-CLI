@@ -40,11 +40,10 @@ $ az ad sp create-for-rbac --skip-assignment --name AKSClusterPruebasServicePrin
 
 Definims variables entorno para los recursos
 ```
-RG_NAME=rg-aks-cluster-demo
+RG_NAME=AKS-demolab-recursos
 RG_LOCATION=westeurope
-ACR_NAME=acrhubdemo
-AKS_NAME-aks-cluter-pruebas
-
+ACR_NAME=acrhubdemolab
+AKS_NAME=aks-cluster-demolab
 ```
 
 Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
@@ -60,12 +59,11 @@ $ az aks create --name $AKS_NAME \
     --node-vm-size Standard_b2ms \
     --enable-cluster-autoscaler \
     --min-count 1 \
-    --max-count 3 \
+    --max-count 2 \
     --service-principal <appId> \
     --client-secret <password>
     
 # verificamos AKS actualizado y version definida
-$ az aks list -o table
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
 ```
 
@@ -78,7 +76,7 @@ $ az acr create --name $ACR_NAME --resource-group $RG_NAME --location $RG_LOCATI
 
 # atachamos AKS para deployar imagenes
 $ ACR_ID=$(az acr show --name $ACR_NAME --resource-group $RG_NAME --query id -o tsv)
-$ az aks update --name --name $AKS_NAME --resource-group $RG_NAME --attach-acr $ACR_ID
+$ az aks update --name $AKS_NAME --resource-group $RG_NAME --attach-acr $ACR_ID
   - AAD role propagation - Running.... (tarda unos minutos)
   
 # importamos imagen NGNIX para pruebas AKS
@@ -94,7 +92,7 @@ Configurar la herramienta de Kubectl para trabajar con AKS
 ```
 $ az aks install-cli (para instalar kubectl si no lo tenemos en local)
 
-$ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks-cluster> --admin
+$ az aks get-credentials --name $AKS_NAME --resource-group $RG_NAME --admin
   Merged ........ as current context in /home/santimacnet/.kube/config
 
 #  ejecutar comandos Kubectl para verificar aks funcionando
@@ -104,7 +102,7 @@ $ kubectl cluster-info
 $ kubectl get nodes
 
 # realizar deploy nginx para pruebas desde ACR
-$ kubectl run demo-nginx --image=acrhubdemo.azurecr.io/nginx:v1 --port=80
+$ kubectl run demo-nginx --image=acrhubdemolab.azurecr.io/nginx:v1 --port=80
 $ kubectl expose deployment demo-nginx --port=80 --type=LoadBalancer
 
 $ kubectl get all (ver IP publica para nginx)
@@ -117,7 +115,7 @@ $ kubectl get all (ver IP publica para nginx)
 $ kubectl create clusterrolebinding kubernetes-dashboard -n kube-system --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 
 # abrir dashboard como proxy
-$ az aks browse --resource-group $RG_NAME --name <nombre-aks>
+$ az aks browse --name $AKS_NAME --resource-group $RG_NAME
 
 # ver lista de roles definidos
 $ kubectl get clusterrolebinding 
