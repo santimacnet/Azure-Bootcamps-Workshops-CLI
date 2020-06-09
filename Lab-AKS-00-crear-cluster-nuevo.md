@@ -96,6 +96,12 @@ $ kubectl version
 $ kubectl config current-context (para ver contexto correcto AKS)
 $ kubectl cluster-info
 $ kubectl get nodes
+
+# realizar deploy nginx para pruebas desde ACR
+$ kubectl run demo-nginx --image=acrhubdemo.azurecr.io/nginx:v1 --port=80
+$ kubectl expose deployment demo-nginx --port=80 --type=LoadBalancer
+
+$ kubectl get all (ver IP publica para nginx)
 ```
 
 ### Paso5: Configurar acceso Dashboard AKS
@@ -113,7 +119,6 @@ $ kubectl get clusterrolebinding
 # quitar permisos para no acceder al Dashboard
 $ kubectl delete clusterrolebinding kubernetes-dashboard -n kube-system
 ```
-
 
 ### Paso6: Acceso Dashboard mediante port-forward
 
