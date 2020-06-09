@@ -4,13 +4,11 @@
 Tutorial para charlas, eventos, meetups y formación sobre AKS donde veremos:
 
    - Paso1: Creando un Service Principal para AKS
-   - Paso2: Creando un cluster de AKS
+   - Paso2: Creando cluster de AKS y registry ACR
    - Paso3: Configurar Kubectl y Credenciales acceso AKS
+   - Paso4: Configurar acceso Dashboard AKS
+   - Paso5: Acceso Dashboard mediante port-forward
 
-
-    - Paso1: Configurar acceso Dashboard AKS-Kubernetes
-    - Paso2: Acceso Dashboard mediante port-forward
-    - Paso3: 
 
 Requerimientos Tutorial:
 
@@ -36,14 +34,14 @@ $ az ad sp create-for-rbac --skip-assignment --name AKSClusterSantiPruebasServic
 ...respuesta json...
 ```
 
-### Paso2: Creando un cluster de AKS
+### Paso2: Creando cluster de AKS y registry ACR
 
 Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
 ```
-$ az group create --name rg-santi-pruebas-cluster-aks --location westeurope
+$ az group create --name rg-aks-cluster-demo --location westeurope
 
-$ az aks create --resource-group rg-santi-pruebas-cluster-aks \
-    --name aks-santi-cluster-pruebas \
+$ az aks create --resource-group rg-aks-cluster-demo \
+    --name aks-cluster-pruebas \
     --location westeurope \
     --enable-addons monitoring \
     --generate-ssh-keys \
@@ -54,10 +52,14 @@ $ az aks create --resource-group rg-santi-pruebas-cluster-aks \
     --service-principal <appId> \
     --client-secret <password>
     
-# ver aks esta actualizado y version definida
+# verificamos AKS actualizado y version definida
 $ az aks list -o table
+$ az aks show --resource-group rg-aks-cluster-demo --name aks-cluster-pruebas -o table    
 
-$ az aks show --resource-group rg-santi-pruebas-cluster-aks --name aks-santi-cluster-pruebas -o table    
+# creamos el ACR para imagenes
+$ az acr create --resource-group rg-aks-cluster-demo --name acrhubdemo --sku Basic
+$ az acr repository list --name acrhubdemo --output table
+
 ```
 
 ### Paso3: Configurar Kubectl y Credenciales acceso AKS
@@ -72,20 +74,17 @@ Configurar la herramienta de Kubectl para trabajar con AKS
 ```
 $ az aks install-cli (para instalar kubectl si no lo tenemos en local)
 
-$ kubectl version
-
 $ az aks get-credentials --resource-group <nombre-rg> --name <nombre-aks-cluster> --admin
-  Merged "aks-santi-cluster-pruebas-admin" as current context in /home/santimacnet/.kube/config
+  Merged ........ as current context in /home/santimacnet/.kube/config
 
 #  ejecutar comandos Kubectl para verificar aks funcionando
+$ kubectl version
 $ kubectl config current-context (para ver contexto correcto AKS)
-
 $ kubectl cluster-info
-
 $ kubectl get nodes
 ```
 
-### Configurar acceso Dashboard AKS
+### Paso4: Configurar acceso Dashboard AKS
 
 ```
 # crear role para permisos con rbac
@@ -102,7 +101,7 @@ $ kubectl delete clusterrolebinding kubernetes-dashboard -n kube-system
 ```
 
 
-### Acceso Dashboard mediante port-forward
+### Paso5: Acceso Dashboard mediante port-forward
 
 Esta opción reenvía las conexiones de un puerto local a un puerto en un pod. En comparación con kubectl proxy, kubectl port-forward es más genérico, ya que puede reenviar TCP tráfico mientras que kubectl proxy solo puede reenviar tráfico HTTP.
 
