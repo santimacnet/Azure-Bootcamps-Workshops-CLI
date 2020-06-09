@@ -5,7 +5,7 @@ Tutorial para charlas, eventos, meetups y formación sobre AKS donde veremos:
 
    - Paso1: Creando un Service Principal para AKS
    - Paso2: Creando cluster de AKS 
-   - Paso3: Creando registry de imagenes ACR
+   - Paso3: Creando registry ACR y Service Principal
    - Paso4: Configurar Kubectl y Credenciales acceso AKS
    - Paso5: Configurar acceso Dashboard AKS
    - Paso6: Acceso Dashboard mediante port-forward
@@ -32,8 +32,9 @@ Creamos Service Principal y anotamos JSON con AppID y Password, este SP se guard
 $ az account list
 $ az account set --subscription ****-****-***-***
 
+# configurar service principal para AKS para luego attachar con ACR
 $ az ad sp create-for-rbac --skip-assignment --name AKSClusterPruebasServicePrincipal
-...guardar datos respuesta json...
+...guardar datos respuesta json con password...
 ```
 
 ### Paso2: Creando cluster de AKS
@@ -67,18 +68,26 @@ $ az aks create --name $AKS_NAME \
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
 ```
 
-### Paso3: Creando registry de imagenes ACR
+### Paso3: Creando registry ACR y Service Principal
 
 Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
 ```
 # creamos el ACR para publicar imagenes
 $ az acr create --name $ACR_NAME --resource-group $RG_NAME --location $RG_LOCATION --sku Basic
 
-# atachamos AKS para deployar imagenes
+# atachamos ACR-ID para deployar imagenes entre ACR y AKS
 $ ACR_ID=$(az acr show --name $ACR_NAME --resource-group $RG_NAME --query id -o tsv)
 $ az aks update --name $AKS_NAME --resource-group $RG_NAME --attach-acr $ACR_ID
   - AAD role propagation - Running.... (tarda unos minutos)
   
+# creamos Service Principal para utilizar con Azure DevOps Pipelines
+$ AZDEVOPS_ACR_SP=AzureDevOpsPipelineACRServicePrincipal
+$ AZDEVOPS_ACR_SP_PASSWORD=$(az ad sp create-for-rbac --name $AZDEVOPS_ACR_SP --scopes $ACR_ID --role acrpush --query password -o tsv)
+$ echo $AZDEVOPS_ACR_SP_PASSWORD   # Guardarlo en sitio seguro para usarlo en los pipelines
+
+# creamos Service Principal para utilizar con Developers que luego podemos revocar
+OPCIONAL: pensar si realmente es necesario al ACR directamente o todo por Azure DevOps
+    
 # importamos imagen NGNIX para pruebas AKS
 $ az acr import  -n $ACR_NAME -g $RG_NAME --source docker.io/library/nginx:latest --image nginx:v1
 $ az acr repository list --name $ACR_NAME --output table
