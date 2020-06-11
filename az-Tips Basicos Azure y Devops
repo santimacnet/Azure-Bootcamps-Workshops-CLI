@@ -22,6 +22,8 @@ AzureDevOps: Updated azure-pipeline-CI - Tag Build Number
 AzureDevOps: pipeline: tag: '$(Build.BuildNumber)'
 AzureDevOps: commit: Tag sources - on success: $(build.buildNumber)
 
+YAML schema: https://aka.ms/yaml
+
 Git - bajar cambios desde repo-remoto (azdevops-github-otros): git pull origin master
 Git - subir cambios hacia repo-remoto (azdevops-github-otros): git push origin master
 
