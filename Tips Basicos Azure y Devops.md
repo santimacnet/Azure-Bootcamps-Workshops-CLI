@@ -16,6 +16,12 @@ $ az account list
 $ az account set --subscription ****-****-***-***
 ```
 
+### Listar contenido ACR tanto Docker-images como Helm-Charts
+```
+$ az acr repository list -n acrhubdemolab -o table
+$ az acr helm  list -n acrhubdemolab -o table
+```
+
 ###### AZURE DEVOPS - TIPS PARA COMMITS Y PIPELINES CI-CD 
 
 AzureDevOps: Updated azure-pipeline-CI - Tag Build Number
