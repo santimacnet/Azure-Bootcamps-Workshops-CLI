@@ -22,15 +22,20 @@ $ az acr repository list -n acrhubdemolab -o table
 $ az acr helm  list -n acrhubdemolab -o table
 ```
 
-###### AZURE DEVOPS - TIPS PARA COMMITS Y PIPELINES CI-CD 
+### AZURE DEVOPS - TIPS PARA COMMITS Y PIPELINES CI-CD 
+
+```
+PIPELINES YAML schema: https://aka.ms/yaml
 
 AzureDevOps: Updated azure-pipeline-CI - Tag Build Number
 AzureDevOps: pipeline: tag: '$(Build.BuildNumber)'
 AzureDevOps: commit: Tag sources - on success: $(build.buildNumber)
+```
 
-YAML schema: https://aka.ms/yaml
-
+```
 Git - bajar cambios desde repo-remoto (azdevops-github-otros): git pull origin master
 Git - subir cambios hacia repo-remoto (azdevops-github-otros): git push origin master
 
 Readme- poner el status Badge markdown coger url-imagen desde Azure DevOps
+
+```
