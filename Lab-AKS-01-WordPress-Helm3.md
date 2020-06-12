@@ -10,12 +10,10 @@ Tutorial para eventos y meetups sobre AKS donde veremos:
 
 Requerimientos Tutorial:
 
-- Azure y Kubernetes fundamentos basicos
+- Azure, suscripcion y Kubernetes fundamentos basicos
 - Azure CLI, shell.azure.com, Kubectl y Helm3
 - AKS ya creado en Azure con permisos administrador
-- Suscripcion de Azure con permisos Admin para Azure Active Directory
 - Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
-
 
 ### Configurar Suscripcion Azure para Workshop
 
@@ -50,12 +48,36 @@ Mas detalles: https://v3.helm.sh/docs/intro/quickstart/#initialize-a-helm-chart-
 
 ### Paso2: Instalar WordPress y MariaDB con Helm
 
-Para ver la potencia de Helm, instalaremos WordPress desde el repo azure-marketplace/wordpress con un solo comando.
+Para ver la potencia de Helm, instalaremos WordPress **con un solo comando** desde 2 repositorios Helm.
 
-Ejecutamos el comando de instalación que se muestra, donde obtendremos las indicaciones detalladas para acceder a nuestro Wordpress una vez este creado y funcionando en Kubernetes:
+Ejecutamos comando de instalación y obtendremos las indicaciones detalladas para acceder a nuestro Wordpress.
 
+Caso1: Instalamos Wordpress desde stable:
 ```
+# creamos con param --generate-name nos pone automaticamente NAME: wordpress-1591957704
+$ helm install stable/wordpress --generate-name
+
+# leer las NOTES de instalacion para configurarlo 
+WARNING: This chart is deprecated
+NAME: wordpress-1591957704
+LAST DEPLOYED: Fri Jun 12 10:28:26 2020
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES: ...
+
+** Please be patient while the chart is being deployed **
+
+To access your WordPress site from outside the cluster follow the steps below:
+.... detalles de los pasos de acceso, login y configuracion a Wordpress
+```
+
+Caso2: Instalamos Wordpress desde Azure Marketplace:
+```
+# creamos con nombre: aks-blogdemo y veremos las notas con NAME: aks-blogdemo
 $ helm install aks-blogdemo azure-marketplace/wordpress --set global.imagePullSecrets={emptysecret}
+
+# leer las NOTES de instalacion para configurarlo 
 NAME: aks-blogdemo
 LAST DEPLOYED: Sun Mar 22 21:08:17 2020
 NAMESPACE: default
@@ -65,36 +87,24 @@ NOTES:
 ** Please be patient while the chart is being deployed **
 
 To access your WordPress site from outside the cluster follow the steps below:
-
-1. Get the WordPress URL by running these commands:
-
-  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-        Watch the status with: 'kubectl get svc --namespace default -w aks-blogdemo-wordpress'
-
-   export SERVICE_IP=$(kubectl get svc --namespace default aks-blogdemo-wordpress --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
-   echo "WordPress URL: http://$SERVICE_IP/"
-   echo "WordPress Admin URL: http://$SERVICE_IP/admin"
-
-2. Open a browser and access WordPress using the obtained URL.
-
-3. Login with the following credentials below to see your blog:
-
-  echo Username: user
-  echo Password: $(kubectl get secret --namespace default aks-blogdemo-wordpress -o jsonpath="{.data.wordpress-password}" | base64 --decode)
-
+.... detalles de los pasos de acceso, login y configuracion a Wordpress
 ```
 
-Ahora consultamos estado pods hasta que esten ready, suele tardar 2 minutos aprox.
-
+Ahora consultamos los despliegues de nuestro WordPress y veremos que son distintos:
 ```
+$ helm ls
+NAME                    NAMESPACE       REVISION        UPDATE         STATUS     CHART                APP VERSION
+aks-blogdemo            default         1               2020-06-12 UTC deployed   wordpress-9.3.10     5.4.1
+wordpress-1591957704    default         1               2020-06-12 UTC deployed   wordpress-9.0.3      5.3.2
+
 $ kubectl get pods -w
-
 NAME                                      READY   STATUS    RESTARTS   AGE
-aks-blogdemo-mariadb-0                    1/1     Running   0          16m
-aks-blogdemo-wordpress-778c69ff58-5gtlk   1/1     Running   1          16m
+aks-blogdemo-mariadb-0                    0/1     Pending   0          16m
+aks-blogdemo-wordpress-68bcc9676b-dk9xq   0/1     Pending   0          16m
+wordpress-1591957704-766456c86f-dlvb4     1/1     Running   0          16m
+wordpress-1591957704-mariadb-0            1/1     Running   0          16m
 otros pods...
 ```
-
 
 Ahora consultamos el estatus del servicio para obtener la IP publica de nuestro WordPress:
 
