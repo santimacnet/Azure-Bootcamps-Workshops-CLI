@@ -71,6 +71,7 @@ NOTES: ...
 To access your WordPress site from outside the cluster follow the steps below:
 .... detalles de los pasos de acceso, login y configuracion a Wordpress
 ```
+Ref Helm Pelao: https://www.youtube.com/watch?v=CPjfb-I_BKU
 
 Caso2: Instalamos Wordpress desde Azure Marketplace:
 ```
@@ -90,12 +91,15 @@ To access your WordPress site from outside the cluster follow the steps below:
 .... detalles de los pasos de acceso, login y configuracion a Wordpress
 ```
 
-Ahora consultamos los despliegues de nuestro WordPress y veremos que son distintos:
+Ahora inspeccionamos los despliegues de nuestro WordPress y veremos que son distintos:
 ```
 $ helm list
 NAME                    NAMESPACE       REVISION        UPDATE         STATUS     CHART                APP VERSION
 aks-blogdemo            default         1               2020-06-12 UTC deployed   wordpress-9.3.10     5.4.1
 wordpress-1591957704    default         1               2020-06-12 UTC deployed   wordpress-9.0.3      5.3.2
+
+$ helm inspect values azure-marketplace/wordpress
+... explicaciones detalladas del creador del chart con todo lo que podemos cambiar.
 
 $ kubectl get pods -w
 NAME                                      READY   STATUS    RESTARTS   AGE
