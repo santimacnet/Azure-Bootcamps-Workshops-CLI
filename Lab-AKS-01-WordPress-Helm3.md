@@ -173,6 +173,7 @@ $ helm list --all-namespaces
   
 #manifiesto del chart que hemos instalado
 $ helm get manifest nombre-del-chart
+
 ```
 
 ### Bonus: Otros comandos interesantes de Helm
