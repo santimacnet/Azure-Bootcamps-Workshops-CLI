@@ -5,8 +5,8 @@ Tutorial para eventos y meetups sobre AKS donde veremos:
 
 - Prev: Configurar Suscripcion Azure para Workshop
 - Paso1: Configurar Helm3 y repositorios de Charts 
-- Paso2: Instalar WordPress con MariaDB con Helm
-- Paso3: Consultando y Borrando WordPress con Helm
+- Paso2: Instalar WordPress y MariaDB con Helm
+- Paso3: Borrando WordPress y MariaDB con Helm
 
 Requerimientos Tutorial:
 
@@ -92,7 +92,7 @@ To access your WordPress site from outside the cluster follow the steps below:
 
 Ahora consultamos los despliegues de nuestro WordPress y veremos que son distintos:
 ```
-$ helm ls
+$ helm list
 NAME                    NAMESPACE       REVISION        UPDATE         STATUS     CHART                APP VERSION
 aks-blogdemo            default         1               2020-06-12 UTC deployed   wordpress-9.3.10     5.4.1
 wordpress-1591957704    default         1               2020-06-12 UTC deployed   wordpress-9.0.3      5.3.2
@@ -123,19 +123,20 @@ otros services...
 
 Una vez tenemos la EXTERNAL-IP, abrimos un navegador y veremos Wordpress ya funcionando, con el mensaje Welcome to WordPress!!
 
-### Paso3: Consultando y Borrando WordPress con Helm
+### Paso3: Borrando WordPress y MariaDB con Helm
 
 En este punto podemos consultar el trabajo y eliminar WordPress si es necesario con los comandos siguientes:
 
 ```
-# Consultar lista de charts desplegados y versiones
-$ helm list
-NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
-aks-blogdemo    default         1               2020-03-22 21:08:17.752260455 +0000 UTC deployed        wordpress-9.0.3 5.3.2
-
 # Desinstalando Wordpress completamente
 $ helm uninstall aks-blogdemo
 release "aks-blogdemo" uninstalled
+
+$ helm uninstall wordpress-1591957704
+release "wordpress-1591957704" uninstalled
+
+$ helm list
+...comprobar que no aparecen
 ```
 
 Por último, tambien podemos eliminar AKS para no incurrir en gastos innecesarios una vez finalizado el laboratorio.
