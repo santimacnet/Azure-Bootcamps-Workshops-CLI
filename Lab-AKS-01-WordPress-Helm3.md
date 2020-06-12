@@ -10,18 +10,9 @@ Tutorial para eventos y meetups sobre AKS donde veremos:
 
 Requerimientos Tutorial:
 
-- Azure, suscripcion y Kubernetes fundamentos basicos
-- Azure CLI, shell.azure.com, Kubectl y Helm3
 - AKS ya creado en Azure con permisos administrador
+- Azure, suscripcion, Kubernetes, Kubectl y Helm3 fundamentos basicos
 - Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-Sheet_07182019.pdf
-
-### Configurar Suscripcion Azure para Workshop
-
-Abrir una shell de Azure para consultar suscripcion correcta
-```
-$ az account list
-$ az account set --subscription ****-****-***-***
-```
 
 ### Paso1: Configurar Helm3 y repositorios de Charts 
 
@@ -143,7 +134,24 @@ $ helm list
 ...comprobar que no aparecen
 ```
 
-Por último, tambien podemos eliminar AKS para no incurrir en gastos innecesarios una vez finalizado el laboratorio.
+
+### Otras pruebas de Helm
+
+Visto lo facil que es deplegar Aplicaciones en AKS con Helm podemos hacer otras pruebas como:
+
+```
+$ helm install bitnami/apache --version 7.3.17 --generate-name
+... leer notas de la configuracion
+
+$ helm install bitnami/joomla --generate-name
+... leer notas de la configuracion
+
+$ helm install bitnami/drupal  --generate-name
+... leer notas de la configuracion
+
+```
+
+Por último, no olvidar borrar los recursos creados y el cluster de AKS de pruebas para no incurrir en gastos innecesarios una vez finalizado el laboratorio.
 ...
 
 Happy Lab!!
