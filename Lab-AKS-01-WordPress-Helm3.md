@@ -23,10 +23,11 @@ Helm, a parte de un package manager de Kubernetes, proporciona una forma fácil 
 
 Para ello, configuramos varios repositorios comunes de Charts de Helm y asegurarmos que estan actualizados con los ultimos paquetes para trabajar desde nuestro entorno: 
 ```
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
 $ helm repo add stable https://kubernetes-charts.storage.googleapis.com
 $ helm repo add azure-samples https://azure-samples.github.io/helm-charts
 $ helm repo add azure-marketplace https://marketplace.azurecr.io/helm/v1/repo
-"stable" has been added to your repositories
+".........." has been added to your repositories
 
 $ helm repo update
 Update Complete. ⎈ Happy Helming!⎈
@@ -142,7 +143,6 @@ $ helm list
 ...comprobar que no aparecen
 ```
 
-
 ### Paso4: Probando Helm con otras aplicaciones del Hub
 
 Visto lo facil que es deplegar Aplicaciones en AKS con Helm podemos hacer otras pruebas como:
@@ -160,9 +160,14 @@ $ kubectl create namespace drupal
 $ helm install bitnami/drupal --namespace drupal --generate-name
 ... leer notas de la configuracion
 
+$ kubectl create namespace sonarqube
+$ helm install stable/sonarqube --namespace sonarqube --generate-name
+... leer notas de la configuracion - DEPRECATED
+
 #obtener lista de charts que hemos instalado
 $ helm list -n apache
   ... listado
+  
 $ helm list --all-namespaces
   ... listado
   
