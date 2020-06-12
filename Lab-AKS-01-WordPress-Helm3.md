@@ -61,6 +61,7 @@ NOTES: ...
 
 To access your WordPress site from outside the cluster follow the steps below:
 .... detalles de los pasos de acceso, login y configuracion a Wordpress
+
 ```
 Ref Helm Pelao: https://www.youtube.com/watch?v=CPjfb-I_BKU
 
@@ -80,6 +81,7 @@ NOTES:
 
 To access your WordPress site from outside the cluster follow the steps below:
 .... detalles de los pasos de acceso, login y configuracion a Wordpress
+
 ```
 
 Ahora inspeccionamos los despliegues de nuestro WordPress y veremos que son distintos:
@@ -89,6 +91,11 @@ NAME                    NAMESPACE       REVISION        UPDATE         STATUS   
 aks-blogdemo            default         1               2020-06-12 UTC deployed   wordpress-9.3.10     5.4.1
 wordpress-1591957704    default         1               2020-06-12 UTC deployed   wordpress-9.0.3      5.3.2
 
+#manifiesto del chart que hemos instalado
+$ helm get manifest wordpress-1591957704
+... yaml del deployment, service, etc.
+
+#inspeccionar el chart que hemos instalado
 $ helm inspect values azure-marketplace/wordpress
 ... explicaciones detalladas del creador del chart con todo lo que podemos cambiar.
 
@@ -148,6 +155,10 @@ $ helm install bitnami/joomla --generate-name
 
 $ helm install bitnami/drupal  --generate-name
 ... leer notas de la configuracion
+
+#manifiesto del chart que hemos instalado
+$ helm list
+$ helm get manifest nombre-del-chart
 
 ```
 
