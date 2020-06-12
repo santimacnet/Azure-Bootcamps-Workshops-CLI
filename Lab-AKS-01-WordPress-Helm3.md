@@ -3,10 +3,11 @@
 
 Tutorial para eventos y meetups sobre AKS donde veremos:
 
-- Prev: Configurar Suscripcion Azure para Workshop
 - Paso1: Configurar Helm3 y repositorios de Charts 
 - Paso2: Instalar WordPress y MariaDB con Helm
 - Paso3: Borrando WordPress y MariaDB con Helm
+- Paso4: Probando Helm con otras aplicaciones del Hub
+- Bonus: Otros comandos interesantes de Helm
 
 Requerimientos Tutorial:
 
@@ -142,25 +143,48 @@ $ helm list
 ```
 
 
-### Otras pruebas de Helm
+### Paso4: Probando Helm con otras aplicaciones del Hub
 
 Visto lo facil que es deplegar Aplicaciones en AKS con Helm podemos hacer otras pruebas como:
 
 ```
-$ helm install bitnami/apache --version 7.3.17 --generate-name
+$ kubectl create namespace apache
+$ helm install bitnami/apache --version 7.3.17 --namespace apache --generate-name 
 ... leer notas de la configuracion
 
-$ helm install bitnami/joomla --generate-name
+$ kubectl create namespace joomla
+$ helm install bitnami/joomla --namespace joomla --generate-name
 ... leer notas de la configuracion
 
-$ helm install bitnami/drupal  --generate-name
+$ kubectl create namespace drupal
+$ helm install bitnami/drupal --namespace drupal --generate-name
 ... leer notas de la configuracion
 
+#obtener lista de charts que hemos instalado
+$ helm list -n apache
+  ... listado
+$ helm list --all-namespaces
+  ... listado
+  
 #manifiesto del chart que hemos instalado
-$ helm list
 $ helm get manifest nombre-del-chart
+```
+
+### Bonus: Otros comandos interesantes de Helm
+
+Tambien podemos crear nuestros propios Chart de forma muy sencilla::
 
 ```
+# crear una plantilla base para nuestros propios chart
+$ helm create prueba-appweb
+
+# comprobar como queda el manifiesto generado
+$ helm template .
+
+# instalar directamente el chart desde el codigo-fuente
+$ helm install .
+```
+
 
 Por último, no olvidar borrar los recursos creados y el cluster de AKS de pruebas para no incurrir en gastos innecesarios una vez finalizado el laboratorio.
 ...
