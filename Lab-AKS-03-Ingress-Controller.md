@@ -88,3 +88,8 @@ spec:
 
 Con el recurso Ingress que acabamos de crear, ahora deberíamos poder acceder a los servicios webserver-blue-svc o webserver-green-svc utilizando las URL blue.example.com y green.example.com. 
 
+Diagrama del ejemplo:
+
+![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-url-routing-image.jpg)
+
+
