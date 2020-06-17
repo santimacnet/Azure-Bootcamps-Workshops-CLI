@@ -86,5 +86,17 @@ spec:
           servicePort: 80
 ```
 
+Con el recurso Ingress que acabamos de crear, ahora deberíamos poder acceder a los servicios webserver-blue-svc o webserver-green-svc utilizando las URL blue.example.com y green.example.com. 
+
+Si utilizamos Minikube, necesitaremos actualizar el archivo de configuración del host (/ etc / hosts en Mac y Linux) en nuestra estación de trabajo a la IP de Minikube para esas URL.
+
+Después de la actualización, el archivo debería ser similar a:
+
+```
+$ cat /etc/hosts
+127.0.0.1        localhost
+192.168.99.100   blue.example.com green.example.com 
+```
+
 
 
