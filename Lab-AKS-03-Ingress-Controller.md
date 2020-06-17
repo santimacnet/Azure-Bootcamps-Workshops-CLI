@@ -36,7 +36,54 @@ Para permitir que la conexión entrante llegue a los Servicios del clúster, Ing
 - Seguridad TLS (Terminacion de TLS/SSL en capa de transporte)
 
 
+Con Ingress, los usuarios no se conectan directamente a un Servicio. Los usuarios alcanzan el punto final de Ingress y, a partir de ahí, la solicitud se reenvía al Servicio deseado.
 
+En el siguiente ejemplo, las solicitudes de los usuarios a blue.example.com y green.example.com irían al mismo punto final de Ingress y, a partir de ahí, se enviarían a webserver-blue-svc y webserver-green-svc respectivamente. 
 
+Ejemplo de una regla basado en nombre: 
+'''
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: virtual-host-ingress
+  namespace: default
+spec:
+  rules:
+  - host: blue.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: webserver-blue-svc
+          servicePort: 80
+  - host: green.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: webserver-green-svc
+          servicePort: 80
+'''
+
+También podemos usar reglas de Fanout, cuando las solicitudes a example.com/blue y example.com/green se envíen a webserver-blue-svc y webserver-green-svc, respectivamente:
+
+'''
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: fan-out-ingress
+  namespace: default
+spec:
+  rules:
+  - host: example.com
+    http:
+      paths:
+      - path: /blue
+        backend:
+          serviceName: webserver-blue-svc
+          servicePort: 80
+      - path: /green
+        backend:
+          serviceName: webserver-green-svc
+          servicePort: 80
+'''
 
 
