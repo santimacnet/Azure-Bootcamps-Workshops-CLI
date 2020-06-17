@@ -41,7 +41,7 @@ Con Ingress, los usuarios no se conectan directamente a un Servicio. Los usuario
 En el siguiente ejemplo, las solicitudes de los usuarios a blue.example.com y green.example.com irían al mismo punto final de Ingress y, a partir de ahí, se enviarían a webserver-blue-svc y webserver-green-svc respectivamente. 
 
 Ejemplo de una regla basado en nombre: 
-'''
+```yml
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -61,11 +61,11 @@ spec:
       - backend:
           serviceName: webserver-green-svc
           servicePort: 80
-'''
+```
 
 También podemos usar reglas de Fanout, cuando las solicitudes a example.com/blue y example.com/green se envíen a webserver-blue-svc y webserver-green-svc, respectivamente:
 
-'''
+```yml
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -84,6 +84,7 @@ spec:
         backend:
           serviceName: webserver-green-svc
           servicePort: 80
-'''
+```
+
 
 
