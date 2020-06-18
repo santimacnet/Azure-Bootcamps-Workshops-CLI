@@ -4,8 +4,8 @@
 Tutorial para eventos, meetups y formación sobre AKS donde veremos:
 
 - Paso1: Entendiendo que es un Controlador Ingress 
-- Paso2: 
-- Paso3: 
+- Paso2: Instalando NGNIX Ingress con Deployment en AKS
+- Paso3: Instalando NGNIX Ingress con Helm-3 en AKS
 - Paso4: 
 - Paso5: 
 
@@ -93,7 +93,7 @@ Diagrama del ejemplo:
 ![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-url-routing-image.jpg)
 
 
-### Paso2: Instalando NGNIX Ingress version oficial
+### Paso2: Instalando NGNIX Ingress con Deployment en AKS
 
 La instalación oficial nos indica utilizar los siguientes pasos:
 
@@ -131,3 +131,30 @@ $ kubectl get svc -n ingress-nginx
 ```
 
 Ref: https://kubernetes.github.io/ingress-nginx/deploy/#azure
+
+
+### Paso2: Instalando NGNIX Ingress con Helm-3 en AKS
+
+La instalación oficial nos indica utilizar HELM para instalar NGNIX:
+
+```
+$ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+NAME: my-release
+LAST DEPLOYED: Jun 2020
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+The ingress-nginx controller has been installed.
+It may take a few minutes for the LoadBalancer IP to be available.
+You can watch the status by running 'kubectl --namespace default get services -o wide -w my-release-ingress-nginx-controller'
+...
+
+$ helm install my-release ingress-nginx/ingress-nginx
+$ helm list
+```
+
+Ref: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
+
+
