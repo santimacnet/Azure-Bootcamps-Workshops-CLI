@@ -35,7 +35,6 @@ Para permitir que la conexión entrante llegue a los Servicios del clúster, Ing
 - Enrutamiento basado en Virtual Host (Virtual Server)
 - Seguridad TLS (Terminacion de TLS/SSL en capa de transporte)
 
-
 Con Ingress, los usuarios **no se conectan directamente a un Servicio**, llegan al controlador de Ingress y a partir de ahí la solicitud se reenvía al Servicio deseado segun las reglas definidas.
 
 En el siguiente ejemplo, las solicitudes de los usuarios a **blue.example.com y green.example.com** llegan al Ingress y a partir de ahí, se enviarían a webserver-blue-svc y webserver-green-svc respectivamente. 
@@ -46,9 +45,17 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: virtual-host-ingress
-  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
+  - host: example.com
+    http:
+      paths:
+      - backend:
+          serviceName: nginx-main-svc
+          servicePort: 80
   - host: blue.example.com
     http:
       paths:
@@ -69,13 +76,18 @@ También podemos usar reglas de Fanout, cuando las solicitudes a **example.com/b
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: fan-out-ingress
-  namespace: default
+  name: fanout-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: example.com
     http:
       paths:
+      - path: /
+        backend:
+          serviceName: nginx-main-svc
+          servicePort: 80
       - path: /blue
         backend:
           serviceName: webserver-blue-svc
@@ -87,6 +99,8 @@ spec:
 ```
 
 Con el recurso Ingress que acabamos de crear, ahora deberíamos poder acceder a los servicios webserver-blue-svc o webserver-green-svc utilizando las URL blue.example.com y green.example.com. 
+
+Ref: https://github.com/justmeandopensource/kubernetes/tree/master/yamls/ingress-demo
 
 Diagrama del ejemplo:
 
