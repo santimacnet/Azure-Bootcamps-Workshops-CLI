@@ -31,8 +31,8 @@ Para permitir que la conexión entrante llegue a los Servicios del clúster, Ing
 
 - Balanceo de carga
 - Reglas personalizadas
-- Enrutamiento basado en rutas Fanout
-- Enrutamiento basado en Virtual Hosting Name
+- Enrutamiento basado en Locations (Fanout)
+- Enrutamiento basado en Virtual Host (Virtual Server)
 - Seguridad TLS (Terminacion de TLS/SSL en capa de transporte)
 
 
@@ -153,6 +153,19 @@ You can watch the status by running 'kubectl --namespace default get services -o
 
 $ helm install my-release ingress-nginx/ingress-nginx
 $ helm list
+```
+
+Verificando instalacion y configuracion
+```
+# Check Ingress Resource Events
+$ kubectl get deploy -n <namespace-of-ingress>
+$ kubectl get ing -n <namespace-of-ingress>
+$ kubectl describe ing <ingress-resource-name> -n <namespace-of-ingress>
+
+# Check Logs y configuracion
+$ kubectl get pods -n <namespace-of-ingress-controller>
+$ kubectl logs -n <namespace> nginx-ingress-controller-67956bf89d-fv58j
+$ kubectl exec -it -n <namespace-of-ingress-controller> nginx-ingress-controller-67956bf89d-fv58j cat /etc/nginx/nginx.conf
 ```
 
 Ref: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
