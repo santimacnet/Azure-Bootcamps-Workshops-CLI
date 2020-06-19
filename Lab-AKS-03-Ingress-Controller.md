@@ -191,7 +191,7 @@ Ref: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
 
 Vamos a desplegar recursos para ver en accion NGINX con las propias demos que ofrece el fabricante.
 
-Crear el archivo para el deployment de la practica CAFE o TE: demo-deployment.yml
+Creamos el archivo para el deployment de la practica CAFE o TE: demo-deployment.yml
 
 ```yml
 apiVersion: apps/v1
@@ -262,8 +262,7 @@ spec:
     app: tea
 ```
 
-Crear ahore archivo para recursos ingress de CAFE o TE: demo-ingress.yml y rellenar la IP publica del servicio de NGINX INGRESS que se ha creado en el balanceador de AKS para ponerla en <ip-ip-ip-ip>
-
+Creamos ahora el archivo para recursos ingress: demo-ingress.yml y rellenar la IP publica del servicio de NGINX INGRESS que se ha creado en el balanceador de AKS para ponerla en ip-ip-ip-ip
 ```yml
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -273,7 +272,7 @@ metadata:
      kubernetes.io/ingress.class: nginx 
 spec:
   rules:
-  - host: frontend.<ip-ip-ip-ip>.nip.io
+  - host: labdemocafe.ip-ip-ip-ip.nip.io
     http:
       paths:
       - path: /tea
@@ -295,10 +294,9 @@ $ kubectl apply -f demo-ingress.yml
 
 Abrimos un navegador y vistamos las rutas definidas para ver los resultados:
 ```
-http://frontend.40-127-237-79.nip.io/tea
-http://frontend.40-127-237-79.nip.io/coffee
+http://labdemocafe.40-127-237-79.nip.io/tea
+http://labdemocafe.40-127-237-79.nip.io/coffee
 ```
-
 
 ### Paso5: Verificando instalacion y configuracion NGINX
 ```
@@ -312,6 +310,5 @@ $ kubectl get pods -n <namespace-of-ingress-controller>
 $ kubectl logs -n <namespace> nginx-ingress-controller-67956bf89d-fv58j
 $ kubectl exec -it -n <namespace-of-ingress-controller> nginx-ingress-controller-67956bf89d-fv58j cat /etc/nginx/nginx.conf
 ```
-
 
 Enjoy the Lab!!
