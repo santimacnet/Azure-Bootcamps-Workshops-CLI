@@ -14,18 +14,28 @@ Chuleta: https://kubernetes.github.io/ingress-nginx
 
 ### Paso1: Entendiendo que es un Controlador Ingress 
 
+De acuerdo con la definición de kubernetes.io: "Un Ingress es una colección de reglas que permiten que las conexiones entrantes lleguen a los Servicios del clúster".
+
 Aqui comparto una serie de definiciones para entender el concepto:
 
-- Un controlador Ingress es completamente independiente de los servicios de Kubernetes
 - Un controlador Ingress permite exponer servicios ClusterIP al mundo exterior desde 1 solo punto de entrada
+- Un controlador Ingress es completamente independiente de los servicios de Kubernetes
 - Es la solucion recomendada para no tener que usar servicios NodePort o LoadBalancer en kubernetes
 - Con LoadBalancer/NodePort exponemos el servicio al exterior acoplandonos con el tipo de servicio
-
-De acuerdo con la definición de kubernetes.io: "Un Ingress es una colección de reglas que permiten que las conexiones entrantes lleguen a los Servicios del clúster".
 
 Con los Servicios, las reglas de enrutamiento están asociadas con un Servicio determinado. Existen mientras exista el Servicio, y hay muchas reglas porque hay muchos Servicios en el clúster. 
 Si de alguna manera podemos desacoplar las reglas de enrutamiento de la aplicación y centralizar la administración de reglas, podemos actualizar nuestra aplicación sin preocuparnos por su acceso externo.
 Esto lo podemos hacer mediante el recurso Ingress.
+
+![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-Controller-NGINX-diagrama)
+
+Existen 2 tipos de NGINX que podemos utilizar, ambos son de código abierto y están  en GitHub:
+
+- Uno es mantenido por la community Kubernetes: https://github.com/kubernetes/ingress-nginx
+- Otro es mantenido por le empresa NGINX: https://github.com/nginxinc/kubernetes-ingress
+
+Ref: https://www.nginx.com/blog/wait-which-nginx-ingress-controller-kubernetes-am-i-using
+
 
 Para permitir que la conexión entrante llegue a los Servicios del clúster, Ingress configura un balanceador HTTP/HTTPS para los servicios y proporciona lo siguiente:
 
