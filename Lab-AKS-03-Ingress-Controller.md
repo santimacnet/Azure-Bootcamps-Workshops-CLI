@@ -4,10 +4,10 @@
 Tutorial para eventos, meetups y formación sobre AKS donde veremos:
 
 - Paso1: Entendiendo que es un Controlador Ingress 
-- Paso2: Instalando NGNIX Ingress con Deployment en AKS
-- Paso3: Instalando NGNIX Ingress con Helm-3 en AKS
-- Paso4: 
-- Paso5: 
+- Paso2: Instalando NGNIX Ingress Controler con Deployment 
+- Paso3: Instalando NGNIX Ingress Controler con Helm-3
+- Paso4: Instalando Recursos Ingress para enrutar trafico
+- Paso5: Verificando instalacion y configuracion NGINX
 
 Chuleta: https://kubernetes.github.io/ingress-nginx
 
@@ -27,7 +27,7 @@ Con los Servicios, las reglas de enrutamiento están asociadas con un Servicio d
 Si de alguna manera podemos desacoplar las reglas de enrutamiento de la aplicación y centralizar la administración de reglas, podemos actualizar nuestra aplicación sin preocuparnos por su acceso externo.
 Esto lo podemos hacer mediante el recurso Ingress.
 
-![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-Controller-NGINX-diagrama)
+![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-Controller-NGINX-diagrama.png)
 
 Existen 2 tipos de NGINX que podemos utilizar, ambos son de código abierto y están  en GitHub:
 
@@ -117,7 +117,7 @@ Diagrama del ejemplo:
 ![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-url-routing-image.jpg)
 
 
-### Paso2: Instalando NGNIX Ingress con Deployment en AKS
+### Paso2: Instalando NGNIX Ingress Controler con Deployment
 
 La instalación oficial nos indica utilizar los siguientes pasos:
 
@@ -151,17 +151,17 @@ ingress-nginx-controller   1/1     1            1           11m
 
 $ kubectl get svc -n ingress-nginx
 ... obtener la IP del servicio LoadBalancer
-
 ```
 
 Ref: https://kubernetes.github.io/ingress-nginx/deploy/#azure
 
 
-### Paso2: Instalando NGNIX Ingress con Helm-3 en AKS
+### Paso3: Instalando NGNIX Ingress Controler con Helm-3 
 
 La instalación oficial nos indica utilizar HELM para instalar NGNIX:
 
 ```
+$ helm repo update
 $ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 NAME: my-release
 LAST DEPLOYED: Jun 2020
@@ -177,9 +177,125 @@ You can watch the status by running 'kubectl --namespace default get services -o
 
 $ helm install my-release ingress-nginx/ingress-nginx
 $ helm list
+
+$ kubectl get all --namespace default
+```
+Ref: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
+
+### Paso4: Instalando Recursos Ingress para enrutar trafico
+
+Vamos a desplegar recursos para ver en accion NGINX con las propias demos que ofrece el fabricante.
+
+Crear el archivo para el deployment de la practica CAFE o TE: demo-deployment.yml
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: coffee
+  template:
+    metadata:
+      labels:
+        app: coffee
+    spec:
+      containers:
+      - name: coffee
+        image: nginxdemos/nginx-hello:plain-text
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffee-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: coffee
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tea
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tea 
+  template:
+    metadata:
+      labels:
+        app: tea 
+    spec:
+      containers:
+      - name: tea 
+        image: nginxdemos/nginx-hello:plain-text
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea-svc
+  labels:
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: tea
 ```
 
-Verificando instalacion y configuracion
+Crear ahore archivo para recursos ingress de CAFE o TE: demo-ingress.yml y rellenar la IP publica del servicio de NGINX INGRESS que se ha creado en el balanceador de AKS para ponerla en <ip-ip-ip-ip>
+
+```yml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cafe-ingress
+   annotations:
+     kubernetes.io/ingress.class: nginx 
+spec:
+  rules:
+  - host: frontend.<ip-ip-ip-ip>.nip.io
+    http:
+      paths:
+      - path: /tea
+        backend:
+          serviceName: tea-svc
+          servicePort: 80
+      - path: /coffee
+        backend:
+          serviceName: coffee-svc
+          servicePort: 80
+```
+
+Aplicamos los archivos desde la consola para ver el resultado:
+```
+$ kubectl apply -f demo-deployment.yml
+
+$ kubectl apply -f demo-ingress.yml
+```
+
+Abrimos un navegador y vistamos las rutas definidas para ver los resultados:
+```
+http://frontend.40-127-237-79.nip.io/tea
+http://frontend.40-127-237-79.nip.io/coffee
+```
+
+
+### Paso5: Verificando instalacion y configuracion NGINX
 ```
 # Check Ingress Resource Events
 $ kubectl get deploy -n <namespace-of-ingress>
@@ -192,6 +308,5 @@ $ kubectl logs -n <namespace> nginx-ingress-controller-67956bf89d-fv58j
 $ kubectl exec -it -n <namespace-of-ingress-controller> nginx-ingress-controller-67956bf89d-fv58j cat /etc/nginx/nginx.conf
 ```
 
-Ref: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
 
-
+Enjoy the Lab!!
