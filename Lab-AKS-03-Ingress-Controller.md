@@ -1,7 +1,7 @@
-**PRACTICA AKS KUBERNETES CON INGRESS CONTROLLER**
+**PRACTICA AKS KUBERNETES CON NGINX INGRESS CONTROLLER**
 ------------------------------------------------------------------
 
-Tutorial para eventos, meetups y formación sobre AKS donde veremos:
+Tutorial para eventos, meetups y formación sobre AKS con Ingress donde veremos:
 
 - Paso1: Entendiendo que es un Controlador Ingress 
 - Paso2: Instalando NGNIX Ingress Controler con Deployment 
@@ -9,8 +9,9 @@ Tutorial para eventos, meetups y formación sobre AKS donde veremos:
 - Paso4: Instalando Recursos Ingress para enrutar trafico
 - Paso5: Verificando instalacion y configuracion NGINX
 
-Chuleta: https://kubernetes.github.io/ingress-nginx
-
+Lectura previa para fundamentos:
+- Conceptos: https://kubernetes.io/docs/concepts/services-networking/ingress
+- Conceptos: https://kubernetes.github.io/ingress-nginx/troubleshooting
 
 ### Paso1: Entendiendo que es un Controlador Ingress 
 
@@ -23,16 +24,17 @@ Aqui comparto una serie de definiciones para entender el concepto:
 - Es la solucion recomendada para no tener que usar servicios NodePort o LoadBalancer en kubernetes
 - Con LoadBalancer/NodePort exponemos el servicio al exterior acoplandonos con el tipo de servicio
 
-Con los Servicios, las reglas de enrutamiento están asociadas con un Servicio determinado. Existen mientras exista el Servicio, y hay muchas reglas porque hay muchos Servicios en el clúster. 
+Con los Servicios, las reglas de enrutamiento están asociadas con un servicio determinado y existen mientras exista el servicio 
 Si de alguna manera podemos desacoplar las reglas de enrutamiento de la aplicación y centralizar la administración de reglas, podemos actualizar nuestra aplicación sin preocuparnos por su acceso externo.
 Esto lo podemos hacer mediante el recurso Ingress.
 
 ![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-Controller-NGINX-diagrama.png)
 
-Existen 2 tipos de NGINX que podemos utilizar, ambos son de código abierto y están  en GitHub:
+Existen muchos tipos de Ingress Controller, en esta practica usamos NGINX donde existen 2 opciones, ambas son de código abierto y están  en GitHub:
 
 - Uno es mantenido por la community Kubernetes: https://github.com/kubernetes/ingress-nginx
 - Otro es mantenido por le empresa NGINX: https://github.com/nginxinc/kubernetes-ingress
+- Listado completo: https://kubernetes.io/docs/concepts/services-networking/ingress-controllers
 
 Ref: https://www.nginx.com/blog/wait-which-nginx-ingress-controller-kubernetes-am-i-using
 
@@ -45,11 +47,11 @@ Para permitir que la conexión entrante llegue a los Servicios del clúster, Ing
 - Enrutamiento basado en Virtual Host (Virtual Server)
 - Seguridad TLS (Terminacion de TLS/SSL en capa de transporte)
 
-Con Ingress, los usuarios **no se conectan directamente a un Servicio**, llegan al controlador de Ingress y a partir de ahí la solicitud se reenvía al Servicio deseado segun las reglas definidas.
+Con un Ingress, los usuarios **no se conectan directamente a un Servicio**, llegan al controlador de Ingress y a partir de ahí la solicitud se reenvía al Servicio deseado segun las reglas definidas.
 
 En el siguiente ejemplo, las solicitudes de los usuarios a **blue.example.com y green.example.com** llegan al Ingress y a partir de ahí, se enviarían a webserver-blue-svc y webserver-green-svc respectivamente. 
 
-Ejemplo de una regla basado en nombre: 
+Ejemplo de una regla basado en virtual host: 
 ```yml
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -108,18 +110,18 @@ spec:
           servicePort: 80
 ```
 
-Con el recurso Ingress que acabamos de crear, ahora deberíamos poder acceder a los servicios webserver-blue-svc o webserver-green-svc utilizando las URL blue.example.com y green.example.com. 
-
-Ref: https://github.com/justmeandopensource/kubernetes/tree/master/yamls/ingress-demo
-
 Diagrama del ejemplo:
 
 ![Diagrama Ingress](https://github.com/santimacnet/Azure-Bootcamps-Workshops-CLI/blob/master/images/lab-ingress-url-routing-image.jpg)
 
+Un ejemplo en video muy didactico lo podemos ver aqui:
+
+Ref: https://github.com/justmeandopensource/kubernetes/tree/master/yamls/ingress-demo
+
 
 ### Paso2: Instalando NGNIX Ingress Controler con Deployment
 
-La instalación oficial nos indica utilizar los siguientes pasos:
+La instalación oficial se puede realizar con los siguientes pasos para un deploy normal, pero actualmente esta recomendado usar Helm3 como vemos en el paso3.
 
 ```
 # Ejecutar el siguiente deployment
@@ -179,6 +181,9 @@ $ helm install my-release ingress-nginx/ingress-nginx
 $ helm list
 
 $ kubectl get all --namespace default
+
+$ kubectl get svc --namespace default
+  ... obtener la IP del servicio LoadBalancer
 ```
 Ref: https://kubernetes.github.io/ingress-nginx/deploy/#using-helm
 
