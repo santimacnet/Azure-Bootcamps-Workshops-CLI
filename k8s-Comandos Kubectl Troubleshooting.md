@@ -26,7 +26,6 @@ proxy          Run a proxy to the Kubernetes API server
 
 Referencias:
 
-
 - Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
 - Ref: https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/index.md
 
@@ -49,20 +48,12 @@ You can use the Kubernetes command line tool kubectl to interact with the API Se
 Ref: https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl
 
 
-### Comandos para Kube-advisor
-Esta utilidad muestra recomendaciones para mejor rendimiento y resistencia para las aplicaciones de k8s
-
-```
-$ kubectl run --rm -i -t kube-advisor --image=mcr.microsoft.com/aks/kubeadvisor --restart=Never
-```
-
-Ref:https://github.com/azure/kube-advisor
-
 ### Comandos get para DEPLOYMENTS, SERVICES, PODS, NAMESPACES, ETC
 
 ```
 $ kubectl get pods
 $ kubectl get pods -o wide
+$ kubectl get pods -o yaml
 $ kubectl get pods -n kube-system
 $ kubectl get pods --all-namespaces
 $ kubectl get pods --all-namespaces -o wide
@@ -72,6 +63,20 @@ $ kubectl get pods -l app=nginx
 ```
 
 Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#viewing-finding-resources
+
+
+### Comandos para Logs
+
+```
+$ kubectl logs [pod-name]
+$ kubectl logs [pod-name] -c [container-name]
+$ kubectl logs [pod-name] --all-containers=true
+$ kubectl logs -p [pod-name]
+$ kubectl logs -f [pod-name]
+```
+
+Ref: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#logs
+
 
 ### Pruebas de HelloAPP en Kubernetes
 
