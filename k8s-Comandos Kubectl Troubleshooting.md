@@ -133,3 +133,19 @@ $ kubectl top pods --all-namespaces
 # metricas de un pod y sus containers (indicar namespace)
 $ kubectl top pod POD_NAME --containers 
 ```
+
+
+### kubectl Cheat Sheet
+
+Creating Objects
+Viewing, Finding Resources
+Updating Resources
+Patching Resources
+Editing Resources
+Scaling Resources
+Deleting Resources
+Interacting with running Pods
+Interacting with Nodes and Cluster
+
+Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet
+    
