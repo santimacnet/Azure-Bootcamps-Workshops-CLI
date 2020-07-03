@@ -63,10 +63,21 @@ $ az aks create --name $AKS_NAME \
     --max-count 2 \
     --service-principal <appId> \
     --client-secret <password>
+```    
     
-# verificamos AKS actualizado y version definida
-$ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
+Verificamos AKS y Service Principal creado.
 ```
+$ az aks show --name $AKS_NAME --resource-group $RG_NAME 
+$ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
+$ az aks show --name $AKS_NAME --resource-group $RG_NAME --query servicePrincipalProfile.clientId -o tsv)
+
+IMPORTANTE: los clústeres de AKS se crean con una entidad de servicio que tiene un período de expiración de un año.
+Referencia: https://docs.microsoft.com/es-es/azure/aks/update-credentials
+```
+
+Nota: actualmente se recomienda usar identidades administradas por Azure AD:
+https://santimacnet.wordpress.com/2020/04/20/aks-creando-un-cluster-con-identidad-administrada-asignada-por-azure-ad
+
 
 ### Paso3: Creando registry ACR y Service Principal
 
