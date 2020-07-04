@@ -26,7 +26,7 @@ $ node --version
 
 ### Crear Aplicacion Angular9 HelloWorld
 
-Ejecutar los comandos para ejecutar aplicacion Angular en local:
+Comandos para ejecutar aplicacion Angular en "environment" desarrollo local:
 ```
 $ npm install -g @angular/cli (-g instalar globalmente)
 $ ng new angular-hello
@@ -38,7 +38,7 @@ $ ng serve
 Compiled successfully.
 ```
 
-Ejecutar configuracion para produccion con NPM o NG de Angular:
+Comandos para ejecutar configuracion para "enviroment" produccion con NPM o NG de forma manual:
 ```
 $ npm install
 $ npm run build -- --configuration=production
@@ -70,7 +70,7 @@ COPY --from=build /app/dist/scr /usr/share/nginx/html
 # Archivo nginx.conf para nuestra aplicacion Angular
 COPY ./nginx.conf /etc/nginx/nginx.conf
 ```
-IMPORTANTE: anadir .gitignore en el proyecto para node-modules
+IMPORTANTE: anadir .gitignore en el proyecto para evitar node-modules con muchos MB
 
 
 ### Crear configuracion NGINX para copiar en imagen Docker
