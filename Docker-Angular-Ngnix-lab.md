@@ -1,7 +1,7 @@
-**PRACTICA ANGULAR & NGINX CON DOCKER**
+**PRACTICA ANGULAR-9 & NGINX CON DOCKER**
 ------------------------------------------------------------------
 
-Tutorial didáctico para eventos y meetups sobre ANGULAR y DOCKER.
+Tutorial didáctico para eventos y meetups sobre ANGULAR-9 y DOCKER.
 
 Para este tutorial es necesario tener los siguientes requerimientos:
 
@@ -24,11 +24,11 @@ $ nvm use 13.7.0
 $ node --version 
 ```
 
-### Crear Aplicacion Angular HelloWorld
+### Crear Aplicacion Angular9 HelloWorld
 
-Ejecutar los comandos desde consola para crear y ejecutar nueva aplicacion Angular
+Ejecutar los comandos para ejecutar aplicacion Angular en local:
 ```
-$ npm install -g @angular/cli (si no lo tenemos instalado
+$ npm install -g @angular/cli (-g instalar globalmente)
 $ ng new angular-hello
 $ cd angular-hello
 $ ng serve
@@ -37,6 +37,18 @@ $ ng serve
 ** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
 Compiled successfully.
 ```
+
+Ejecutar configuracion para produccion con NPM o NG de Angular:
+```
+$ npm install
+$ npm run build -- --configuration=production
+
+$ ng build "--configuration=production"
+$ ng serve --configuration=production
+
+Ref: https://angular.io/cli/serve
+```
+
 Abrimos en navegador http://localhost:4200 para ver la aplicacion en el browser.
 
 ### Crear Dockerfile para generar imagen Docker
@@ -46,20 +58,20 @@ Crear archivo Dockerfile en el mismo directorio que aplicacion Angular
 # STAGE-1: Construccion de Angular App
 FROM node:13.7-alpine AS build
 WORKDIR /app
-COPY ./ /app/
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN npm run build -- --configuration=production
 
-# Compilar Angular App para produccion
-RUN npm ci
-RUN npm run build --prod
-RUN mv /app/dist/angular-hello/* /app/dist/
-
-# STAGE-2: Desplegar en NGINX
+# STAGE-2: Desplegar en NGINX (cambiar scr por vuestra ruta)
 FROM nginx:1.17.8-alpine
-COPY --from=build /app/dist/ /usr/share/nginx/html
+COPY --from=build /app/dist/scr /usr/share/nginx/html
 
-# Mejorar configuracion de NGINX copiado archivo nginx.conf
+# Archivo nginx.conf para nuestra aplicacion Angular
 COPY ./nginx.conf /etc/nginx/nginx.conf
 ```
+IMPORTANTE: anadir .gitignore en el proyecto para node-modules
+
 
 ### Crear configuracion NGINX para copiar en imagen Docker
 
