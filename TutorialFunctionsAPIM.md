@@ -11,6 +11,11 @@ Objetivos de aprendizaje
 - Importación de varias aplicaciones de funciones de Azure como una sola API en Azure API Management
 - Conocimientos básicos de Azure API Management y Azure Functions
 
+Diagrama del proyecto a realizar
+
+https://docs.microsoft.com/es-es/learn/modules/build-serverless-api-with-functions-api-management/media/3-script-results.png
+
+
 Descargar el ejemplo de codigo completo y ejecutar script para crear recursos en Azure
 ```
 git clone https://github.com/MicrosoftDocs/mslearn-apim-and-functions.git ~/OnlineStoreFuncs
@@ -61,3 +66,5 @@ az functionapp deployment source config-zip -g $RESOURCE_GROUP -n $PRODUCT_FUNCT
 az functionapp deployment source config-zip -g $RESOURCE_GROUP -n $ORDER_FUNCTION_NAME --src OrderShippingFunc.PKG.zip
 printf "\nCode published. Functions are ready to use.\n"
 ```
+
+Pasos del tutorial:  https://docs.microsoft.com/es-es/learn/modules/build-serverless-api-with-functions-api-management/
