@@ -22,6 +22,9 @@ logs           Print the logs for a container in a pod
 exec           Execute a command in a container
 port-forward   Forward one or more local ports to a pod
 proxy          Run a proxy to the Kubernetes API server
+
+kubectl get componentstatuses
+
 ```
 
 Referencias:
@@ -64,6 +67,20 @@ $ kubectl get pods -l app=nginx
 
 Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#viewing-finding-resources
 
+
+### Creando pods como terminal para servicios internos del cluster
+
+Para depurar internamente desde AKS servicios internos:
+
+```
+$ kubectl run -it alpine --image=alpine --sh
+$ kubectl run -it busybox --image=busybox --restart=Never
+$ kubectl run -it --rm aks-tests --image=debian --namespace default
+
+$ apt-get update
+$ apt-get install -y curl
+$ apk add vim
+```
 
 ### Comandos para Logs
 
@@ -127,7 +144,7 @@ Desde la shell de Azure lanzamos los siguientes comandos.
 
 ```
 # metricas de nodos y pods
-$ kubectl top pods nodes
+$ kubectl top  nodes
 $ kubectl top pods --all-namespaces
 
 # metricas de un pod y sus containers (indicar namespace)
