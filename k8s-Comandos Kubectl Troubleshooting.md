@@ -1,4 +1,4 @@
-**PRACTICA COMANDOS KUBECTL GENERALES **
+**PRACTICA COMANDOS KUBECTL GENERALES**
 -------------------------------------------------------
 
 Abrir una shell en Azure para ejecutar estos comandos, necesitamos un AKS funcionando.
@@ -23,12 +23,19 @@ exec           Execute a command in a container
 port-forward   Forward one or more local ports to a pod
 proxy          Run a proxy to the Kubernetes API server
 
-kubectl get componentstatuses
+# Depurar internamente en AKS servicios internos:
+$ kubectl run -it alpine --image=alpine --sh
+$ kubectl run -it busybox --image=busybox --restart=Never
+$ kubectl run -it --rm aks-tests --image=debian --namespace default
 
+$ apt-get update
+$ apt-get install -y curl
+$ apk add vim
+
+$ kubectl get componentstatuses
 ```
 
 Referencias:
-
 - Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
 - Ref: https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/index.md
 
@@ -51,9 +58,11 @@ You can use the Kubernetes command line tool kubectl to interact with the API Se
 Ref: https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl
 
 
-### Comandos get para DEPLOYMENTS, SERVICES, PODS, NAMESPACES, ETC
+### Comandos DEPLOYMENTS, SERVICES, PODS, NAMESPACES, LOGS ETC
 
 ```
+#Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#viewing-finding-resources
+
 $ kubectl get pods
 $ kubectl get pods -o wide
 $ kubectl get pods -o yaml
@@ -63,28 +72,10 @@ $ kubectl get pods --all-namespaces -o wide
 $ kubectl get pods --show-labels
 $ kubectl get pods --watch
 $ kubectl get pods -l app=nginx
-```
-
-Ref: https://kubernetes.io/docs/reference/kubectl/cheatsheet/#viewing-finding-resources
 
 
-### Creando pods como terminal para servicios internos del cluster
+#Ref: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#logs
 
-Para depurar internamente desde AKS servicios internos:
-
-```
-$ kubectl run -it alpine --image=alpine --sh
-$ kubectl run -it busybox --image=busybox --restart=Never
-$ kubectl run -it --rm aks-tests --image=debian --namespace default
-
-$ apt-get update
-$ apt-get install -y curl
-$ apk add vim
-```
-
-### Comandos para Logs
-
-```
 $ kubectl logs [pod-name]
 $ kubectl logs [pod-name] -c [container-name]
 $ kubectl logs [pod-name] --all-containers=true
@@ -92,11 +83,7 @@ $ kubectl logs -p [pod-name]
 $ kubectl logs -f [pod-name]
 ```
 
-Ref: https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#logs
-
-
 ### Pruebas de HelloAPP en Kubernetes
-
 ```
 # Crear deployment directamente con "run" y nombre del pod "web" y "web2"
 $ kubectl run web --image=gcr.io/google-samples/hello-app:1.0 --port=8081
