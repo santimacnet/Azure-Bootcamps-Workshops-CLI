@@ -23,16 +23,18 @@ exec           Execute a command in a container
 port-forward   Forward one or more local ports to a pod
 proxy          Run a proxy to the Kubernetes API server
 
-# Depurar internamente en AKS servicios internos:
+# Instalar contenedor para Depurar internamente en AKS servicios:
 $ kubectl run -it alpine --image=alpine --sh
-$ kubectl run -it busybox --image=busybox --restart=Never
 $ kubectl run -it --rm aks-tests --image=debian --namespace default
 
+# Instalar herramientas si no las tenemos como curl, vim, etc:
 $ apt-get update
 $ apt-get install -y curl
-$ apk add vim
+$ apt-get install -y vim
 
-$ kubectl get componentstatuses
+# llamar a servicios internos no accesibles desde exterior
+$ curl -L http://ip-del-servicio
+$ curl -k https://ip-del-servicio
 ```
 
 Referencias:
