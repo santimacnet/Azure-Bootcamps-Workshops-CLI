@@ -40,6 +40,11 @@ $ ...
 # llamar a servicios internos no accesibles desde exterior
 $ curl -L http://ip-del-servicio
 $ curl -k https://ip-del-servicio
+
+# Entrar en un Pod corriendo NGINX - The container must be configured with tty: true and stdin: true.
+$ kubectl attach -it nginx-POD -c nginx-CONTENEDOR -n NAMESPACE
+$ kubectl exec   -it nginx-POD -c nginx-CONTENEDOR -n NAMESPACE bash
+$ kubectl exec   -it nginx-POD -c nginx-CONTENEDOR -n NAMESPACE /bin/bash
 ```
 
 Referencias:
