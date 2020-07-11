@@ -61,13 +61,11 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-RUN npm run build -- --configuration=production
+RUN npm run build -- --output-path=./dist/out --configuration=production
 
-# STAGE-2: Desplegar en NGINX (cambiar scr por vuestra ruta)
+# STAGE-2: Publicar con NGINX y configuracion con nginx.conf 
 FROM nginx:1.17.8-alpine
-COPY --from=build /app/dist/scr /usr/share/nginx/html
-
-# Archivo nginx.conf para nuestra aplicacion Angular
+COPY --from=build /app/dist/out /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
 ```
 IMPORTANTE: anadir .gitignore en el proyecto para evitar node-modules con muchos MB
@@ -82,10 +80,6 @@ http {
   server {
     listen 80;
     server_name  localhost;
- 
-    root   /usr/share/nginx/html;
-    include /etc/nginx/mime.types;
-    index  index.html;
 
     ## Logging Settings
     access_log /var/log/nginx/access.log;
@@ -93,6 +87,8 @@ http {
 
     ## Location
     location / {
+      root /usr/share/nginx/html;
+      index index.html index.htm;
       try_files $uri $uri/ /index.html;
     }
   }
@@ -109,21 +105,23 @@ http {
   # Simplico las trazas del Build para no tener tanto texto
     Sending build context to Docker daemon.....
 
-    Step 1/8 : FROM node:13.7-alpine AS build 
+    Step 1/9 : FROM node:13.7-alpine AS build
    
-    Step 2/8 : WORKDIR /app
+    Step 2/9 : WORKDIR /app    
     
-    Step 3/8 : COPY ./ /app/
+    Step 3/9 : COPY package.json package-lock.json ./
     
-    Step 4/8 : RUN npm ci
+    Step 4/9 : RUN npm install
     
-    Step 5/8 : RUN npm run build --prod 
+    Step 5/9 : COPY . .
     
-    Step 6/8 : RUN mv /app/dist/angular-hello/* /app/dist/
+    Step 6/9 : RUN npm run build -- --output-path=./dist/out --configuration=production
     
-    Step 7/8 : FROM nginx:1.17.8-alpine
+    Step 7/9 : FROM nginx:1.17.8-alpine
     
-    Step 8/8 : COPY --from=build /app/dist/ /usr/share/nginx/html
+    Step 8/9 : COPY --from=build /app/dist/out /usr/share/nginx/html
+    
+    Step 9/9 : COPY ./nginx.conf /etc/nginx/nginx.conf
  
     Removing intermediate container
     Successfully built e671f4d19609
