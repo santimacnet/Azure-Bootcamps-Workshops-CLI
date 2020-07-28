@@ -4,7 +4,7 @@
 Tutorial para charlas, eventos, meetups y formación sobre AKS donde veremos:
 
    - Paso1: Creando un Service Principal para AKS
-   - Paso2: Creando cluster de AKS 
+   - Paso2: Creando cluster AKS con Load Balancer Standard
    - Paso3: Creando registry ACR y Service Principal
    - Paso4: Configurar Kubectl y Credenciales acceso AKS
    - Paso5: Configurar acceso Dashboard AKS
@@ -37,7 +37,7 @@ $ az ad sp create-for-rbac --skip-assignment --name AKSClusterPruebasServicePrin
 ...guardar datos respuesta json con password...
 ```
 
-### Paso2: Creando cluster de AKS
+### Paso2: Creando cluster AKS con Load Balancer Standard
 
 Definims variables entorno para los recursos
 ```
@@ -47,7 +47,8 @@ ACR_NAME=acrhubdemolab
 AKS_NAME=aks-cluster-demolab
 ```
 
-Creamos el grupo de recursos y AKS con la opcion de autoescalado, la creacion del cluster puede tardar entre 10 y 15 minutos.
+Creamos el grupo de recursos y AKS la creacion del cluster puede tardar entre 5 y 10.
+La configuración de **nodos en el grupo de nodos predeterminado con el parámetro --node-count 2** sirve para los servicios esenciales del sistema en AKS en este grupo de nodos, y los nodos adicionales contribuyen a la confiabilidad de las operaciones del clúster.
 ```
 $ az group create --name $RG_NAME --location $RG_LOCATION
 
@@ -55,15 +56,17 @@ $ az aks create --name $AKS_NAME \
     --resource-group $RG_NAME \
     --location $RG_LOCATION \
     --enable-addons monitoring \
-    --generate-ssh-keys \
-    --vm-set-type VirtualMachineScaleSets \
+    --node-count 2
     --node-vm-size Standard_b2ms \
-    --enable-cluster-autoscaler \
-    --min-count 1 \
-    --max-count 2 \
+    --vm-set-type VirtualMachineScaleSets \
+    --generate-ssh-keys \
+    --load-balancer-sku standard \
     --service-principal <appId> \
     --client-secret <password>
 ```    
+Nota: El LB Básico no se admite cuando se usan varios grupos de nodos en node pools hay que usar LB Standard.
+
+
     
 Verificamos AKS y Service Principal creado.
 ```
