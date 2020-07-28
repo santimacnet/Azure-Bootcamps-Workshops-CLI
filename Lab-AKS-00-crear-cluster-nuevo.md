@@ -73,9 +73,6 @@ $ az aks show --name $AKS_NAME --resource-group $RG_NAME
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME --query servicePrincipalProfile.clientId -o tsv)
 
-# Listar grupos de nodos del cluster ver tipo (system o user)
-$ az aks nodepool list --resource-group $RG_NAME --cluster-name $AKS_NAME -o table
-
 IMPORTANTE: los clústeres de AKS se crean con una entidad de servicio que tiene un período de expiración de un año.
 Referencia: https://docs.microsoft.com/es-es/azure/aks/update-credentials
 ```
@@ -89,7 +86,7 @@ $ kubectl get nodes
 # Listar grupos de nodos del cluster y ver tipo (system o user)
 $ az aks nodepool list --resource-group $RG_NAME --cluster-name $AKS_NAME -o table
 ```
-Ref: https://docs.microsoft.com/es-es/learn/modules/aks-optimize-compute-costs/3-exercise-node-pools
+Ref: https://docs.microsoft.com/es-es/azure/aks/use-multiple-node-pools
 
 
 ### Paso3: Creando registry ACR y Service Principal
