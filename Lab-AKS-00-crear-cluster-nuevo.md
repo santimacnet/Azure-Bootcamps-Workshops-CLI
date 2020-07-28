@@ -52,6 +52,7 @@ La configuración de **nodos en el grupo de nodos predeterminado con el parámet
 ```
 $ az group create --name $RG_NAME --location $RG_LOCATION
 
+# crear LB-Standard ya que LB-Básico no se admite cuando se usan varios grupos de nodos en node pools
 $ az aks create --name $AKS_NAME \
     --resource-group $RG_NAME \
     --location $RG_LOCATION \
@@ -64,15 +65,15 @@ $ az aks create --name $AKS_NAME \
     --service-principal <appId> \
     --client-secret <password>
 ```    
-Nota: El LB Básico no se admite cuando se usan varios grupos de nodos en node pools hay que usar LB Standard.
-
-
     
-Verificamos AKS y Service Principal creado.
+Verificamos AKS con Service Principal y grupos de nodos creados.
 ```
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME 
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME --query servicePrincipalProfile.clientId -o tsv)
+
+# Listar grupos de nodos del cluster ver tipo (system o user)
+$ az aks nodepool list --resource-group $RG_NAME --cluster-name $AKS_NAME -o table
 
 IMPORTANTE: los clústeres de AKS se crean con una entidad de servicio que tiene un período de expiración de un año.
 Referencia: https://docs.microsoft.com/es-es/azure/aks/update-credentials
