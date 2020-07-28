@@ -66,7 +66,8 @@ $ az aks create --name $AKS_NAME \
     --client-secret <password>
 ```    
     
-Verificamos AKS con Service Principal y grupos de nodos creados.
+Verificamos AKS con Service Principal y grupos de nodos creados. Actualmente se recomienda usar identidades administradas por Azure AD:
+https://santimacnet.wordpress.com/2020/04/20/aks-creando-un-cluster-con-identidad-administrada-asignada-por-azure-ad
 ```
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME 
 $ az aks show --name $AKS_NAME --resource-group $RG_NAME -o table    
@@ -79,8 +80,16 @@ IMPORTANTE: los clústeres de AKS se crean con una entidad de servicio que tiene
 Referencia: https://docs.microsoft.com/es-es/azure/aks/update-credentials
 ```
 
-Nota: actualmente se recomienda usar identidades administradas por Azure AD:
-https://santimacnet.wordpress.com/2020/04/20/aks-creando-un-cluster-con-identidad-administrada-asignada-por-azure-ad
+
+NODEPOOLS: Escalar manualmente los nodos de los nodepools, así como la capacidad de escalar a cero grupos de nodos basados en costosas máquinas virtuales, es una buena estrategia para optimizar los costos en AKS cuando se administran directamente las demandas de carga de trabajo. 
+```
+# Listar nodos de AKS pero no vemos los nodepools
+$ kubectl get nodes
+
+# Listar grupos de nodos del cluster y ver tipo (system o user)
+$ az aks nodepool list --resource-group $RG_NAME --cluster-name $AKS_NAME -o table
+```
+Ref: https://docs.microsoft.com/es-es/learn/modules/aks-optimize-compute-costs/3-exercise-node-pools
 
 
 ### Paso3: Creando registry ACR y Service Principal
