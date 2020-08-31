@@ -127,7 +127,9 @@ $ az aks get-credentials --name $AKS_NAME --resource-group $RG_NAME --admin
 
 #  ejecutar comandos Kubectl para verificar aks funcionando
 $ kubectl version
+$ kubectl config get-contexts (para ver todos los contextos AKS)
 $ kubectl config current-context (para ver contexto correcto AKS)
+
 $ kubectl cluster-info
 $ kubectl get nodes
 
