@@ -13,15 +13,11 @@ Lectura previa para fundamentos:
 - Conceptos: https://kubernetes.io/docs/concepts/services-networking/ingress
 - Conceptos: https://kubernetes.github.io/ingress-nginx/troubleshooting
 
-Mejoras para futuras versiones de Lab:
-- Utilizar un nombre basado en FQDN de la IP de ingress
-- Utilizar una Zona DNS asociada a un  dominio.com propio
-- Utilizar un certificado para https
-
-Mejoras para trabajar con varios namespaces
+Mejoras para trabajar futuras versiones:
 - Utilizar un servicio y pods en otro namespace en lugar de "default"
 - Llegar a otros servvicios con "Cross Namespace Ingress Network", se necesita "kube-dns"
 - Ejemplo con externalName: servicio-svc.namespace.svc.cluster.local
+- Configurar certificados para https con certmanager
 
 
 ### Paso1: Entendiendo que es un Controlador Ingress 
