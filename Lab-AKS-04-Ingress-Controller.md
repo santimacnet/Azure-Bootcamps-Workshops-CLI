@@ -6,7 +6,7 @@ Tutorial para eventos, meetups y formación sobre AKS con Ingress basado en la d
 Ref: https://docs.microsoft.com/en-us/azure/aks/ingress-basic
 
 
-### Paso1: Creando NGINX con HELM 
+### Paso1: Desplegando NGINX con HELM 
 ```
 # Create a namespace for your ingress resources
 kubectl create namespace ingress-basic
@@ -31,7 +31,8 @@ nginx-ingress-ingress-nginx-controller   LoadBalancer   10.0.189.9   20.54.143.1
 
 ### Paso2: Desplegando aplicaciones AKS-ONE y AKS-TWO como ClusterIP
 
-Desplegar aks-helloworld-one.yml desde DASHBOARD o fichero: kubectl apply -f aks-helloworld-one.yaml -n ingress-basic
+Desplegar aplicacion AKS-ONE desde DASHBOARD o FICHERO: 
+$ kubectl apply -f aks-helloworld-one.yml -n ingress-basic
 
 ```yml
 apiVersion: apps/v1
@@ -70,7 +71,8 @@ spec:
 ```
 
 
-Desplegar aks-helloworld-two.yml desde DASHBOARD o fichero: kubectl apply -f aks-helloworld-two.yaml -n ingress-basic
+Desplegar aplicacion AKS-TWO desde DASHBOARD o FICHERO: 
+$ kubectl apply -f aks-helloworld-two.yml -n ingress-basic
 
 ```yml
 apiVersion: apps/v1
@@ -107,6 +109,18 @@ spec:
   selector:
     app: aks-helloworld-two
 ```
+
+Comprobacion de creacion de los Pods:
+
+```
+$ kubectl get pods --namespace ingress-basic
+NAME                                                      READY   STATUS              RESTARTS   AGE
+aks-helloworld-one-78866647fc-jnxx7                       1/1     Running             0          3m29s
+aks-helloworld-two-769548854c-6r7rh                       1/1     Running             0          2m10s
+```
+
+### Paso3: ...
+
 
 
 
