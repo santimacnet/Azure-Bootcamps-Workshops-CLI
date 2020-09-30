@@ -119,8 +119,119 @@ aks-helloworld-one-78866647fc-jnxx7                       1/1     Running       
 aks-helloworld-two-769548854c-6r7rh                       1/1     Running             0          2m10s
 ```
 
-### Paso3: ...
+### Paso3: Creando RUTAS DE INGRESS EN AKS
+
+Desplegar las rutas desde DASHBOARD o FICHERO (The ingress resource configures the rules that route traffic to one of the two applications):
+
+```
+$ kubectl apply -f aks-helloworld-ingress.yml -n ingress-basic
+ingress.networking.k8s.io/hello-world-ingress created
+ingress.networking.k8s.io/hello-world-ingress-static created
+```
+
+Codigo del fichero:
+```yml
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: hello-world-ingress
+  namespace: ingress-basic
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: aks-helloworld-one
+          servicePort: 80
+        path: /hello-world-one(/|$)(.*)
+      - backend:
+          serviceName: aks-helloworld-two
+          servicePort: 80
+        path: /hello-world-two(/|$)(.*)
+      - backend:
+          serviceName: aks-helloworld-one
+          servicePort: 80
+        path: /(.*)
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: hello-world-ingress-static
+  namespace: ingress-basic
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /static/$2
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: aks-helloworld-one
+          servicePort: 80
+        path: /static(/|$)(.*)
+
+```
+
+Comprobacion de creacion de ingress y las rutas:
+```
+$ kubectl get ingress --namespace ingress-basic
+NAME                         HOSTS   ADDRESS         PORTS   AGE
+hello-world-ingress          *       20.54.143.197   80      2m11s
+hello-world-ingress-static   *       20.54.143.197   80      2m11s
 
 
+$ kubectl describe ingress --namespace ingress-basic
+Name:             hello-world-ingress
+Namespace:        ingress-basic
+Address:          20.54.143.197
+Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *
+              /hello-world-one(/|$)(.*)   aks-helloworld-one:80 (10.240.0.13:80)
+              /hello-world-two(/|$)(.*)   aks-helloworld-two:80 (10.240.0.29:80)
+              /(.*)                       aks-helloworld-one:80 (10.240.0.13:80)
+Annotations:  kubernetes.io/ingress.class: nginx
+              nginx.ingress.kubernetes.io/rewrite-target: /$1
+              nginx.ingress.kubernetes.io/ssl-redirect: false
+              nginx.ingress.kubernetes.io/use-regex: true
+Events:
+  Type    Reason  Age    From                      Message
+  ----    ------  ----   ----                      -------
+  Normal  CREATE  3m26s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress
+  Normal  CREATE  3m26s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress
+  Normal  UPDATE  2m57s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress
+  Normal  UPDATE  2m57s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress
+
+
+Name:             hello-world-ingress-static
+Namespace:        ingress-basic
+Address:          20.54.143.197
+Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *
+              /static(/|$)(.*)   aks-helloworld-one:80 (10.240.0.13:80)
+Annotations:  kubernetes.io/ingress.class: nginx
+              nginx.ingress.kubernetes.io/rewrite-target: /static/$2
+              nginx.ingress.kubernetes.io/ssl-redirect: false
+Events:
+  Type    Reason  Age    From                      Message
+  ----    ------  ----   ----                      -------
+  Normal  CREATE  3m26s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress-static
+  Normal  CREATE  3m26s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress-static
+  Normal  UPDATE  2m57s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress-static
+  Normal  UPDATE  2m57s  nginx-ingress-controller  Ingress ingress-basic/hello-world-ingress-static
+```
+
+Si abrimos un navegador y navegamos a las rutas veremos las aplicaciones funcionando.
 
 
