@@ -94,6 +94,7 @@ http {
   }
 }
 ```
+
 - Ref1: https://angular.io/guide/deployment
 - Ref2: https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#front-controller-pattern-web-apps
 - Ref3: https://www.serverlab.ca/tutorials/linux/web-servers-linux/how-to-configure-nginx-for-angular-and-reactjs
@@ -148,6 +149,7 @@ Abrimos en navegador http://localhost:8888 para ver la aplicacion ejecutandose e
 
 
 ### Entrar al contenedor para ver NGINX y aplicacion Angular
+Podemos usar /bin/bash o /bin/sh dependiendo de la shell de nuestro contenedor.
 ```
 # Desde windows command line
 c:\> docker exec -it <id-container> /bin/sh
@@ -171,7 +173,29 @@ $ apk add curl
 $ curl localhost
 ```
 
-NOTA: Podemos usar /bin/bash o /bin/sh dependiendo de la shell de nuestro contenedor.
+
+### Reiniciar configuracion NGINX 
+Si realizamos cambios en nginx.conf es necesario reiniciar el proceso.
+```
+/etc/nginx # nginx -h
+nginx version: nginx/1.17.8
+Usage: nginx [-?hvVtTq] [-s signal] [-c filename] [-p prefix] [-g directives]
+
+Options:
+  -?,-h         : this help
+  -v            : show version and exit
+  -V            : show version and configure options then exit
+  -t            : test configuration and exit
+  -T            : test configuration, dump it and exit
+  -q            : suppress non-error messages during configuration testing
+  -s signal     : send signal to a master process: stop, quit, reopen, reload
+  -p prefix     : set prefix path (default: /etc/nginx/)
+  -c filename   : set configuration file (default: /etc/nginx/nginx.conf)
+  -g directives : set global directives out of configuration file
+ 
+ 
+$ nginx -s reload  
+```
 
 ### Subir imagen a DockerHub Publico
 Si queremos compartir nuestra imagen ya definitiva podemos subirla a DockerHub si disponemos de una cuenta
