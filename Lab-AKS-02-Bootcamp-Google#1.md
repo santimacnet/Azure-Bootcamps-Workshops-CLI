@@ -3,7 +3,8 @@
 
 Tutorial para eventos, meetups y formación sobre AKS donde veremos:
 
-    - Paso1: Implementando aplicación Bootcamp en AKS
+    - Paso0: Implementando aplicación Bootcamp en AKS
+    - Paso1: Explorando recursos y objetos de API-RESOURCES
     - Paso2: Explorando aplicación para Troubleshooting y Debugging 
     - Paso3: Exponer Services para acceder aplicación creada
     - Paso4: Escalar aplicación creada desde 1-pod hasta 5-pods
@@ -13,12 +14,11 @@ Chuleta: https://linuxacademy.com/site-content/uploads/2019/04/Kubernetes-Cheat-
 
 Requerimientos:
 
-    - Azure y Kubernetes fundamentos basicos
-    - Azure CLI, Kubectl y shell.azure.com
+    - Azure, Kubectl, shell.azure.com y Kubernetes fundamentos basicos
     - AKS ya creado en Azure con permisos administrador
     - Suscripcion de Azure con permisos Admin para Azure Active Directory
 
-### Paso1: Implementando aplicación Bootcamp en AKS
+### Paso0: Implementando aplicación Bootcamp en AKS
 ```
 $ kubectl create deployment k8-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1
 
@@ -27,6 +27,22 @@ $ kubectl get rs           // ver replicaset ej: k8-bootcamp-6969f6d786
 $ kubectl get pods         // ver pod creado ej: k8-bootcamp-6969f6d786-z842s 
 $ kubectl get services     // no lo vemos porque no ha sido creado
 $ kubectl get all          // ver todo los objetos con un solo comando
+```
+
+### Paso1: Explorando recursos y objetos de API-RESOURCES
+
+No Todos los Objetos están en un Espacio de nombres 
+La mayoría de los recursos de Kubernetes (ej. pods, services, replication controllers, y otros) están en algunos espacios de nombres. Sin embargo, los recursos que representan a los propios NAMESPACES, NODOS, VOLUMENES no están en NAMESPACES. 
+
+```
+# Para conocer recursos de Kubernetes 
+$ kubectl api-resources 
+
+# In a namespace
+$ kubectl api-resources --namespaced=true
+
+# Not in a namespace
+$ kubectl api-resources --namespaced=false
 ```
 
 ### Paso2: Explorando aplicación para Troubleshooting y Debugging 
