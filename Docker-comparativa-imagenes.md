@@ -33,6 +33,7 @@ $ docker pull mysql
 
 $ docker pull bitnami/minideb:latest
 ```
+VER COMPARATIVA: https://medium.com/swlh/alpine-slim-stretch-buster-jessie-bullseye-bookworm-what-are-the-differences-in-docker-62171ed4531d
 
 ### Tamaño de las diferentes imagenes 
 
